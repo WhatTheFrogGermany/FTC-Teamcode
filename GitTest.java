@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public class GitTest extends OpMode {
     @Override
     public void init() {
-
+        int anotherChange;
     }
 
     @Override
