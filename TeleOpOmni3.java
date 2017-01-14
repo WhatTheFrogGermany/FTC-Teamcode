@@ -65,6 +65,7 @@ public class TeleOpOmni3 extends OpMode {
         backLeftDrive = cOmni;
 
         gabiMotor = hardwareMap.dcMotor.get("gabi");
+        gabiMotor.setDirection(DcMotor.Direction.REVERSE);
 
         steffiMotor = hardwareMap.dcMotor.get("steffi");
         franzMotor = hardwareMap.dcMotor.get("franz");
