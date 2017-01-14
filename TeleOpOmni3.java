@@ -72,10 +72,10 @@ public class TeleOpOmni3 extends OpMode {
         gabiMotor.setDirection(DcMotor.Direction.REVERSE);
 
         steffiMotor = hardwareMap.dcMotor.get("steffi");
-        steffiTime = ElapsedTime();
+        steffiTime = new ElapsedTime();
 
         franzMotor = hardwareMap.dcMotor.get("franz");
-        franzTime = ElapsedTime();
+        franzTime = new ElapsedTime();
         franzMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         wildeHildeMotor = hardwareMap.dcMotor.get("hilde");
