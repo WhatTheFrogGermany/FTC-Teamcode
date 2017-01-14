@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by FTC on 07.10.2016.
@@ -36,8 +37,11 @@ public class TeleOpOmni3 extends OpMode {
 
     //the collecting mechanism
     DcMotor steffiMotor;    //the back
+    ElapsedTime steffiTime; //Added TimeToggle on 14.01
+    boolean steffiToggle = false;
     DcMotor franzMotor;     //the front
-    boolean collectingToggle = false;
+    ElapsedTime franzTime;
+    boolean franzToggle = false;
 
     //the shooter
     DcMotor wildeHildeMotor;
@@ -68,7 +72,10 @@ public class TeleOpOmni3 extends OpMode {
         gabiMotor.setDirection(DcMotor.Direction.REVERSE);
 
         steffiMotor = hardwareMap.dcMotor.get("steffi");
+        steffiTime = ElapsedTime();
+
         franzMotor = hardwareMap.dcMotor.get("franz");
+        franzTime = ElapsedTime();
         franzMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         wildeHildeMotor = hardwareMap.dcMotor.get("hilde");
@@ -171,7 +178,7 @@ public class TeleOpOmni3 extends OpMode {
             vals[i] = check(vals[i]);
         }
 
-        //scale down to 10% if the slowModeToggle is on
+        //scale down to 20% if the slowModeToggle is on
         if(slowModeToggle){
             for(int i = 0; i < 4; i++){
                 vals[i] = vals[i] * 0.2;
@@ -248,18 +255,26 @@ public class TeleOpOmni3 extends OpMode {
     }
 
     public void collect(){
-        if(collectingToggle){
+        if(steffiToggle){
             steffiMotor.setPower(1);
-            franzMotor.setPower(1);
         } else {
             steffiMotor.setPower(0);
+        }
+
+        if(franzToggle) {
+            franzMotor.setPower(1);
+        } else {
             franzMotor.setPower(0);
         }
-        if(gamepad2.a){
-            collectingToggle = true;
+
+
+        if(gamepad2.a && (steffiTime.time() > 1)){
+            steffiToggle = !steffiToggle;
+            steffiTime.reset();
         }
-        if(gamepad2.b){
-            collectingToggle = false;
+        if(gamepad2.b && (franzTime.time() > 1)){
+            franzToggle = !franzToggle;
+            franzTime.reset();
         }
 
     }
