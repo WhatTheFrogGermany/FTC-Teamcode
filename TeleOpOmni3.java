@@ -92,7 +92,6 @@ public class TeleOpOmni3 extends OpMode {
         drive();
         changeDirection();
 
-        slow();
         lift();
 
         collect();
@@ -187,7 +186,7 @@ public class TeleOpOmni3 extends OpMode {
             vals[i] = vals[i] * absolute;
         }
         //scale down to 20% if the slowModeToggle is on
-        if(slowModeToggle){
+        if(gamepad1.left_stick_button){
             for(int i = 0; i < 4; i++){
                 vals[i] = vals[i] * 0.2;
             }
@@ -248,16 +247,6 @@ public class TeleOpOmni3 extends OpMode {
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
     }
 
-    public void slow() {
-        if(gamepad1.left_trigger > 0.5) {
-            slowModeToggle = true;
-            telemetry.addData("SlowMode", "On");
-        }
-        if(gamepad1.right_trigger > 0.5){
-            slowModeToggle = false;
-            telemetry.addData("SlowMode", "Off");
-        }
-    }
     public void lift(){
         gabiMotor.setPower(-gamepad2.right_stick_y);
     }
