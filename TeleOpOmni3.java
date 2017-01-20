@@ -47,6 +47,7 @@ public class TeleOpOmni3 extends OpMode {
     //the shooter
     DcMotor wildeHildeMotor;
     int lastTargetPositionHilde = 0;
+    boolean hildeRotatedFully = true;
     boolean customMoveHilde = false;
 
 
@@ -279,21 +280,29 @@ public class TeleOpOmni3 extends OpMode {
     }
 
     public void shooter(){
-        if(gamepad2.x && wildeHildeMotor.getCurrentPosition() >= lastTargetPositionHilde){
+        if(gamepad2.x && hildeRotatedFully){
+            hildeRotatedFully = false;
             lastTargetPositionHilde+=5040;
             wildeHildeMotor.setTargetPosition(lastTargetPositionHilde);
             wildeHildeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             wildeHildeMotor.setPower(1);
         }
 
+        if(Math.abs(wildeHildeMotor.getCurrentPosition()-lastTargetPositionHilde) < 10){
+            hildeRotatedFully = true;
+        };
+
         if(gamepad2.y){
+            wildeHildeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             wildeHildeMotor.setPower(1);
             customMoveHilde = true;
         } else if(customMoveHilde){
+            wildeHildeMotor.setPower(0);
             wildeHildeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             wildeHildeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             lastTargetPositionHilde = 0;
             customMoveHilde = false;
+            hildeRotatedFully= true;
         }
 
     }
