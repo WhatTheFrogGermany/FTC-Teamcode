@@ -47,6 +47,8 @@ public class TeleOpOmni3 extends OpMode {
     //the shooter
     DcMotor wildeHildeMotor;
     boolean shootingToggle = false;
+    int lastTargetPositionHilde = 0;
+    boolean customMoveHilde = false;
 
     //Beacon
     Servo leftBeacon;
@@ -278,10 +280,20 @@ public class TeleOpOmni3 extends OpMode {
 
     public void shooter(){
         if(gamepad2.x){
+            lastTargetPositionHilde+=5040;
+            wildeHildeMotor.setTargetPosition(lastTargetPositionHilde);
+            wildeHildeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             wildeHildeMotor.setPower(1);
-        } else {
-            wildeHildeMotor.setPower(0);
         }
+
+        if(gamepad2.y){
+            wildeHildeMotor.setPower(1);
+            customMoveHilde = true;
+        } else if(customMoveHilde){
+            wildeHildeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            lastTargetPositionHilde = 0;
+        }
+
     }
 
     public void beacon(){
