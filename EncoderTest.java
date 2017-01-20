@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Created by FTC2 on 20.01.2017.
  */
-@TeleOp(name="Test: Encoder", group="Tests")
+@TeleOp(name="Test: Encoder TestMotor", group="Tests")
 public class EncoderTest extends OpMode {
     DcMotor testMotor;
 
