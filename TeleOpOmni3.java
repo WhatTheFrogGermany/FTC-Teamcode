@@ -62,10 +62,10 @@ public class TeleOpOmni3 extends OpMode {
         cOmni = hardwareMap.dcMotor.get("c_omni");
         dOmni = hardwareMap.dcMotor.get("d_omni");
 
-        aOmni.setDirection(DcMotor.Direction.FORWARD);
-        bOmni.setDirection(DcMotor.Direction.REVERSE);
-        dOmni.setDirection(DcMotor.Direction.REVERSE);
-        cOmni.setDirection(DcMotor.Direction.FORWARD);
+        aOmni.setDirection(DcMotor.Direction.REVERSE);
+        bOmni.setDirection(DcMotor.Direction.FORWARD);
+        dOmni.setDirection(DcMotor.Direction.FORWARD);
+        cOmni.setDirection(DcMotor.Direction.REVERSE);
 
         frontRightDrive = aOmni;
         frontLeftDrive = bOmni;
@@ -244,10 +244,10 @@ public class TeleOpOmni3 extends OpMode {
     }
 
     public void changeMotorDirections(){
-        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
+        frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
+        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
     }
 
     public void lift(){
