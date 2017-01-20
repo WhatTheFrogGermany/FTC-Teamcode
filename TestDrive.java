@@ -20,6 +20,12 @@ public class TestDrive extends OpMode {
         bOmni = hardwareMap.dcMotor.get("b_omni");
         cOmni = hardwareMap.dcMotor.get("c_omni");
         dOmni = hardwareMap.dcMotor.get("d_omni");
+
+        aOmni.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bOmni.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        cOmni.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        dOmni.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
     }
 
     @Override
@@ -45,5 +51,9 @@ public class TestDrive extends OpMode {
             dOmni.setPower(0);
         }
 
+        telemetry.addData("aOmni", aOmni.getCurrentPosition());
+        telemetry.addData("bOmni", bOmni.getCurrentPosition());
+        telemetry.addData("cOmni", cOmni.getCurrentPosition());
+        telemetry.addData("dOmni", dOmni.getCurrentPosition());
     }
 }
