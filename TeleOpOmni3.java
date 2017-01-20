@@ -126,7 +126,7 @@ public class TeleOpOmni3 extends OpMode {
         double d = -x - y;
 
         double[] beforeScaled = {a,b,c,d};
-        scaled = scaleDown(beforeScaled);
+        scaled = scaleDown(beforeScaled, x, y);
         a = scaled[0];
         b = scaled[1];
         c = scaled[2];
@@ -164,7 +164,7 @@ public class TeleOpOmni3 extends OpMode {
 
     }
 
-    public double[] scaleDown(double[] vals){
+    public double[] scaleDown(double[] vals, double x ,double y){
         //instead of the check we will scale down proportionally (10.10.16)
         //first we check for the greatest of all four values
         double greatest = 0;
@@ -174,13 +174,18 @@ public class TeleOpOmni3 extends OpMode {
             }
         }
 
-        //then we scale the rest accordingly to make sure the greates value equals one.
+        //then we scale the rest accordingly to make sure the greatest value equals one.
         double scale = 1 / greatest;
         for(int i = 0; i < 4; i++){
             vals[i] = vals[i] * scale;
             vals[i] = check(vals[i]);
         }
 
+        //Afterwards we scale according to the absolute value of x and y (the distance the stick is from 0)
+        double absolute = Math.sqrt(x*x + y*y);
+        for(int i = 0; i < 4; i++){
+            vals[i] = vals[i] * absolute;
+        }
         //scale down to 20% if the slowModeToggle is on
         if(slowModeToggle){
             for(int i = 0; i < 4; i++){
