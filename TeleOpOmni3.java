@@ -30,6 +30,7 @@ public class TeleOpOmni3 extends OpMode {
     int lyMag;
     int lxMag;
 
+    double[] scaled = new double[4];
     boolean slowModeToggle = false;
 
     //Gabi lift
@@ -67,6 +68,8 @@ public class TeleOpOmni3 extends OpMode {
         frontLeftDrive = bOmni;
         backRightDrive = dOmni;
         backLeftDrive = cOmni;
+
+
 
         gabiMotor = hardwareMap.dcMotor.get("gabi");
         gabiMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -122,8 +125,8 @@ public class TeleOpOmni3 extends OpMode {
         double c = x - y;
         double d = -x - y;
 
-        double[] scaled = {a,b,c,d};
-        scaled = scaleDown(scaled);
+        double[] beforeScaled = {a,b,c,d};
+        scaled = scaleDown(beforeScaled);
         a = scaled[0];
         b = scaled[1];
         c = scaled[2];
