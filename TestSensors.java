@@ -4,6 +4,7 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
@@ -30,6 +31,9 @@ public class TestSensors extends OpMode {
     I2cDeviceSynch beaconLeftRangeRead;
     I2cDeviceSynch beaconRightRangeRead;
 
+    GyroSensor bottomGyro;
+    GyroSensor topGyro;
+
     @Override
     public void init() {
         beaconLeftColor = hardwareMap.colorSensor.get("left_beacon_color");
@@ -46,6 +50,9 @@ public class TestSensors extends OpMode {
 
         beaconRightRangeRead.engage();
         beaconLeftRangeRead.engage();
+
+        bottomGyro = hardwareMap.gyroSensor.get("bottom_gyro");
+        topGyro = hardwareMap.gyroSensor.get("top_gyro");
     }
 
     @Override
@@ -61,6 +68,7 @@ public class TestSensors extends OpMode {
         telemetry.addData("RightRangeUS", beaconRightRangeCache[0] & 0xFF);
         telemetry.addData("RightRangeODS", beaconRightRangeCache[1] & 0xFF);
 
-
+        telemetry.addData("BottomGyro", bottomGyro.rawZ());
+        telemetry.addData("TopGyro", topGyro.rawZ());
     }
 }
