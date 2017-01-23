@@ -4,24 +4,48 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.I2cAddr;
+import com.qualcomm.robotcore.hardware.I2cDevice;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
  * Created by FTC2 on 23.01.2017.
  */
+
 @TeleOp(name="Test: Sensors", group="Tests")
 public class TestSensors extends OpMode {
+    int ULTRASONIC_REGISTER = 0x04;
     ColorSensor beaconLeftColor;
     ColorSensor beaconRightColor;
-    ModernRoboticsI2cRangeSensor beaconLeftRange;
-    ModernRoboticsI2cRangeSensor beaconRightRange;
+
+    byte[] beaconLeftRangeCache;
+    byte[] beaconRightRangeCache;
+
+    I2cDevice beaconLeftRange;
+    I2cDevice beaconRightRange;
+
+    I2cDeviceSynch beaconLeftRangeRead;
+    I2cDeviceSynch beaconRightRangeRead;
 
     @Override
     public void init() {
         beaconLeftColor = hardwareMap.colorSensor.get("left_beacon_color");
         beaconRightColor = hardwareMap.colorSensor.get("right_beacon_color");
 
-        beaconLeftRange = (ModernRoboticsI2cRangeSensor)hardwareMap.get("left_beacon_range");
-        beaconRightRange = (ModernRoboticsI2cRangeSensor)hardwareMap.get("right_beacon_range");
+        beaconLeftRange = hardwareMap.i2cDevice.get("left_beacon_range");
+        beaconRightRange = hardwareMap.i2cDevice.get("right_beacon_range");
+
+        beaconLeftColor.setI2cAddress(I2cAddr.create8bit(0x1c));
+        beaconRightColor.setI2cAddress(I2cAddr.create8bit(0x2c));
+
+        beaconLeftRangeRead = new I2cDeviceSynchImpl(beaconLeftRange, I2cAddr.create8bit(0x218), false);
+        beaconRightRangeRead = new I2cDeviceSynchImpl(beaconRightRange, I2cAddr.create8bit(0x28), false);
+
+        beaconRightRangeRead.engage();
+        beaconLeftRangeRead.engage();
     }
 
     @Override
@@ -29,8 +53,14 @@ public class TestSensors extends OpMode {
         telemetry.addData("LeftColor", beaconLeftColor.red());
         telemetry.addData("RightColor", beaconRightColor.red());
 
-        telemetry.addData("LeftUltrasonic", beaconLeftRange.read8(ModernRoboticsI2cRangeSensor.Register.ULTRASONIC));
-        telemetry.addData("RightUltrasonic",beaconRightRange.read8(ModernRoboticsI2cRangeSensor.Register.ULTRASONIC));
+        beaconLeftRangeCache = beaconLeftRangeRead.read(ULTRASONIC_REGISTER, 2);
+        beaconRightRangeCache = beaconRightRangeRead.read(ULTRASONIC_REGISTER, 2);
+
+        telemetry.addData("LeftRangeUS", beaconLeftRangeCache[0] & 0xFF);
+        telemetry.addData("LeftRangeODS", beaconLeftRangeCache[1] & 0xFF);
+        telemetry.addData("RightRangeUS", beaconRightRangeCache[0] & 0xFF);
+        telemetry.addData("RightRangeODS", beaconRightRangeCache[1] & 0xFF);
+
 
     }
 }
