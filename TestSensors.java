@@ -68,7 +68,7 @@ public class TestSensors extends OpMode {
         telemetry.addData("RightRangeUS", beaconRightRangeCache[0] & 0xFF);
         telemetry.addData("RightRangeODS", beaconRightRangeCache[1] & 0xFF);
 
-        telemetry.addData("BottomGyro", bottomGyro.rawZ());
-        telemetry.addData("TopGyro", topGyro.rawZ());
+        telemetry.addData("BottomGyro", bottomGyro.getHeading());
+        telemetry.addData("TopGyro", topGyro.getHeading());
     }
 }
