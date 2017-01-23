@@ -41,7 +41,7 @@ public class TestSensors extends OpMode {
         beaconLeftColor.setI2cAddress(I2cAddr.create8bit(0x1c));
         beaconRightColor.setI2cAddress(I2cAddr.create8bit(0x2c));
 
-        beaconLeftRangeRead = new I2cDeviceSynchImpl(beaconLeftRange, I2cAddr.create8bit(0x218), false);
+        beaconLeftRangeRead = new I2cDeviceSynchImpl(beaconLeftRange, I2cAddr.create8bit(0x18), false);
         beaconRightRangeRead = new I2cDeviceSynchImpl(beaconRightRange, I2cAddr.create8bit(0x28), false);
 
         beaconRightRangeRead.engage();
