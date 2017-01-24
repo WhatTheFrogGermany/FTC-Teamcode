@@ -44,6 +44,7 @@ public class TeleOpOmni3 extends OpMode {
     ElapsedTime franzTime;
     boolean franzToggle = false;
 
+    Servo kerstinServo; //the blockade after steffi
     //the shooter
     DcMotor wildeHildeMotor;
     int lastTargetPositionHilde = 0;
@@ -84,6 +85,8 @@ public class TeleOpOmni3 extends OpMode {
         franzTime = new ElapsedTime();
         franzMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        kerstinServo = hardwareMap.servo.get("kerstin_servo");
+
         wildeHildeMotor = hardwareMap.dcMotor.get("hilde");
 
         leftBeacon = hardwareMap.servo.get("left_beacon");
@@ -96,6 +99,8 @@ public class TeleOpOmni3 extends OpMode {
         changeDirection();
 
         lift();
+
+        kerstin();
 
         collect();
         shooter();
@@ -146,7 +151,7 @@ public class TeleOpOmni3 extends OpMode {
         double r = gamepad1.right_stick_x;
 
         if(r != 0) {
-            if(slowModeToggle){
+            if(gamepad1.right_stick_button){
                 r = r * 0.1;
             }
             telemetry.addData("RightstickX", r);
@@ -277,6 +282,15 @@ public class TeleOpOmni3 extends OpMode {
             franzTime.reset();
         }
 
+    }
+
+    public void kerstin(){
+        if(gamepad2.dpad_left){
+            kerstinServo.setPosition(0);
+        }
+        if(gamepad2.dpad_right){
+            kerstinServo.setPosition(1);
+        }
     }
 
     public void shooter(){
