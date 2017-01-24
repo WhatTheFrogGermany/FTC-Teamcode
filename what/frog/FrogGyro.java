@@ -19,49 +19,27 @@ public class FrogGyro extends FrogSensor {
     final static int Z_AXIS_OFFSET_REGISTER = 0x0e;
     final static int Z_AXIS_SCALING_REGISTER = 0x10;
 
-    HardwareMap hardwareMap;
-    I2cDevice i2cDevice;
-    byte[] readCache;
-    I2cDeviceSynch deviceRead;
-    int address;
-    String name;
-
     public FrogGyro(HardwareMap hardwareMap, String name, int address){
-        this.name = name;
-        this.address = address;
-        this.hardwareMap = hardwareMap;
-        i2cDevice = hardwareMap.i2cDevice.get(name);
-        deviceRead = new I2cDeviceSynchImpl(i2cDevice, I2cAddr.create8bit(address), false);
-        deviceRead.engage();
+        super(hardwareMap, name, address);
     }
 
     public int getHeading(){
-        readCache = deviceRead.read(HEADING_REGISTER, 2);
-        int heading = FrogMath.bytesToInt(readCache);
-        return heading;
+        return readTwoBytes(HEADING_REGISTER);
     }
 
     public int getIntegratedZ(){
-        readCache = deviceRead.read(INTEGRATED_Z_REGISTER, 2);
-        int int_z = FrogMath.bytesToInt(readCache);
-        return int_z;
+        return readTwoBytes(INTEGRATED_Z_REGISTER);
     }
 
-    public int getRawXRegister(){
-        readCache = deviceRead.read(RAW_X_REGISTER, 2);
-        int x = FrogMath.bytesToInt(readCache);
-        return x;
+    public int getRawX(){
+        return readTwoBytes(RAW_X_REGISTER);
     }
 
-    public int getRawYRegister(){
-        readCache = deviceRead.read(RAW_Y_REGISTER, 2);
-        int y = FrogMath.bytesToInt(readCache);
-        return y;
+    public int getRawY(){
+        return readTwoBytes(RAW_Y_REGISTER);
     }
 
     public int getRawZRegister(){
-        readCache = deviceRead.read(RAW_Z_REGISTER, 2);
-        int z = FrogMath.bytesToInt(readCache);
-        return z;
+        return  readTwoBytes(RAW_Z_REGISTER);
     }
 }
