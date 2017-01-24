@@ -16,6 +16,7 @@ public class FrogSensor {
     I2cDeviceSynch deviceRead;
     int address;
     String name;
+    boolean locked = false;
 
     public FrogSensor(HardwareMap hardwareMap, String name, int address){
         this.name = name;
@@ -27,12 +28,22 @@ public class FrogSensor {
     }
 
     public int readOneByte(int address){
+        if(locked){
+            return -1;
+        }
         readCache = deviceRead.read(address, 1);
         return readCache[0]&0xFF;
     }
 
     public int readTwoBytes(int address){
+        if(locked){
+            return -1;
+        }
         readCache = deviceRead.read(address, 2);
         return FrogMath.bytesToInt(readCache);
+    }
+
+    public void write(int address, byte[] toWrite){
+        deviceRead.write(address, toWrite);
     }
 }
