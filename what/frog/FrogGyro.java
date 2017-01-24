@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
  * Created by FTC2 on 24.01.2017.
  */
 
-public class FrogGyro {
+public class FrogGyro extends FrogSensor {
     final static int HEADING_REGISTER = 0x04;
     final static int INTEGRATED_Z_REGISTER = 0x06;
     final static int RAW_X_REGISTER = 0x08;
@@ -41,9 +41,27 @@ public class FrogGyro {
         return heading;
     }
 
+    public int getIntegratedZ(){
+        readCache = deviceRead.read(INTEGRATED_Z_REGISTER, 2);
+        int int_z = FrogMath.bytesToInt(readCache);
+        return int_z;
+    }
 
+    public int getRawXRegister(){
+        readCache = deviceRead.read(RAW_X_REGISTER, 2);
+        int x = FrogMath.bytesToInt(readCache);
+        return x;
+    }
 
+    public int getRawYRegister(){
+        readCache = deviceRead.read(RAW_Y_REGISTER, 2);
+        int y = FrogMath.bytesToInt(readCache);
+        return y;
+    }
 
-
-
+    public int getRawZRegister(){
+        readCache = deviceRead.read(RAW_Z_REGISTER, 2);
+        int z = FrogMath.bytesToInt(readCache);
+        return z;
+    }
 }
