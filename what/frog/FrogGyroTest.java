@@ -22,5 +22,10 @@ public class FrogGyroTest extends OpMode {
     public void loop() {
         telemetry.addData("bottomGyro", bottomGyro.getHeading());
         telemetry.addData("topGyro", topGyro.getHeading());
+
+        if(gamepad1.y){
+            bottomGyro.reset();
+        }
+        bottomGyro.reactivateRead();
     }
 }
