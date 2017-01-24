@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  * Created by FTC on 21.12.2016.
  */
 @TeleOp(name="Test: Color (Beacon)", group="Tests")
+@Disabled
 public class TestColorSensor extends OpMode {
     ColorSensor leftBeaconColor;
     ColorSensor rightBeaconColor;

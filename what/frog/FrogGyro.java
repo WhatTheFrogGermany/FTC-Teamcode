@@ -41,7 +41,6 @@ public class FrogGyro {
         readCache = deviceRead.read(HEADING_REGISTER, 2);
         int heading = bytesToInt(readCache);
         return heading;
-
     }
 
     public int bytesToInt(byte[] bytes){

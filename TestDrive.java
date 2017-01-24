@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by FTC on 21.12.2016.
  */
 @TeleOp(name="Test: Drive", group="Tests")
+@Disabled
 public class TestDrive extends OpMode {
     DcMotor aOmni;
     DcMotor bOmni;
