@@ -37,6 +37,19 @@ public class FrogGyro {
         deviceRead.engage();
     }
 
+    public int getHeading(){
+        readCache = deviceRead.read(HEADING_REGISTER, 2);
+        int heading = bytesToInt(readCache);
+        return heading;
+
+    }
+
+    public int bytesToInt(byte[] bytes){
+        //this converts two bytes (lsb:msb) to an integer
+        int val = ((bytes[1] & 0xff) << 8) | (bytes[0] & 0xff);
+        return val;
+    }
+
 
 
 
