@@ -9,18 +9,18 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  */
 @TeleOp(name="Test: FrogGyro", group="Tests")
 public class FrogGyroTest extends OpMode {
-    //FrogGyro bottomGyro = new FrogGyro(this.hardwareMap, "bottom_gyro", 0x10);
+    FrogGyro bottomGyro;
     FrogGyro topGyro;
     @Override
     public void init() {
         topGyro = new FrogGyro(this.hardwareMap, "top_gyro", 0x20);
-
+        bottomGyro = new FrogGyro(this.hardwareMap, "bottom_gyro", 0x10);
 
     }
 
     @Override
     public void loop() {
-        //telemetry.addData("bottomGyro", bottomGyro.getHeading());
+        telemetry.addData("bottomGyro", bottomGyro.getHeading());
         telemetry.addData("topGyro", topGyro.getHeading());
     }
 }
