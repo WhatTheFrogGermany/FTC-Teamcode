@@ -30,8 +30,6 @@ public class FrogGyro {
         this.name = name;
         this.address = address;
         this.hardwareMap = hardwareMap;
-    }
-    public void init(){
         i2cDevice = hardwareMap.i2cDevice.get(name);
         deviceRead = new I2cDeviceSynchImpl(i2cDevice, I2cAddr.create8bit(address), false);
         deviceRead.engage();

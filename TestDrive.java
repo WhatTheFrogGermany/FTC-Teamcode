@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,7 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by FTC on 21.12.2016.
  */
 @TeleOp(name="Test: Drive", group="Tests")
-@Disabled
 public class TestDrive extends OpMode {
     DcMotor aOmni;
     DcMotor bOmni;
