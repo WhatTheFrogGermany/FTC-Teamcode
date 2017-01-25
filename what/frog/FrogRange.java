@@ -7,11 +7,19 @@ import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 /**
  * Created by FTC2 on 24.01.2017.
  */
-public class FrogRange {
-    HardwareMap hardwareMap;
-    I2cDevice i2cDevice;
-    byte[] readCache;
-    I2cDeviceSynch deviceRead;
-    int address;
-    String name;
+public class FrogRange extends FrogSensor{
+    final static byte ULTRASONIC_REGISTER = 0x04;
+    final static byte OPTICAL_REGISTER = 0x05;
+
+    public FrogRange(HardwareMap hardwareMap, String name, int address){
+        super(hardwareMap, name, address);
+    };
+    public int getUltrasonic(){
+        return super.readOneByte(0x04);
+    }
+
+    public int getOptical(){
+        return super.readOneByte(0x05);
+    }
+
 }
