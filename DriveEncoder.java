@@ -23,8 +23,8 @@ public class DriveEncoder extends OpMode {
 
         aOmni.setDirection(DcMotor.Direction.REVERSE);
         bOmni.setDirection(DcMotor.Direction.FORWARD);
-        dOmni.setDirection(DcMotor.Direction.FORWARD);
-        cOmni.setDirection(DcMotor.Direction.REVERSE);
+        dOmni.setDirection(DcMotor.Direction.REVERSE);
+        cOmni.setDirection(DcMotor.Direction.FORWARD);
     }
 
     @Override
