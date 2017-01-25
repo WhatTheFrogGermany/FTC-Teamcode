@@ -150,6 +150,7 @@ public class TeleOpOmni3 extends OpMode {
         //nur Stick 2 (drehen)
         double r = gamepad1.right_stick_x;
 
+        r*=0.5;
         if(r != 0) {
             if(gamepad1.right_stick_button){
                 r = r * 0.1;
