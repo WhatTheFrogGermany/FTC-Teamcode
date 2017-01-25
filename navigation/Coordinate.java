@@ -1,4 +1,4 @@
-package com.qualcomm.ftcrobotcontroller.opmodes.navigation;
+package org.firstinspires.ftc.teamcode.navigation;
 
 /**
  * Created by FTCAdministrator on 08.03.2016.
