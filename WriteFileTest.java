@@ -24,7 +24,7 @@ public class WriteFileTest extends OpMode {
     public void init() {
         if(isExternalStorageWritable()){
             directory = getFilesStorageDir("tests");
-            int[] array = {0};
+            int[] array = {0, 11, 2, 12, 13};
             telemetry.addData("directory", directory.getAbsolutePath());
             try {
                 write(fileName, directory, array);
@@ -62,10 +62,14 @@ public class WriteFileTest extends OpMode {
         File writeFile = new File(directory.getPath(), fileName);
         writeFile.createNewFile();
         BufferedWriter outputWriter = new BufferedWriter(new FileWriter(writeFile));
+        for(int i = 0; i < array.length; i++){
+            outputWriter.write(Integer.toString(array[i])+"\n");
+        }
         outputWriter.write("Blubb");
         outputWriter.flush();
         outputWriter.close();
 
     }
+
 }
 //hallo mein name ist Janine ich rieche nach head and shoulders
