@@ -20,6 +20,10 @@ public class WriteFileTest extends OpMode {
     File directory;
     String fileName = "blubb.txt";
 
+    int[] array1 ={1, 12};
+    int [] array2 = {23, 24};
+    int[][] array3 = {array1, array2};
+
     @Override
     public void init() {
         if(isExternalStorageWritable()){
@@ -29,6 +33,12 @@ public class WriteFileTest extends OpMode {
             try {
                 write(fileName, directory, array);
             } catch(IOException e){
+                e.printStackTrace();
+            }
+
+            try{
+                write2DArray("array.csv", directory, array3);
+            } catch (IOException e){
                 e.printStackTrace();
             }
         }
@@ -69,6 +79,20 @@ public class WriteFileTest extends OpMode {
         outputWriter.flush();
         outputWriter.close();
 
+    }
+
+    public void write2DArray(String fileName, File directory, int[][] array) throws IOException{
+        File writeFile = new File(directory.getPath(), fileName);
+        writeFile.createNewFile();
+        BufferedWriter outputWriter = new BufferedWriter(new FileWriter(writeFile));
+        for(int i = 0; i < array.length; i++){
+            for(int j = 0; j < array[i].length; j++ ) {
+                outputWriter.write(Integer.toString(array[i][j]) + ",");
+            } outputWriter.write("\n");
+        }
+        outputWriter.write("Blubb");
+        outputWriter.flush();
+        outputWriter.close();
     }
 
 }
