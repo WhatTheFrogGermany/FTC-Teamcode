@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogFileWriter;
  * Created by FTC2 on 27.01.2017.
  */
 
+@TeleOp(name="Measure: Drive", group="Measure")
 //This OpMode is for measuring the encoder values that correlate to the distance driven.
 public class MeasureDrive extends OpMode {
     DcMotor aOmni;
@@ -20,7 +22,7 @@ public class MeasureDrive extends OpMode {
     FrogFileWriter fileWriter;
     int[][] array = new int[50][6];
     int counter = 0;
-    int mm_travelled;
+    int cm_travelled = 100;
 
     ElapsedTime elapsedTime;
     ElapsedTime storeTime;
@@ -62,32 +64,45 @@ public class MeasureDrive extends OpMode {
 
         if(gamepad1.dpad_up && elapsedTime.milliseconds() > 250){
             elapsedTime.reset();
-            mm_travelled++;
+            cm_travelled++;
         }
 
         if(gamepad1.dpad_down && elapsedTime.milliseconds() > 250){
             elapsedTime.reset();
-            mm_travelled--;
+            cm_travelled--;
         }
 
         if(gamepad1.x && storeTime.seconds() > 1){
             storeTime.reset();
             array[counter][0] = counter;
-            array[counter][1] = mm_travelled;
+            array[counter][1] = cm_travelled;
             array[counter][2] = aOmni.getCurrentPosition();
             array[counter][3] = bOmni.getCurrentPosition();
             array[counter][4] = cOmni.getCurrentPosition();
             array[counter][5] = dOmni.getCurrentPosition();
             counter++;
             telemetry.addData("status", "added another line");
+
+            aOmni.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            bOmni.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            cOmni.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            dOmni.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            aOmni.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bOmni.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            cOmni.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            dOmni.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
         if(gamepad1.y &&storeTime.seconds() > 1){
             storeTime.reset();
             fileWriter.write2DArray(array);
+            telemetry.addData("status", "saved file");
 
         }
 
+        telemetry.addData("cm_travelled", cm_travelled);
+        telemetry.addData("counter", counter);
         telemetry.addData("a", aOmni.getCurrentPosition());
         telemetry.addData("b", bOmni.getCurrentPosition());
         telemetry.addData("c", cOmni.getCurrentPosition());

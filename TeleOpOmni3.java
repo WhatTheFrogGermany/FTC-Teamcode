@@ -259,6 +259,9 @@ public class TeleOpOmni3 extends OpMode {
     public void lift(){
         gabiMotor.setPower(-gamepad2.right_stick_y);
     }
+    public void gabiBlock(){
+
+    }
 
     public void collect(){
         if(steffiToggle){
