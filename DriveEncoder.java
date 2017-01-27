@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,7 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Created by FTC2 on 25.01.2017.
  */
-@TeleOp(name="Measure: DriveEncoder", group="Measure")
+@TeleOp(name="Test: DriveEncoder", group="Measure")
+@Disabled
 public class DriveEncoder extends OpMode {
     DcMotor aOmni;
     DcMotor bOmni;

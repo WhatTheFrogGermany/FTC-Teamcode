@@ -51,16 +51,21 @@ public class FrogFileWriter {
         outputWriter.close();
 
     }
-    public void write2DArray( int[][] array) throws IOException {
-        file.createNewFile();
-        BufferedWriter outputWriter = new BufferedWriter(new FileWriter(file));
-        for(int i = 0; i < array.length; i++){
-            for(int j = 0; j < array[i].length; j++ ) {
-                outputWriter.write(Integer.toString(array[i][j]) + ",");
-            } outputWriter.write("\n");
+    public void write2DArray( int[][] array) {
+        try {
+            file.createNewFile();
+            BufferedWriter outputWriter = new BufferedWriter(new FileWriter(file));
+            for (int i = 0; i < array.length; i++) {
+                for (int j = 0; j < array[i].length; j++) {
+                    outputWriter.write(Integer.toString(array[i][j]) + ",");
+                }
+                outputWriter.write("\n");
+            }
+            outputWriter.flush();
+            outputWriter.close();
+        } catch (IOException e){
+            e.printStackTrace();
         }
-        outputWriter.flush();
-        outputWriter.close();
     }
 
 }
