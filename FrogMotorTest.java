@@ -27,6 +27,7 @@ public class FrogMotorTest extends OpMode {
         telemetry.addData("Position", testMotor.getCurrentPosition());
         telemetry.addData("NormalMotor", testMotor.normalMotorPower);
         telemetry.addData("currentMotor", testMotor.motorCurrentPower);
+        telemetry.addData("Busy", testMotor.drivingToPosition);
 
     }
 }

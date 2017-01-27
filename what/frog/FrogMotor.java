@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.what.frog;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorImpl;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by FTC2 on 27.01.2017.
@@ -11,7 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotorImpl;
 public class FrogMotor extends DcMotorImpl {
     double gearRatio = 1; //1/20 should put in the value 20
     int encoderPPR = 7; //default for NeveRestMotors
-    boolean drivingToPosition = false;
+    public boolean drivingToPosition = false;
 
     int targetPosition = 0;
     int stoppingInterval;
@@ -37,8 +38,8 @@ public class FrogMotor extends DcMotorImpl {
     public void initDriveToPosition(int targetPosition, int stoppingInterval, double normalMotorPower){
         drivingToPosition = true;
         this.targetPosition = targetPosition;
-        this.stoppingInterval = stoppingInterval;
-        this.normalMotorPower = normalMotorPower;
+        this.stoppingInterval = Math.abs(stoppingInterval);
+        this.normalMotorPower = Math.abs(normalMotorPower);
     }
 
     public void driveToPosition(){
