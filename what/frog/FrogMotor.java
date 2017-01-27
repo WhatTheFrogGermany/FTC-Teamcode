@@ -19,6 +19,8 @@ public class FrogMotor extends DcMotorImpl {
     public double normalMotorPower;
     public double motorCurrentPower;
 
+    ElapsedTime waitTime;
+
     public FrogMotor(DcMotorController controller, int port){
         super(controller, port);
     }
@@ -40,6 +42,7 @@ public class FrogMotor extends DcMotorImpl {
         this.targetPosition = targetPosition;
         this.stoppingInterval = Math.abs(stoppingInterval);
         this.normalMotorPower = Math.abs(normalMotorPower);
+        waitTime = new ElapsedTime();
     }
 
     public void driveToPosition(){
@@ -58,7 +61,12 @@ public class FrogMotor extends DcMotorImpl {
                 setPower(motorCurrentPower);
 
                 if(Math.abs(motorCurrentPower) < 0.01){
-                    drivingToPosition = false;
+                    if(waitTime.milliseconds() > 500){
+                        drivingToPosition = false;
+                        setPower(0);
+                    }
+                } else {
+                    waitTime.reset();
                 }
             }
         }
