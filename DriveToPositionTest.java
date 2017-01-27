@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class DriveToPositionTest extends OpMode {
     DcMotor testMotor;
     int targetPosition = 5000;
-    int stoppingInterval = 1440;
+    int stoppingInterval = 3000;
     int stopstartPosition = targetPosition - stoppingInterval;
     double driveNormalPower = 1;
     double driveCurrentPower = driveNormalPower;
@@ -19,6 +19,7 @@ public class DriveToPositionTest extends OpMode {
     @Override
     public void init() {
         testMotor = hardwareMap.dcMotor.get("test_motor");
+        testMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         testMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
@@ -31,7 +32,7 @@ public class DriveToPositionTest extends OpMode {
     public void driveToPosition(){
         if(testMotor.getCurrentPosition() < stopstartPosition){
             testMotor.setPower(driveNormalPower);
-        } else if(testMotor.getCurrentPosition() < targetPosition){
+        } else {
             int distance = targetPosition - testMotor.getCurrentPosition();
             telemetry.addData("distance", distance);
             double scale = (double)distance / stoppingInterval;
