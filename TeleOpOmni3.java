@@ -269,9 +269,9 @@ public class TeleOpOmni3 extends OpMode {
     public void gabiBlock(){
         gabiBlockToggle.toggle(gamepad2.left_trigger > 0.5 && gamepad2.right_trigger > 0.5);
         if(gabiBlockToggle.getState()){
-            gabiBlockServo.setPosition(1);
+            gabiBlockServo.setPosition(0.8);
         } else {
-            gabiBlockServo.setPosition(0);
+            gabiBlockServo.setPosition(0.15);
         }
     }
 

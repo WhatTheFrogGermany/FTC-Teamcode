@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class FrogToggle {
     ElapsedTime time;
     int interval;
-    boolean state;
+    boolean state = false;
 
     public FrogToggle(int interval){
         time = new ElapsedTime();
