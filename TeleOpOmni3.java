@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.what.frog.FrogToggle;
+
 /**
  * Created by FTC on 07.10.2016.
  */
@@ -31,10 +33,11 @@ public class TeleOpOmni3 extends OpMode {
     int lxMag;
 
     double[] scaled = new double[4];
-    boolean slowModeToggle = false;
 
     //Gabi lift
     DcMotor gabiMotor;
+    FrogToggle gabiBlockToggle;
+    Servo gabiBlockServo;
 
     //the collecting mechanism
     DcMotor steffiMotor;    //the back
@@ -77,6 +80,8 @@ public class TeleOpOmni3 extends OpMode {
 
         gabiMotor = hardwareMap.dcMotor.get("gabi");
         gabiMotor.setDirection(DcMotor.Direction.REVERSE);
+        gabiBlockToggle = new FrogToggle(500);
+        gabiBlockServo = hardwareMap.servo.get("gabi_block_servo");
 
         steffiMotor = hardwareMap.dcMotor.get("steffi");
         steffiTime = new ElapsedTime();
@@ -99,6 +104,7 @@ public class TeleOpOmni3 extends OpMode {
         changeDirection();
 
         lift();
+        gabiBlock();
 
         kerstin();
 
@@ -259,8 +265,14 @@ public class TeleOpOmni3 extends OpMode {
     public void lift(){
         gabiMotor.setPower(-gamepad2.right_stick_y);
     }
-    public void gabiBlock(){
 
+    public void gabiBlock(){
+        gabiBlockToggle.toggle(gamepad2.left_trigger > 0.5 && gamepad2.right_trigger > 0.5);
+        if(gabiBlockToggle.getState()){
+            gabiBlockServo.setPosition(1);
+        } else {
+            gabiBlockServo.setPosition(0);
+        }
     }
 
     public void collect(){
