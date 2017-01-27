@@ -15,12 +15,15 @@ public class FrogMotor extends DcMotorImpl {
 
     int targetPosition = 0;
     int stoppingInterval;
-    int stopStartPosition;
-    double normalMotorPower;
-    double motorCurrentPower;
+    public double normalMotorPower;
+    public double motorCurrentPower;
 
     public FrogMotor(DcMotorController controller, int port){
         super(controller, port);
+    }
+
+    public FrogMotor(DcMotor dcMotor){
+        super(dcMotor.getController(), dcMotor.getPortNumber());
     }
 
     public void setGearRatio(double ratio){
@@ -40,14 +43,20 @@ public class FrogMotor extends DcMotorImpl {
 
     public void driveToPosition(){
         if(drivingToPosition) {
-            if (getCurrentPosition() < stopStartPosition) {
-                setPower(normalMotorPower);
+            if(Math.abs(targetPosition - getCurrentPosition()) > stoppingInterval) {
+                if((targetPosition - getCurrentPosition()) > 0){
+                    setPower(normalMotorPower);
+                } else {
+                    setPower(-normalMotorPower);
+                }
+
             } else {
                 int distance = targetPosition - getCurrentPosition();
-                double scale = (double) distance / stoppingInterval;
+                double scale = (double)distance / stoppingInterval;
                 motorCurrentPower = normalMotorPower * scale;
                 setPower(motorCurrentPower);
-                if (motorCurrentPower < 0.01) {
+
+                if(Math.abs(motorCurrentPower) < 0.01){
                     drivingToPosition = false;
                 }
             }
