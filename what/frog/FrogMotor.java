@@ -15,6 +15,7 @@ public class FrogMotor extends DcMotorImpl {
     public boolean drivingToPosition = false;
 
     int targetPosition = 0;
+    int lastTargetPosition = 0;
     int stoppingInterval;
     public double normalMotorPower;
     public double motorCurrentPower;
@@ -62,6 +63,7 @@ public class FrogMotor extends DcMotorImpl {
 
                 if(Math.abs(motorCurrentPower) < 0.01){
                     if(waitTime.milliseconds() > 500){
+                        lastTargetPosition = targetPosition;
                         drivingToPosition = false;
                         setPower(0);
                     }
@@ -73,7 +75,7 @@ public class FrogMotor extends DcMotorImpl {
     }
 
     public void initRotateRounds(double rounds, double motorPower){
-        int targetPosition = Math.round((int)(rounds * encoderPPR * gearRatio));
+        int targetPosition = lastTargetPosition + Math.round((int)(rounds * encoderPPR * gearRatio));
         int stoppingInterval = Math.round((int)(encoderPPR * gearRatio));
         initDriveToPosition(targetPosition, stoppingInterval, motorPower);
     }

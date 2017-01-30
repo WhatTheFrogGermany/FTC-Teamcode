@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.what.frog.FrogMotor;
 import org.firstinspires.ftc.teamcode.what.frog.FrogToggle;
 
 /**
@@ -49,7 +50,7 @@ public class TeleOpOmni3 extends OpMode {
 
     Servo kerstinServo; //the blockade after steffi
     //the shooter
-    DcMotor wildeHildeMotor;
+    FrogMotor wildeHildeMotor;
     int lastTargetPositionHilde = 0;
     boolean hildeRotatedFully = true;
     boolean customMoveHilde = false;
@@ -92,7 +93,8 @@ public class TeleOpOmni3 extends OpMode {
 
         kerstinServo = hardwareMap.servo.get("kerstin_servo");
 
-        wildeHildeMotor = hardwareMap.dcMotor.get("hilde");
+        wildeHildeMotor = new FrogMotor(hardwareMap.dcMotor.get("hilde"));
+        wildeHildeMotor.setGearRatio(720);
 
         leftBeacon = hardwareMap.servo.get("left_beacon");
         rightBeacon = hardwareMap.servo.get("right_beacon");
@@ -310,17 +312,11 @@ public class TeleOpOmni3 extends OpMode {
     }
 
     public void shooter(){
-        if(gamepad2.x && hildeRotatedFully){
-            hildeRotatedFully = false;
-            lastTargetPositionHilde+=5040;
-            wildeHildeMotor.setTargetPosition(lastTargetPositionHilde);
-            wildeHildeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            wildeHildeMotor.setPower(1);
+        if(gamepad2.x && !wildeHildeMotor.drivingToPosition){
+            wildeHildeMotor.initRotateRounds(1,1);
         }
 
-        if(Math.abs(wildeHildeMotor.getCurrentPosition()-lastTargetPositionHilde) < 10){
-            hildeRotatedFully = true;
-        };
+        wildeHildeMotor.driveToPosition();
 
         if(gamepad2.y){
             wildeHildeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
