@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class FrogTableWriter extends FrogFileWriter {
     ArrayList<int[]> rows;
     int[] columns;
-    int currentCell = 0;
+    int currentCell = 1;
     int columnNumber;
 
     public FrogTableWriter(String name, int columnNumber){
@@ -26,9 +26,13 @@ public class FrogTableWriter extends FrogFileWriter {
         currentCell++;
     }
 
+    public void resetCurrentCell(){
+        currentCell = 1;
+    }
     public void addColumn(){
+        columns[0] = rows.size();
         rows.add(columns);
-        currentCell = 0;
+        currentCell = 1;
     }
 
     public int getRowNumber(){

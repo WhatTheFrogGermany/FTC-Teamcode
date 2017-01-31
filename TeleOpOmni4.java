@@ -42,7 +42,7 @@ public class TeleOpOmni4 extends FrogOpMode {
 
     @Override
     public void init (){
-
+        super.init();
         aOmni.setDirection(DcMotor.Direction.REVERSE);
         bOmni.setDirection(DcMotor.Direction.FORWARD);
         dOmni.setDirection(DcMotor.Direction.FORWARD);
