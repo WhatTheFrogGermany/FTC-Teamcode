@@ -9,10 +9,12 @@ public class FrogTableWriter extends FrogFileWriter {
     ArrayList<int[]> rows;
     int[] columns;
     int currentCell = 0;
+    int columnNumber;
 
     public FrogTableWriter(String name, int columnNumber){
         super(name);
         columns = new int[columnNumber];
+        this.columnNumber = columnNumber;
     }
 
     public void setSpecificValue(int column, int value){
@@ -34,7 +36,7 @@ public class FrogTableWriter extends FrogFileWriter {
     }
 
     public void writeAll(){
-        int[][] array = new int[rows.size()][columns.length];
+        int[][] array = new int[rows.size()][columnNumber];
         array = rows.toArray(array);
         write2DArray(array);
     }
