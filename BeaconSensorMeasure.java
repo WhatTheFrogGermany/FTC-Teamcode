@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogToggle;
  * Created by FTC2 on 30.01.2017.
  */
 @TeleOp(name="Measure: BeaconSensor", group="Measure")
+
 public class BeaconSensorMeasure extends OpMode {
     ColorSensor beaconLeftColor;
     ColorSensor beaconRightColor;
@@ -68,7 +69,7 @@ public class BeaconSensorMeasure extends OpMode {
         } else{
             beaconLeftColor.enableLed(false);
         }
-        if(gamepad1.b && buttonTime.milliseconds() >500){
+        if(gamepad1.b && buttonTime.milliseconds() > 500){
             buttonTime.reset();
             fileWriter.write2DArray(array);
             requestOpModeStop();
