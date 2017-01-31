@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogToggle;
  */
 
 @TeleOp(name="TeleOp: Omni", group="TeleOp")
+@Disabled
 public class TeleOpOmni3 extends OpMode {
 
     //drive

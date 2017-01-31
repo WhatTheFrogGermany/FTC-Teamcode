@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.what.frog.FrogMotor;
+import org.firstinspires.ftc.teamcode.what.frog.FrogOpMode;
 import org.firstinspires.ftc.teamcode.what.frog.FrogToggle;
 
 /**
@@ -15,14 +16,7 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogToggle;
  */
 
 @TeleOp(name="TeleOp: Omni", group="TeleOp")
-public class TeleOpOmni4 extends OpMode {
-
-    //drive
-    DcMotor aOmni;
-    DcMotor bOmni;
-    DcMotor cOmni;
-    DcMotor dOmni;
-
+public class TeleOpOmni4 extends FrogOpMode {
     //enable to change the front (18.10.16)
     DcMotor frontLeftDrive;
     DcMotor frontRightDrive;
@@ -34,37 +28,20 @@ public class TeleOpOmni4 extends OpMode {
 
     double[] scaled = new double[4];
 
-    //Gabi lift
-    DcMotor gabiMotor;
     FrogToggle gabiBlockToggle;
-    Servo gabiBlockServo;
 
     //the collecting mechanism
-    DcMotor steffiMotor;    //the back
     ElapsedTime steffiTime; //Added TimeToggle on 14.01
     boolean steffiToggle = false;
-    DcMotor franzMotor;     //the front
     ElapsedTime franzTime;
     boolean franzToggle = false;
 
-    Servo kerstinServo; //the blockade after steffi
-    //the shooter
-    FrogMotor wildeHildeMotor;
     int lastTargetPositionHilde = 0;
     boolean hildeRotatedFully = true;
     boolean customMoveHilde = false;
 
-
-    //Beacon
-    Servo leftBeacon;
-    Servo rightBeacon;
-
     @Override
     public void init (){
-        aOmni = hardwareMap.dcMotor.get("a_omni");
-        bOmni = hardwareMap.dcMotor.get("b_omni");
-        cOmni = hardwareMap.dcMotor.get("c_omni");
-        dOmni = hardwareMap.dcMotor.get("d_omni");
 
         aOmni.setDirection(DcMotor.Direction.REVERSE);
         bOmni.setDirection(DcMotor.Direction.FORWARD);
@@ -76,27 +53,11 @@ public class TeleOpOmni4 extends OpMode {
         backRightDrive = dOmni;
         backLeftDrive = cOmni;
 
-
-
-        gabiMotor = hardwareMap.dcMotor.get("gabi");
-        gabiMotor.setDirection(DcMotor.Direction.REVERSE);
         gabiBlockToggle = new FrogToggle(500);
-        gabiBlockServo = hardwareMap.servo.get("gabi_block_servo");
 
-        steffiMotor = hardwareMap.dcMotor.get("steffi");
         steffiTime = new ElapsedTime();
 
-        franzMotor = hardwareMap.dcMotor.get("franz");
         franzTime = new ElapsedTime();
-        franzMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        kerstinServo = hardwareMap.servo.get("kerstin_servo");
-
-        wildeHildeMotor = new FrogMotor(hardwareMap.dcMotor.get("hilde"));
-        wildeHildeMotor.setGearRatio(720);
-
-        leftBeacon = hardwareMap.servo.get("left_beacon");
-        rightBeacon = hardwareMap.servo.get("right_beacon");
     }
 
     public void loop() {
@@ -334,14 +295,14 @@ public class TeleOpOmni4 extends OpMode {
 
     public void beacon(){
         if(gamepad2.left_bumper){
-            leftBeacon.setPosition(1);
+            leftBeaconServo.setPosition(1);
         }
         if(gamepad2.right_bumper){
-            rightBeacon.setPosition(0);
+            rightBeaconServo.setPosition(0);
         }
         if(gamepad2.back){
-            leftBeacon.setPosition(0);
-            rightBeacon.setPosition(1);
+            leftBeaconServo.setPosition(0);
+            rightBeaconServo.setPosition(1);
         }
     }
 

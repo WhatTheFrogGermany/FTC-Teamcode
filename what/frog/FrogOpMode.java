@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.what.frog;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -10,24 +12,34 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 public class FrogOpMode extends OpMode {
     //drive
-    DcMotor aOmni;
-    DcMotor bOmni;
-    DcMotor cOmni;
-    DcMotor dOmni;
+    protected DcMotor aOmni;
+    protected DcMotor bOmni;
+    protected DcMotor cOmni;
+    protected DcMotor dOmni;
 
-    DcMotor gabiMotor;
-    Servo gabiBlockServo;
+    protected DcMotor gabiMotor;
+    protected Servo gabiBlockServo;
 
     //the collecting mechanism
-    DcMotor steffiMotor;    //the back
-    DcMotor franzMotor;
+    protected DcMotor steffiMotor;    //the back
+    protected DcMotor franzMotor;
 
-    Servo kerstinServo; //the blockade after steffi
-    FrogMotor wildeHildeMotor;
+    protected Servo kerstinServo; //the blockade after steffi
+    protected FrogMotor wildeHildeMotor;
 
     //Beacon
-    Servo leftBeaconServo;
-    Servo rightBeaconServo;
+    protected Servo leftBeaconServo;
+    protected Servo rightBeaconServo;
+
+    //Sensors
+    protected ColorSensor leftBeaconColor;
+    protected ColorSensor rightBeaconColor;
+
+    protected FrogRange leftBeaconRange;
+    protected FrogRange rightBeaconRange;
+
+    protected FrogGyro topGyro;
+    protected FrogGyro bottomGyro;
 
     @Override
     public void init() {
@@ -52,6 +64,19 @@ public class FrogOpMode extends OpMode {
 
         leftBeaconServo = hardwareMap.servo.get("left_beacon");
         rightBeaconServo = hardwareMap.servo.get("right_beacon");
+
+        //Sensors
+        leftBeaconColor = hardwareMap.colorSensor.get("left_beacon_color");
+        rightBeaconColor = hardwareMap.colorSensor.get("right_beacon_color");
+        leftBeaconColor.setI2cAddress(I2cAddr.create8bit(0x1c));
+        rightBeaconColor.setI2cAddress(I2cAddr.create8bit(0x2c));
+
+        leftBeaconRange = new FrogRange(hardwareMap, "left_beacon_range", 0x18);
+        rightBeaconRange = new FrogRange(hardwareMap, "right_beacon_range", 0x28);
+
+        bottomGyro = new FrogGyro(hardwareMap, "bottom_gyro", 0x10);
+        topGyro = new FrogGyro(hardwareMap, "top_gyro", 0x20);
+
     }
 
     @Override
