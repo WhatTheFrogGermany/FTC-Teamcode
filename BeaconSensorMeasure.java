@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogToggle;
  * Created by FTC2 on 30.01.2017.
  */
 @TeleOp(name="Measure: BeaconSensor", group="Measure")
-
+@Disabled
 public class BeaconSensorMeasure extends OpMode {
     ColorSensor beaconLeftColor;
     ColorSensor beaconRightColor;

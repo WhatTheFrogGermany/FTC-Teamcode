@@ -15,12 +15,20 @@ public class MeasureBeaconSensors extends FrogOpMode {
     boolean leftLED = false;
     boolean rightLED = false;
 
+    FrogToggle LEDToggle;
+    FrogToggle leftColorToggle;
+    FrogToggle rightColorToggle;
+
     ElapsedTime buttonTime;
     @Override
     public void init() {
         super.init();
         fileWriter = new FrogTableTelemetry("mega_table.csv", 15, "mes", telemetry);
         buttonTime = new ElapsedTime();
+
+        LEDToggle = new FrogToggle(500);
+        leftColorToggle = new FrogToggle(500);
+        rightColorToggle = new FrogToggle(500);
     }
 
     @Override
@@ -50,6 +58,33 @@ public class MeasureBeaconSensors extends FrogOpMode {
 
         fileWriter.addTelemetry();
 
+        LEDToggle.toggle(gamepad1.x);
+        leftColorToggle.toggle(gamepad1.dpad_left);
+        rightColorToggle.toggle(gamepad1.dpad_right);
+
+        if(LEDToggle.getState()){
+            leftBeaconColor.enableLed(true);
+            rightBeaconColor.enableLed(true);
+            leftLED = true;
+            rightLED = true;
+        } else{
+            leftBeaconColor.enableLed(false);
+            rightBeaconColor.enableLed(false);
+            leftLED = false;
+            rightLED = false;
+        }
+
+        if(leftColorToggle.getState()){
+            leftColor = 1;
+        } else{
+            leftColor = 0;
+        }
+
+        if(rightColorToggle.getState()){
+            rightColor = 1;
+        } else {
+            rightColor = 0;
+        }
 
     }
 }

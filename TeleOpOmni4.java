@@ -289,6 +289,8 @@ public class TeleOpOmni4 extends FrogOpMode {
             lastTargetPositionHilde = 0;
             customMoveHilde = false;
             hildeRotatedFully= true;
+            wildeHildeMotor.drivingToPosition = false;
+            wildeHildeMotor.lastTargetPosition = 0;
         }
 
     }

@@ -15,7 +15,7 @@ public class FrogMotor extends DcMotorImpl {
     public boolean drivingToPosition = false;
 
     int targetPosition = 0;
-    int lastTargetPosition = 0;
+    public int lastTargetPosition = 0;
     int stoppingInterval;
     public double normalMotorPower;
     public double motorCurrentPower;
