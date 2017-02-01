@@ -75,9 +75,22 @@ public class FrogMotor extends DcMotorImpl {
     }
 
     public void initRotateRounds(double rounds, double motorPower){
-        int targetPosition = lastTargetPosition + Math.round((int)(rounds * encoderPPR * gearRatio));
-        int stoppingInterval = Math.round((int)(encoderPPR * gearRatio));
-        initDriveToPosition(targetPosition, stoppingInterval, motorPower);
+        if(!drivingToPosition) {
+            int targetPosition = lastTargetPosition + Math.round((int) (rounds * encoderPPR * gearRatio));
+            int stoppingInterval = Math.round((int) (encoderPPR * gearRatio / 5));
+            initDriveToPosition(targetPosition, stoppingInterval, motorPower);
+        }
     }
 
+    public void stopDrivingToPosition(){
+        drivingToPosition = false;
+    }
+
+    public void reset(){
+        setPower(0);
+        setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        setMode(DcMotor.RunMode.RUN_USING_ENCODER);;
+        drivingToPosition = false;
+        lastTargetPosition = 0;
+    }
 }
