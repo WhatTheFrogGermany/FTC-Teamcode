@@ -56,6 +56,10 @@ public class MeasureBeaconSensors extends FrogOpMode {
             fileWriter.addColumn();
         }
 
+        if(gamepad1.b && buttonTime.milliseconds() > 500){
+            buttonTime.reset();
+            fileWriter.writeAll();
+        }
         fileWriter.addTelemetry();
 
         LEDToggle.toggle(gamepad1.x);

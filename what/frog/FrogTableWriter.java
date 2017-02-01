@@ -13,6 +13,7 @@ public class FrogTableWriter extends FrogFileWriter {
 
     public FrogTableWriter(String name, int columnNumber){
         super(name);
+        rows = new ArrayList<int[]>();
         columns = new int[columnNumber];
         this.columnNumber = columnNumber;
     }
