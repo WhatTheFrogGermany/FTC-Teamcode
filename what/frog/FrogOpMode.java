@@ -12,10 +12,10 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 public class FrogOpMode extends OpMode {
     //drive
-    protected DcMotor aOmni;
-    protected DcMotor bOmni;
-    protected DcMotor cOmni;
-    protected DcMotor dOmni;
+    protected FrogMotor aOmni;
+    protected FrogMotor bOmni;
+    protected FrogMotor cOmni;
+    protected FrogMotor dOmni;
 
     protected DcMotor gabiMotor;
     protected Servo gabiBlockServo;
@@ -43,10 +43,10 @@ public class FrogOpMode extends OpMode {
 
     @Override
     public void init() {
-        aOmni = hardwareMap.dcMotor.get("a_omni");
-        bOmni = hardwareMap.dcMotor.get("b_omni");
-        cOmni = hardwareMap.dcMotor.get("c_omni");
-        dOmni = hardwareMap.dcMotor.get("d_omni");
+        aOmni = new FrogMotor(hardwareMap.dcMotor.get("a_omni"));
+        bOmni = new FrogMotor(hardwareMap.dcMotor.get("b_omni"));
+        cOmni = new FrogMotor(hardwareMap.dcMotor.get("c_omni"));
+        dOmni = new FrogMotor(hardwareMap.dcMotor.get("d_omni"));
 
         gabiMotor = hardwareMap.dcMotor.get("gabi");
         gabiMotor.setDirection(DcMotor.Direction.REVERSE);

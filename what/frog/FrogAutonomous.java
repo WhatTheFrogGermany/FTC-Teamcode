@@ -59,6 +59,7 @@ public class FrogAutonomous extends FrogOpMode {
 
     public void changeDirection(int direction){
         if(direction == GABI_FRONT){
+            frontRightDrive = aOmni;
 
         }
     }
