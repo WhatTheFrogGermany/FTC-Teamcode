@@ -27,6 +27,19 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public void driveToHeading(int heading){
+        while(Math.abs(heading - getHeading()) > 2 ){
+            if(heading - getHeading() > 0){
+                frontRightDrive.setPower(0.3);
+                frontLeftDrive.setPower(-0.3);
+                backLeftDrive.setPower(-0.3);
+                backRightDrive.setPower(0.3);
+            } else {
+                frontRightDrive.setPower(-0.3);
+                frontLeftDrive.setPower(0.3);
+                backLeftDrive.setPower(0.3);
+                backRightDrive.setPower(-0.3);
+            }
+        }
 
     }
 
@@ -46,7 +59,7 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public int getHeading(){
-        int result = (topGyro.getHeading()+360-bottomGyro.getHeading())/2;
+        int result = (360-topGyro.getHeading()+bottomGyro.getHeading())/2;
         return result;
     }
 
