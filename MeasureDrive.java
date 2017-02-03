@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogTableTelemetry;
 
 @TeleOp(name="Measure: Drive", group="Measure")
 //This OpMode is for measuring the encoder values that correlate to the distance driven.
-public class MeasureDrive extends FrogOpMode {
+public class MeasureDrive extends TeleOpOmni4 {
 
     FrogTableTelemetry fileWriter;
     int cm_travelled = 100;
@@ -31,28 +31,23 @@ public class MeasureDrive extends FrogOpMode {
         storeTime = new ElapsedTime();
 
         fileWriter = new FrogTableTelemetry("measure_drive.csv", 6, "mes", telemetry);
-
-        aOmni.setDirection(DcMotor.Direction.REVERSE);
-        bOmni.setDirection(DcMotor.Direction.FORWARD);
-        cOmni.setDirection(DcMotor.Direction.FORWARD);
-        dOmni.setDirection(DcMotor.Direction.REVERSE);
     }
 
     @Override
     public void loop() {
-        if(gamepad1.a){
-            aOmni.setPower(1);
-            bOmni.setPower(1);
-            cOmni.setPower(1);
-            dOmni.setPower(1);
+        if(gamepad1.dpad_right){
+            frontLeftDrive.setPower(1);
+            frontRightDrive.setPower(1);
+            backLeftDrive.setPower(1);
+            backRightDrive.setPower(1);
 
         }
 
-        if(gamepad1.b){
-            aOmni.setPower(0);
-            bOmni.setPower(0);
-            cOmni.setPower(0);
-            dOmni.setPower(0);
+        if(gamepad1.dpad_left){
+            frontLeftDrive.setPower(0);
+            frontRightDrive.setPower(0);
+            backRightDrive.setPower(0);
+            backLeftDrive.setPower(0);
         }
 
         if(gamepad1.dpad_up && elapsedTime.milliseconds() > 250){
@@ -65,25 +60,37 @@ public class MeasureDrive extends FrogOpMode {
             cm_travelled--;
         }
 
-        if(gamepad1.x && storeTime.seconds() > 1){
+        fileWriter.setNextValue(cm_travelled);
+        fileWriter.setNextValue(aOmni.getCurrentPosition());
+        fileWriter.setNextValue(bOmni.getCurrentPosition());
+        fileWriter.setNextValue(cOmni.getCurrentPosition());
+        fileWriter.setNextValue(dOmni.getCurrentPosition());
+        fileWriter.resetCurrentCell();
+        fileWriter.addTelemetry();
+
+        if(gamepad1.left_bumper && storeTime.seconds() > 1){
             storeTime.reset();
             telemetry.addData("status", "added another line");
 
-            aOmni.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            bOmni.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            cOmni.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            dOmni.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            fileWriter.addColumn();
 
-            aOmni.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            bOmni.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            cOmni.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            dOmni.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            aOmni.reset();
+            bOmni.reset();
+            cOmni.reset();
+            dOmni.reset();
         }
 
-        if(gamepad1.y &&storeTime.seconds() > 1){
+        if(gamepad1.left_trigger > 0.5 && storeTime.seconds() > 1){
             storeTime.reset();
             telemetry.addData("status", "saved file");
+            requestOpModeStop();
+        }
 
+        if(gamepad1.right_bumper){
+            aOmni.reset();
+            bOmni.reset();
+            cOmni.reset();
+            dOmni.reset();
         }
 
         telemetry.addData("cm_travelled", cm_travelled);
