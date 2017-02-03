@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.what.frog.FrogFileWriter;
+import org.firstinspires.ftc.teamcode.what.frog.FrogOpMode;
+import org.firstinspires.ftc.teamcode.what.frog.FrogTableTelemetry;
 
 /**
  * Created by FTC2 on 27.01.2017.
@@ -13,15 +15,9 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogFileWriter;
 
 @TeleOp(name="Measure: Drive", group="Measure")
 //This OpMode is for measuring the encoder values that correlate to the distance driven.
-public class MeasureDrive extends OpMode {
-    DcMotor aOmni;
-    DcMotor bOmni;
-    DcMotor cOmni;
-    DcMotor dOmni;
+public class MeasureDrive extends FrogOpMode {
 
-    FrogFileWriter fileWriter;
-    int[][] array = new int[50][6];
-    int counter = 0;
+    FrogTableTelemetry fileWriter;
     int cm_travelled = 100;
 
     ElapsedTime elapsedTime;
@@ -30,14 +26,11 @@ public class MeasureDrive extends OpMode {
     //number, milimetres, a, b, c, d
     @Override
     public void init() {
+        super.init();
         elapsedTime = new ElapsedTime();
         storeTime = new ElapsedTime();
 
-        fileWriter = new FrogFileWriter("measure_drive.csv");
-        aOmni = hardwareMap.dcMotor.get("a_omni");
-        bOmni = hardwareMap.dcMotor.get("b_omni");
-        cOmni = hardwareMap.dcMotor.get("c_omni");
-        dOmni = hardwareMap.dcMotor.get("d_omni");
+        fileWriter = new FrogTableTelemetry("measure_drive.csv", 6, "mes", telemetry);
 
         aOmni.setDirection(DcMotor.Direction.REVERSE);
         bOmni.setDirection(DcMotor.Direction.FORWARD);
@@ -74,13 +67,6 @@ public class MeasureDrive extends OpMode {
 
         if(gamepad1.x && storeTime.seconds() > 1){
             storeTime.reset();
-            array[counter][0] = counter;
-            array[counter][1] = cm_travelled;
-            array[counter][2] = aOmni.getCurrentPosition();
-            array[counter][3] = bOmni.getCurrentPosition();
-            array[counter][4] = cOmni.getCurrentPosition();
-            array[counter][5] = dOmni.getCurrentPosition();
-            counter++;
             telemetry.addData("status", "added another line");
 
             aOmni.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -96,13 +82,12 @@ public class MeasureDrive extends OpMode {
 
         if(gamepad1.y &&storeTime.seconds() > 1){
             storeTime.reset();
-            fileWriter.write2DArray(array);
             telemetry.addData("status", "saved file");
 
         }
 
         telemetry.addData("cm_travelled", cm_travelled);
-        telemetry.addData("counter", counter);
+        telemetry.addData("counter", 134124);
         telemetry.addData("a", aOmni.getCurrentPosition());
         telemetry.addData("b", bOmni.getCurrentPosition());
         telemetry.addData("c", cOmni.getCurrentPosition());

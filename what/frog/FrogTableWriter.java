@@ -33,6 +33,7 @@ public class FrogTableWriter extends FrogFileWriter {
     public void addColumn(){
         columns[0] = rows.size();
         rows.add(columns);
+        columns = new int[columnNumber];
         currentCell = 1;
     }
 
