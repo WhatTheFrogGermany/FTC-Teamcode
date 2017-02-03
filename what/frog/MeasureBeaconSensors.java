@@ -23,7 +23,7 @@ public class MeasureBeaconSensors extends FrogOpMode {
     @Override
     public void init() {
         super.init();
-        fileWriter = new FrogTableTelemetry("mega_table.csv", 15, "mes", telemetry);
+        fileWriter = new FrogTableTelemetry("mega_table.csv", 17, "mes", telemetry);
         buttonTime = new ElapsedTime();
 
         LEDToggle = new FrogToggle(500);
@@ -41,6 +41,8 @@ public class MeasureBeaconSensors extends FrogOpMode {
         fileWriter.setNextValue(rightLED ? 1 : 0);
         fileWriter.setNextValue(leftBeaconRange.getOptical());
         fileWriter.setNextValue(rightBeaconRange.getOptical());
+        fileWriter.setNextValue(leftBeaconRange.getUltrasonic());
+        fileWriter.setNextValue(rightBeaconRange.getUltrasonic());
         fileWriter.setNextValue(leftBeaconColor.alpha());
         fileWriter.setNextValue(leftBeaconColor.red());
         fileWriter.setNextValue(leftBeaconColor.green());
@@ -59,6 +61,7 @@ public class MeasureBeaconSensors extends FrogOpMode {
         if(gamepad1.b && buttonTime.milliseconds() > 500){
             buttonTime.reset();
             fileWriter.writeAll();
+            requestOpModeStop();
         }
         fileWriter.addTelemetry();
 
