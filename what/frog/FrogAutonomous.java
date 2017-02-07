@@ -21,6 +21,7 @@ public class FrogAutonomous extends FrogOpMode {
 
     int robotX;
     int robotY;
+    int heading;
 
     FrogMotor frontRightDrive;
     FrogMotor frontLeftDrive;
@@ -31,21 +32,26 @@ public class FrogAutonomous extends FrogOpMode {
 
     }
 
-    public void driveToHeading(int heading){
-        while(Math.abs(heading - getHeading()) > 2 ){
-            if(heading - getHeading() > 0){
-                frontRightDrive.setPower(0.3);
-                frontLeftDrive.setPower(-0.3);
-                backLeftDrive.setPower(-0.3);
-                backRightDrive.setPower(0.3);
-            } else {
-                frontRightDrive.setPower(-0.3);
-                frontLeftDrive.setPower(0.3);
-                backLeftDrive.setPower(0.3);
-                backRightDrive.setPower(-0.3);
-            }
+    public void initDriveToHeading(int heading){
+        this.heading = heading;
+    }
+    public void driveToHeading(){
+        if(heading - getHeading() > 0){
+            frontRightDrive.setPower(0.3);
+            frontLeftDrive.setPower(-0.3);
+            backLeftDrive.setPower(-0.3);
+            backRightDrive.setPower(0.3);
+        } else {
+            frontRightDrive.setPower(-0.3);
+            frontLeftDrive.setPower(0.3);
+            backLeftDrive.setPower(0.3);
+            backRightDrive.setPower(-0.3);
         }
 
+    }
+
+    public boolean drivingToHeading(){
+        return (Math.abs(heading - getHeading()) > 2);
     }
 
     public void initDriveDistance(int cmDistance){
