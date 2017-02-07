@@ -102,4 +102,23 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
             }
         });
     }
+
+    public void addShoot(){
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                initShootBall();
+                nextAction();
+            }
+        });
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                shootBall();
+                if(!shooting()){
+                    nextAction();
+                }
+            }
+        });
+    }
 }

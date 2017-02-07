@@ -153,8 +153,13 @@ public class FrogAutonomous extends FrogOpMode {
     public void initShootBall(){
         wildeHildeMotor.initRotateRounds(1,1);
     }
+
     public void shootBall(){
         wildeHildeMotor.driveToPosition();
+    }
+
+    public boolean shooting(){
+        return wildeHildeMotor.drivingToPosition;
     }
 
     public void changeDirection(short direction){

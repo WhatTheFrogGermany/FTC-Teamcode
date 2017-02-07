@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogAutonomous;
 /**
  * Created by FTC2 on 07.02.2017.
  */
-@Autonomous(name="Test1", group="Tests")
+@Autonomous(name="Test:Test1", group="Tests")
 public class AutonomousTest1 extends FrogAutonomous {
     @Override
     public void init() {

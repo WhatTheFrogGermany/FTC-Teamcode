@@ -252,11 +252,12 @@ public class TeleOpOmni4 extends FrogOpMode {
         }
 
 
-        if(gamepad2.a && (steffiTime.time() > 1)){
+        if(gamepad2.a && (steffiTime.milliseconds() > 500)){
             steffiToggle = !steffiToggle;
             steffiTime.reset();
         }
-        if(gamepad2.b && (franzTime.time() > 1)){
+        if(gamepad2.b && (franzTime.milliseconds() > 500
+        )){
             franzToggle = !franzToggle;
             franzTime.reset();
         }
