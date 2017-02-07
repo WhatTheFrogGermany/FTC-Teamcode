@@ -13,6 +13,11 @@ public class AutonomousTest1 extends FrogAutonomous {
     public void init() {
         super.init();
         changeDirection(GABI_FRONT);
+    }
+
+    @Override
+    public void init_loop() {
+        super.init_loop();
         resetDrive();
         driveDistance(3000);
     }
