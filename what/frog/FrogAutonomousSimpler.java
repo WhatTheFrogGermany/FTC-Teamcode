@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.what.frog;
  * Created by FTC2 on 07.02.2017.
  */
 public class FrogAutonomousSimpler extends FrogAutonomous {
+
     public void addDriveToHeading(int heading){
         final int heading_final = heading;
         addAction(new FrogAction() {
