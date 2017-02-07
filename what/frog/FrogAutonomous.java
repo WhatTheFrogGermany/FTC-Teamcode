@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.what.frog;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import java.util.ArrayList;
+
 /**
  * Created by FTC2 on 01.02.2017.
  */
@@ -13,6 +15,9 @@ public class FrogAutonomous extends FrogOpMode {
     public final static short GABI_FRONT = 3;
 
     short front = GABI_FRONT;
+
+    ArrayList<FrogAction> actionList;
+    int actionIndex = 0;
 
     int robotX;
     int robotY;
@@ -43,7 +48,7 @@ public class FrogAutonomous extends FrogOpMode {
 
     }
 
-    public void driveDistance(int cmDistance){
+    public void initDriveDistance(int cmDistance){
         int encoderValue = cmDistance; //for now. I'll later calculate something using the stuff I measure
         frontRightDrive.initDriveToPosition(encoderValue, 5000, 1);
         frontLeftDrive.initDriveToPosition(encoderValue, 5000, 1);
@@ -56,6 +61,17 @@ public class FrogAutonomous extends FrogOpMode {
             backLeftDrive.driveToPosition();
             backRightDrive.driveToPosition();
         }
+    }
+
+    public void driveDistance(){
+        frontRightDrive.driveToPosition();
+        frontLeftDrive.driveToPosition();
+        backLeftDrive.driveToPosition();
+        backRightDrive.driveToPosition();
+    }
+
+    public boolean drivingToPosition(){
+        return (frontRightDrive.drivingToPosition || frontLeftDrive.drivingToPosition || backLeftDrive.drivingToPosition || backRightDrive.drivingToPosition);
     }
 
     public void resetDrive(){
@@ -122,5 +138,27 @@ public class FrogAutonomous extends FrogOpMode {
         frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+    }
+
+    public void addAction(FrogAction action){
+        actionList.add(action);
+    }
+
+    public void nextAction(){
+        actionIndex++;
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        actionList = new ArrayList<>();
+    }
+
+    @Override
+    public void loop() {
+        super.loop();
+        if(actionIndex < actionList.size()) {
+            actionList.get(actionIndex).action();
+        }
     }
 }

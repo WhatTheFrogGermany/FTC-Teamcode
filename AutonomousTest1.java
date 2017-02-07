@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.what.frog.FrogAction;
 import org.firstinspires.ftc.teamcode.what.frog.FrogAutonomous;
 
 /**
@@ -13,13 +14,24 @@ public class AutonomousTest1 extends FrogAutonomous {
     public void init() {
         super.init();
         changeDirection(GABI_FRONT);
-    }
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                resetDrive();
+                initDriveDistance(3000);
+                nextAction();
+            }
+        });
 
-    @Override
-    public void init_loop() {
-        super.init_loop();
-        resetDrive();
-        driveDistance(3000);
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                driveDistance();
+                if(!drivingToPosition()){
+                    nextAction();
+                }
+            }
+        });
     }
 
     @Override
