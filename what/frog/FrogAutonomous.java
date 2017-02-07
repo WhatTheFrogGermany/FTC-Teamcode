@@ -38,7 +38,6 @@ public class FrogAutonomous extends FrogOpMode {
         backLeftDrive.setTolerance(tolerance);
         backRightDrive.setTolerance(tolerance);
     }
-
     public void initDriveToHeading(int heading){
         this.heading = heading;
     }
@@ -110,10 +109,28 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public void pushBlueBeacon(){
+        if (leftBeaconColor.blue() > leftBeaconColor.red()) {
+            leftBeaconServo.setPosition(1);
+        }
+        else if (rightBeaconColor.blue() > rightBeaconColor.red()){
+            rightBeaconServo.setPosition(0);
+        }
 
     }
 
     public void pushRedBeacon(){
+        if (leftBeaconColor.red() > leftBeaconColor.blue()) {
+            leftBeaconServo.setPosition(1);
+        }
+        else if (rightBeaconColor.red() > rightBeaconColor.blue()) {
+            rightBeaconServo.setPosition(0);
+        }
+    }
+
+    public void resetServo (){
+
+        rightBeaconServo.setPosition(1);
+        leftBeaconServo.setPosition(0);
 
     }
 
