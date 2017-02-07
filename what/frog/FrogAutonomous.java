@@ -54,13 +54,6 @@ public class FrogAutonomous extends FrogOpMode {
         frontLeftDrive.initDriveToPosition(encoderValue, 5000, 1);
         backLeftDrive.initDriveToPosition(encoderValue, 5000, 1);
         backRightDrive.initDriveToPosition(encoderValue, 5000, 1);
-
-        while(frontRightDrive.drivingToPosition || frontLeftDrive.drivingToPosition || backLeftDrive.drivingToPosition || backRightDrive.drivingToPosition){
-            frontRightDrive.driveToPosition();
-            frontLeftDrive.driveToPosition();
-            backLeftDrive.driveToPosition();
-            backRightDrive.driveToPosition();
-        }
     }
 
     public void driveDistance(){
