@@ -32,20 +32,31 @@ public class FrogAutonomous extends FrogOpMode {
 
     }
 
+    public void setDriveTolerances(double tolerance){
+        frontRightDrive.setTolerance(tolerance);
+        frontLeftDrive.setTolerance(tolerance);
+        backLeftDrive.setTolerance(tolerance);
+        backRightDrive.setTolerance(tolerance);
+    }
+
     public void initDriveToHeading(int heading){
         this.heading = heading;
     }
     public void driveToHeading(){
-        if(heading - getHeading() > 0){
-            frontRightDrive.setPower(0.3);
-            frontLeftDrive.setPower(-0.3);
-            backLeftDrive.setPower(-0.3);
-            backRightDrive.setPower(0.3);
+        if(drivingToHeading()) {
+            if (heading - getHeading() > 0) {
+                frontRightDrive.setPower(0.15);
+                frontLeftDrive.setPower(-0.15);
+                backLeftDrive.setPower(-0.15);
+                backRightDrive.setPower(0.15);
+            } else {
+                frontRightDrive.setPower(-0.15);
+                frontLeftDrive.setPower(0.15);
+                backLeftDrive.setPower(0.15);
+                backRightDrive.setPower(-0.15);
+            }
         } else {
-            frontRightDrive.setPower(-0.3);
-            frontLeftDrive.setPower(0.3);
-            backLeftDrive.setPower(0.3);
-            backRightDrive.setPower(-0.3);
+            stopDrive();
         }
 
     }
@@ -54,6 +65,12 @@ public class FrogAutonomous extends FrogOpMode {
         return (Math.abs(heading - getHeading()) > 2);
     }
 
+    public void stopDrive(){
+        frontRightDrive.reset();
+        frontLeftDrive.reset();
+        backLeftDrive.reset();
+        backRightDrive.reset();
+    }
     public void initDriveDistance(int cmDistance){
         int encoderValue = cmDistance; //for now. I'll later calculate something using the stuff I measure
         frontRightDrive.initDriveToPosition(encoderValue, 5000, 1);

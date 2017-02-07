@@ -14,6 +14,7 @@ public class AutonomousTest1 extends FrogAutonomous {
     public void init() {
         super.init();
         changeDirection(GABI_FRONT);
+        setDriveTolerances(0.1);
         addAction(new FrogAction() {
             @Override
             public void action() {
@@ -28,6 +29,25 @@ public class AutonomousTest1 extends FrogAutonomous {
             public void action() {
                 driveDistance();
                 if(!drivingToPosition()){
+                    nextAction();
+                }
+            }
+        });
+
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                initDriveToHeading(180);
+                nextAction();
+            }
+        });
+
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                driveToHeading();
+                if(!drivingToHeading()){
+                    stopDrive();
                     nextAction();
                 }
             }

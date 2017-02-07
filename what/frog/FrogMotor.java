@@ -19,6 +19,7 @@ public class FrogMotor extends DcMotorImpl {
     int stoppingInterval;
     public double normalMotorPower;
     public double motorCurrentPower;
+    double tolerance = 0.01;
 
     ElapsedTime waitTime;
 
@@ -46,6 +47,10 @@ public class FrogMotor extends DcMotorImpl {
         waitTime = new ElapsedTime();
     }
 
+    public void setTolerance(double tolerance){
+        this.tolerance = tolerance;
+    }
+
     public void driveToPosition(){
         if(drivingToPosition) {
             if(Math.abs(targetPosition - getCurrentPosition()) > stoppingInterval) {
@@ -61,7 +66,7 @@ public class FrogMotor extends DcMotorImpl {
                 motorCurrentPower = normalMotorPower * scale;
                 setPower(motorCurrentPower);
 
-                if(Math.abs(motorCurrentPower) < 0.01){
+                if(Math.abs(motorCurrentPower) < tolerance){
                     if(waitTime.milliseconds() > 500){
                         lastTargetPosition = targetPosition;
                         drivingToPosition = false;
