@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.what.frog;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,21 @@ public class FrogAutonomous extends FrogOpMode {
     FrogMotor backLeftDrive;
     FrogMotor backRightDrive;
 
+    ElapsedTime waitTime;
+    int waitMilliSecs;
+
+    public void initWait(int milliSecs){
+        waitTime = new ElapsedTime();
+        waitMilliSecs = milliSecs;
+    }
+
+    public boolean waiting(){
+        if(waitTime.milliseconds() > waitMilliSecs){
+            return false;
+        } else {
+            return true;
+        }
+    }
     public void driveToPosition(int x, int y){
 
     }
