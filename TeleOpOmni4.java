@@ -23,6 +23,7 @@ public class TeleOpOmni4 extends FrogOpMode {
     DcMotor backLeftDrive;
     DcMotor backRightDrive;
 
+    public boolean extraDrive = false; // work around to make sure MeasureDrive is working properly
     int lyMag;
     int lxMag;
 
@@ -131,7 +132,7 @@ public class TeleOpOmni4 extends FrogOpMode {
             backLeftDrive.setPower(r);
         }
 
-        if(r == 0 && x == 0 && y == 0){
+        if(r == 0 && x == 0 && y == 0 && !extraDrive){
             aOmni.setPower(0);
             bOmni.setPower(0);
             cOmni.setPower(0);

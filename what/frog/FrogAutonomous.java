@@ -58,6 +58,12 @@ public class FrogAutonomous extends FrogOpMode {
         }
     }
 
+    public void resetDrive(){
+        frontRightDrive.reset();
+        frontLeftDrive.reset();
+        backLeftDrive.reset();
+        backRightDrive.reset();
+    }
     public int getHeading(){
         int result = (360-topGyro.getHeading()+bottomGyro.getHeading())/2;
         return result;
@@ -82,30 +88,34 @@ public class FrogAutonomous extends FrogOpMode {
 
     }
 
-    public void changeDirection(int direction){
+    public void changeDirection(short direction){
         if(direction == GABI_FRONT){
             frontRightDrive = aOmni;
             frontLeftDrive = bOmni;
             backLeftDrive = cOmni;
             backRightDrive = dOmni;
+            front = direction;
         }
         if(direction == HILDE_FRONT){
             frontRightDrive = bOmni;
             frontLeftDrive = cOmni;
             backLeftDrive = dOmni;
             backRightDrive = aOmni;
+            front = direction;
         }
         if(direction == FRANZ_FRONT){
             frontRightDrive = cOmni;
             frontLeftDrive = dOmni;
             backLeftDrive = aOmni;
             backRightDrive = bOmni;
+            front = direction;
         }
         if(direction == BEACON_FRONT){
             frontRightDrive = dOmni;
             frontLeftDrive = aOmni;
             backLeftDrive = bOmni;
             backRightDrive = cOmni;
+            front = direction;
         }
 
         frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);

@@ -35,15 +35,18 @@ public class MeasureDrive extends TeleOpOmni4 {
 
     @Override
     public void loop() {
+        super.loop();
         if(gamepad1.dpad_right){
+            extraDrive = true;
             frontLeftDrive.setPower(1);
             frontRightDrive.setPower(1);
-            backLeftDrive.setPower(1);
-            backRightDrive.setPower(1);
+            backLeftDrive.setPower(-1);
+            backRightDrive.setPower(-1);
 
         }
 
         if(gamepad1.dpad_left){
+            extraDrive = false;
             frontLeftDrive.setPower(0);
             frontRightDrive.setPower(0);
             backRightDrive.setPower(0);
@@ -93,11 +96,13 @@ public class MeasureDrive extends TeleOpOmni4 {
             dOmni.reset();
         }
 
+        /*
         telemetry.addData("cm_travelled", cm_travelled);
         telemetry.addData("counter", 134124);
         telemetry.addData("a", aOmni.getCurrentPosition());
         telemetry.addData("b", bOmni.getCurrentPosition());
         telemetry.addData("c", cOmni.getCurrentPosition());
         telemetry.addData("d", dOmni.getCurrentPosition());
+        */
     }
 }
