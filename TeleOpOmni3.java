@@ -15,8 +15,7 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogToggle;
  * Created by FTC on 07.10.2016.
  */
 
-@TeleOp(name="TeleOp: Omni", group="TeleOp")
-@Disabled
+
 public class TeleOpOmni3 extends OpMode {
 
     //drive
@@ -49,7 +48,7 @@ public class TeleOpOmni3 extends OpMode {
     ElapsedTime franzTime;
     boolean franzToggle = false;
 
-    Servo kerstinServo; //the blockade after steffi
+    //Servo kerstinServo; //the blockade after steffi
     //the shooter
     FrogMotor wildeHildeMotor;
     int lastTargetPositionHilde = 0;
@@ -92,7 +91,7 @@ public class TeleOpOmni3 extends OpMode {
         franzTime = new ElapsedTime();
         franzMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        kerstinServo = hardwareMap.servo.get("kerstin_servo");
+       // kerstinServo = hardwareMap.servo.get("kerstin_servo");
 
         wildeHildeMotor = new FrogMotor(hardwareMap.dcMotor.get("hilde"));
         wildeHildeMotor.setGearRatio(720);
@@ -109,7 +108,7 @@ public class TeleOpOmni3 extends OpMode {
         lift();
         gabiBlock();
 
-        kerstin();
+        //kerstin();
 
         collect();
         shooter();
@@ -303,14 +302,14 @@ public class TeleOpOmni3 extends OpMode {
 
     }
 
-    public void kerstin(){
-        if(gamepad2.dpad_left){
-            kerstinServo.setPosition(0);
-        }
-        if(gamepad2.dpad_right){
-            kerstinServo.setPosition(1);
-        }
-    }
+    //public void kerstin(){
+       // if(gamepad2.dpad_left){
+            //kerstinServo.setPosition(0);
+        //}
+       // if(gamepad2.dpad_right){
+            //kerstinServo.setPosition(1);
+        //}
+    //}
 
     public void shooter(){
         if(gamepad2.x && !wildeHildeMotor.drivingToPosition){

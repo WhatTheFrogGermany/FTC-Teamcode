@@ -20,7 +20,7 @@ public class FrogGyro extends FrogSensor {
     final static int Z_AXIS_OFFSET_REGISTER = 0x0e;
     final static int Z_AXIS_SCALING_REGISTER = 0x10;
     final static int COMMAND_REGISTER =0x03;
-    final static byte RESET_COMMAND = 0x4e;
+    final static byte RESET_COMMAND = 0x52;
     final static int NORMAL_READ_MODE_COMMAND = 0x00;
 
     ElapsedTime elapsedTime = new ElapsedTime();

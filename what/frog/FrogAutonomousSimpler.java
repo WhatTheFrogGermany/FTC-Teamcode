@@ -5,6 +5,25 @@ package org.firstinspires.ftc.teamcode.what.frog;
  */
 public class FrogAutonomousSimpler extends FrogAutonomous {
 
+    public void resetGyros(){
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                resetHeading();
+                nextAction();
+            }
+        });
+        robotWait(500);
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                topGyro.reactivateRead();
+                bottomGyro.reactivateRead();
+                nextAction();
+            }
+        });
+        robotWait(500);
+    }
     public void addDriveToHeading(int heading){
         final int heading_final = heading;
         addAction(new FrogAction() {

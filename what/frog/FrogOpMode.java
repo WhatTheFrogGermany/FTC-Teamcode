@@ -24,7 +24,7 @@ public class FrogOpMode extends OpMode {
     protected DcMotor steffiMotor;    //the back
     protected DcMotor franzMotor;
 
-    protected Servo kerstinServo; //the blockade after steffi
+//    protected Servo kerstinServo; //the blockade after steffi
     protected FrogMotor wildeHildeMotor;
 
     //Beacon
@@ -57,7 +57,7 @@ public class FrogOpMode extends OpMode {
         franzMotor = hardwareMap.dcMotor.get("franz");
         franzMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        kerstinServo = hardwareMap.servo.get("kerstin_servo");
+  //      kerstinServo = hardwareMap.servo.get("kerstin_servo");
 
         wildeHildeMotor = new FrogMotor(hardwareMap.dcMotor.get("hilde"));
         wildeHildeMotor.setGearRatio(720);

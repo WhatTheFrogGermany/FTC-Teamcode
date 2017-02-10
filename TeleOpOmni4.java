@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,8 +15,8 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogToggle;
 /**
  * Created by FTC on 07.10.2016.
  */
-
 @TeleOp(name="TeleOp: Omni", group="TeleOp")
+
 public class TeleOpOmni4 extends FrogOpMode {
     //enable to change the front (18.10.16)
     DcMotor frontLeftDrive;
@@ -69,7 +70,7 @@ public class TeleOpOmni4 extends FrogOpMode {
         lift();
         gabiBlock();
 
-        kerstin();
+        //kerstin();
 
         collect();
         shooter();
@@ -264,14 +265,14 @@ public class TeleOpOmni4 extends FrogOpMode {
 
     }
 
-    public void kerstin(){
-        if(gamepad2.dpad_left){
-            kerstinServo.setPosition(0);
-        }
-        if(gamepad2.dpad_right){
-            kerstinServo.setPosition(1);
-        }
-    }
+    //public void kerstin(){
+       // if(gamepad2.dpad_left){
+           // kerstinServo.setPosition(0);
+        //}
+        //if(gamepad2.dpad_right){
+          //  kerstinServo.setPosition(1);
+      //  }
+   // }
 
     public void shooter(){
         if(gamepad2.x && !wildeHildeMotor.drivingToPosition){

@@ -59,16 +59,42 @@ public class FrogAutonomous extends FrogOpMode {
     }
     public void driveToHeading(){
         if(drivingToHeading()) {
+            double power = Math.abs((heading-getHeading())/360);
+            telemetry.addData("power", power);
+            telemetry.addData("heading", heading);
+            telemetry.addData("gyro val", getHeading());
             if (heading - getHeading() > 0) {
-                frontRightDrive.setPower(0.15);
-                frontLeftDrive.setPower(-0.15);
-                backLeftDrive.setPower(-0.15);
-                backRightDrive.setPower(0.15);
+                if (heading- getHeading() > 180){
+                    //linksrum
+                    frontRightDrive.setPower(power);
+                    frontLeftDrive.setPower(-power);
+                    backLeftDrive.setPower(-power);
+                    backRightDrive.setPower(power);
+                }
+                else{
+                    //rechtsrum
+                    frontRightDrive.setPower(-power);
+                    frontLeftDrive.setPower(power);
+                    backLeftDrive.setPower(power);
+                    backRightDrive.setPower(-power);
+                }
+
             } else {
-                frontRightDrive.setPower(-0.15);
-                frontLeftDrive.setPower(0.15);
-                backLeftDrive.setPower(0.15);
-                backRightDrive.setPower(-0.15);
+                if (heading - getHeading() > -180){
+                    //linksrum
+                    frontRightDrive.setPower(power);
+                    frontLeftDrive.setPower(-power);
+                    backLeftDrive.setPower(-power);
+                    backRightDrive.setPower(power);
+                }
+                else {
+                    //rechtsrum fahren
+                    frontRightDrive.setPower(-power);
+                    frontLeftDrive.setPower(power);
+                    backLeftDrive.setPower(power);
+                    backRightDrive.setPower(-power);
+                }
+
             }
         } else {
             stopDrive();
@@ -77,7 +103,7 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public boolean drivingToHeading(){
-        return (Math.abs(heading - getHeading()) > 2);
+        return (Math.abs(heading - getHeading()) > 5);
     }
 
     public void stopDrive(){
@@ -112,8 +138,11 @@ public class FrogAutonomous extends FrogOpMode {
         backRightDrive.reset();
     }
     public int getHeading(){
-        int result = (360-topGyro.getHeading()+bottomGyro.getHeading())/2;
-        return result;
+        //int result = Math.round(((360-topGyro.getHeading())+bottomGyro.getHeading())/2);
+        //telemetry.addData("result", result);
+        telemetry.addData("topGyro", topGyro.getHeading());
+        telemetry.addData("bottomGyro", bottomGyro.getHeading());
+        return bottomGyro.getHeading();
     }
 
     public void resetHeading(){
@@ -218,5 +247,6 @@ public class FrogAutonomous extends FrogOpMode {
         if(actionIndex < actionList.size()) {
             actionList.get(actionIndex).action();
         }
+        gabiBlockServo.setPosition(0.15);
     }
 }
