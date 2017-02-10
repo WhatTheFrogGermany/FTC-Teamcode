@@ -58,6 +58,10 @@ public class FrogGyro extends FrogSensor {
     }
 
     public void reactivateRead(){
+        byte[] bytes = {NORMAL_READ_MODE_COMMAND};
+        write(COMMAND_REGISTER, bytes);
+    }
+    public void reactivateReadOld(){
         if(elapsedTime.seconds() > 3 && super.locked){
             super.locked = false;
             byte[] bytes = {NORMAL_READ_MODE_COMMAND};
