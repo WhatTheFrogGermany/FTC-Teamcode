@@ -17,6 +17,8 @@ public class FrogAutonomous extends FrogOpMode {
 
     short front = GABI_FRONT;
 
+    double power;
+
     ArrayList<FrogAction> actionList;
     int actionIndex = 0;
 
@@ -59,12 +61,20 @@ public class FrogAutonomous extends FrogOpMode {
     }
     public void driveToHeading(){
         if(drivingToHeading()) {
-            double power = Math.abs((heading-getHeading())/360);
+            int difference = heading - getHeading();
+            if(difference > 180){
+                difference = - (difference - 180);
+            }else if (difference < -180){
+                difference = - (difference + 180);
+            }
+            power = ((difference) * 0.00277 * 0.3);
             telemetry.addData("power", power);
             telemetry.addData("heading", heading);
             telemetry.addData("gyro val", getHeading());
+
+            /*
             if (heading - getHeading() > 0) {
-                if (heading- getHeading() > 180){
+                if (heading - getHeading() > 180){
                     //linksrum
                     frontRightDrive.setPower(power);
                     frontLeftDrive.setPower(-power);
@@ -98,7 +108,9 @@ public class FrogAutonomous extends FrogOpMode {
             }
         } else {
             stopDrive();
+        */ 
         }
+
 
     }
 
@@ -140,8 +152,6 @@ public class FrogAutonomous extends FrogOpMode {
     public int getHeading(){
         //int result = Math.round(((360-topGyro.getHeading())+bottomGyro.getHeading())/2);
         //telemetry.addData("result", result);
-        telemetry.addData("topGyro", topGyro.getHeading());
-        telemetry.addData("bottomGyro", bottomGyro.getHeading());
         return bottomGyro.getHeading();
     }
 

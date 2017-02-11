@@ -15,7 +15,7 @@ public class AutoTest2 extends FrogAutonomousSimpler {
         changeDirection(GABI_FRONT);
         setDriveTolerances(0.1);
         resetGyros();
-        addDriveDistance(3000);
+        //addDriveDistance(3000);
         addDriveToHeading(150);
         robotWait(5000);
         addShoot();

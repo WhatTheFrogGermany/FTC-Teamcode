@@ -50,8 +50,8 @@ public class FrogGyro extends FrogSensor {
     }
 
     public void reset(){
-        super.locked = true;
-        elapsedTime.reset();
+        //super.locked = true;
+        //elapsedTime.reset();
         byte[] bytes = {RESET_COMMAND};
         write(COMMAND_REGISTER, bytes);
 

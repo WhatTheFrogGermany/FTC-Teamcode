@@ -24,6 +24,8 @@ public class TeleOpOmni4 extends FrogOpMode {
     DcMotor backLeftDrive;
     DcMotor backRightDrive;
 
+    FrogToggle slowModeToggle;
+
     public boolean extraDrive = false; // work around to make sure MeasureDrive is working properly
     int lyMag;
     int lxMag;
@@ -55,6 +57,7 @@ public class TeleOpOmni4 extends FrogOpMode {
         backRightDrive = dOmni;
         backLeftDrive = cOmni;
 
+        slowModeToggle = new FrogToggle(500);
         gabiBlockToggle = new FrogToggle(500);
 
         steffiTime = new ElapsedTime();
@@ -79,6 +82,7 @@ public class TeleOpOmni4 extends FrogOpMode {
 
 
     public void drive(){
+        slowModeToggle.toggle(gamepad1.left_trigger < 0.5);
         double y = -(gamepad1.left_stick_y);
         double x = gamepad1.left_stick_x;
 
@@ -122,8 +126,8 @@ public class TeleOpOmni4 extends FrogOpMode {
 
         r*=0.5;
         if(r != 0) {
-            if(gamepad1.right_stick_button){
-                r = r * 0.1;
+            if(slowModeToggle.getState()){
+                r = r * 0.3;
             }
             telemetry.addData("RightstickX", r);
             //rechtsdrehung oder von liane zu enrico
@@ -164,10 +168,10 @@ public class TeleOpOmni4 extends FrogOpMode {
         for(int i = 0; i < 4; i++){
             vals[i] = vals[i] * absolute;
         }
-        //scale down to 20% if the slowModeToggle is on
-        if(gamepad1.left_stick_button){
+        //scale down to 20% if the slowModeToggle is on ; up to 30% on 10.2 bc robot was too heavy
+        if(slowModeToggle.getState()){
             for(int i = 0; i < 4; i++){
-                vals[i] = vals[i] * 0.2;
+                vals[i] = vals[i] * 0.3;
             }
         }
         return vals;
