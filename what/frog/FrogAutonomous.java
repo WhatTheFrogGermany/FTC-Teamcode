@@ -63,15 +63,19 @@ public class FrogAutonomous extends FrogOpMode {
         if(drivingToHeading()) {
             int difference = heading - getHeading();
             if(difference > 180){
-                difference = - (difference - 180);
+                difference = 360 - difference;
             }else if (difference < -180){
-                difference = - (difference + 180);
+                difference = difference + 360;
             }
-            power = ((difference) * 0.00277 * 0.3);
+            power = ((difference) * 0.005556 * 0.3);
             telemetry.addData("power", power);
             telemetry.addData("heading", heading);
             telemetry.addData("gyro val", getHeading());
 
+            frontRightDrive.setPower(power);
+            frontLeftDrive.setPower(-power);
+            backLeftDrive.setPower(-power);
+            backRightDrive.setPower(power);
             /*
             if (heading - getHeading() > 0) {
                 if (heading - getHeading() > 180){

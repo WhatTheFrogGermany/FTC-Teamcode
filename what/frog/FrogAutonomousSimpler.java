@@ -134,10 +134,22 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
             @Override
             public void action() {
                 shootBall();
+                telemetry.addData("Status", "shooting");
                 if(!shooting()){
                     nextAction();
                 }
             }
         });
+    }
+
+    public void addNextBall(){
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                steffiMotor.setPower(1);
+                nextAction();
+            }
+        });
+        robotWait(2000);
     }
 }

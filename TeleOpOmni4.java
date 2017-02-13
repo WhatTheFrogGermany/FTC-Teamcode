@@ -82,7 +82,7 @@ public class TeleOpOmni4 extends FrogOpMode {
 
 
     public void drive(){
-        slowModeToggle.toggle(gamepad1.left_trigger < 0.5);
+        slowModeToggle.toggle(gamepad1.left_trigger > 0.5);
         double y = -(gamepad1.left_stick_y);
         double x = gamepad1.left_stick_x;
 
