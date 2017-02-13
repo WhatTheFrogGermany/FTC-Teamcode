@@ -17,12 +17,12 @@ public class FrogOpMode extends OpMode {
     protected FrogMotor cOmni;
     protected FrogMotor dOmni;
 
-    protected DcMotor gabiMotor;
+    protected FrogMotor gabiMotor;
     protected Servo gabiBlockServo;
 
     //the collecting mechanism
-    protected DcMotor steffiMotor;    //the back
-    protected DcMotor franzMotor;
+    protected FrogMotor steffiMotor;    //the back
+    protected FrogMotor franzMotor;
 
 //    protected Servo kerstinServo; //the blockade after steffi
     protected FrogMotor wildeHildeMotor;
@@ -44,18 +44,25 @@ public class FrogOpMode extends OpMode {
     @Override
     public void init() {
         aOmni = new FrogMotor(hardwareMap.dcMotor.get("a_omni"));
+        aOmni.reset();
         bOmni = new FrogMotor(hardwareMap.dcMotor.get("b_omni"));
+        bOmni.reset();
         cOmni = new FrogMotor(hardwareMap.dcMotor.get("c_omni"));
+        cOmni.reset();
         dOmni = new FrogMotor(hardwareMap.dcMotor.get("d_omni"));
+        dOmni.reset();
 
-        gabiMotor = hardwareMap.dcMotor.get("gabi");
+        gabiMotor = new FrogMotor(hardwareMap.dcMotor.get("gabi"));
         gabiMotor.setDirection(DcMotor.Direction.REVERSE);
+        gabiMotor.reset();
 
         gabiBlockServo = hardwareMap.servo.get("gabi_block_servo");
 
-        steffiMotor = hardwareMap.dcMotor.get("steffi");
-        franzMotor = hardwareMap.dcMotor.get("franz");
+        steffiMotor = new FrogMotor(hardwareMap.dcMotor.get("steffi"));
+        franzMotor = new FrogMotor(hardwareMap.dcMotor.get("franz"));
         franzMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        steffiMotor.reset();
+        franzMotor.reset();
 
   //      kerstinServo = hardwareMap.servo.get("kerstin_servo");
 
@@ -76,7 +83,15 @@ public class FrogOpMode extends OpMode {
 
         bottomGyro = new FrogGyro(hardwareMap, "bottom_gyro", 0x10);
         topGyro = new FrogGyro(hardwareMap, "top_gyro", 0x20);
+        bottomGyro.reset();
+        topGyro.reset();
+    }
 
+    @Override
+    public void start() {
+        super.start();
+        bottomGyro.reactivateRead();
+        topGyro.reactivateRead();
     }
 
     @Override

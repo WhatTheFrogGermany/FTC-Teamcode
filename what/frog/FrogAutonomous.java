@@ -76,43 +76,9 @@ public class FrogAutonomous extends FrogOpMode {
             frontLeftDrive.setPower(-power);
             backLeftDrive.setPower(-power);
             backRightDrive.setPower(power);
-            /*
-            if (heading - getHeading() > 0) {
-                if (heading - getHeading() > 180){
-                    //linksrum
-                    frontRightDrive.setPower(power);
-                    frontLeftDrive.setPower(-power);
-                    backLeftDrive.setPower(-power);
-                    backRightDrive.setPower(power);
-                }
-                else{
-                    //rechtsrum
-                    frontRightDrive.setPower(-power);
-                    frontLeftDrive.setPower(power);
-                    backLeftDrive.setPower(power);
-                    backRightDrive.setPower(-power);
-                }
 
-            } else {
-                if (heading - getHeading() > -180){
-                    //linksrum
-                    frontRightDrive.setPower(power);
-                    frontLeftDrive.setPower(-power);
-                    backLeftDrive.setPower(-power);
-                    backRightDrive.setPower(power);
-                }
-                else {
-                    //rechtsrum fahren
-                    frontRightDrive.setPower(-power);
-                    frontLeftDrive.setPower(power);
-                    backLeftDrive.setPower(power);
-                    backRightDrive.setPower(-power);
-                }
-
-            }
         } else {
             stopDrive();
-        */ 
         }
 
 
