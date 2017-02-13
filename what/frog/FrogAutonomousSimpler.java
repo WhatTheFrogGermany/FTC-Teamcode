@@ -24,6 +24,14 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         });
         robotWait(500);
     }
+
+    public void addDriveToPosition(int x, int y){
+        int[] vector;
+        vector = FrogMath.calculateVector(x, y, robotX, robotY);
+        final double[] polar = FrogMath.xyToPolar(vector[0], vector[1]);
+        addDriveToHeading((int)polar[1]);
+        addDriveDistance((int)polar[0]);
+    }
     public void addDriveToHeading(int heading){
         final int heading_final = heading;
         addAction(new FrogAction() {

@@ -22,8 +22,8 @@ public class FrogAutonomous extends FrogOpMode {
     ArrayList<FrogAction> actionList;
     int actionIndex = 0;
 
-    int robotX;
-    int robotY;
+    int robotX = 0;
+    int robotY = 0;
     int heading;
 
     FrogMotor frontRightDrive;
@@ -34,6 +34,10 @@ public class FrogAutonomous extends FrogOpMode {
     ElapsedTime waitTime;
     int waitMilliSecs;
 
+    public void setRobotXY(int x, int y){
+        robotX = x;
+        robotY = y;
+    }
     public void initWait(int milliSecs){
         waitTime = new ElapsedTime();
         waitMilliSecs = milliSecs;
@@ -46,7 +50,7 @@ public class FrogAutonomous extends FrogOpMode {
             return true;
         }
     }
-    public void driveToPosition(int x, int y){
+    public void initDriveToPosition(int x, int y){
 
     }
 
@@ -95,7 +99,7 @@ public class FrogAutonomous extends FrogOpMode {
         backRightDrive.reset();
     }
     public void initDriveDistance(int cmDistance){
-        int encoderValue = cmDistance; //for now. I'll later calculate something using the stuff I measure
+        int encoderValue = cmDistance * 10; //for now. I'll later calculate something using the stuff I measure
         frontRightDrive.initDriveToPosition(encoderValue, 5000, 1);
         frontLeftDrive.initDriveToPosition(encoderValue, 5000, 1);
         backLeftDrive.initDriveToPosition(encoderValue, 5000, 1);

@@ -15,7 +15,7 @@ public class AutoScrimmage extends FrogAutonomousSimpler {
         changeDirection(GABI_FRONT);
         wildeHildeMotor.setTolerance(0.1);
         setDriveTolerances(0.1);
-        addDriveDistance(1000);
+        addDriveDistance(100);
         addShoot();
         addNextBall();
         addShoot();
