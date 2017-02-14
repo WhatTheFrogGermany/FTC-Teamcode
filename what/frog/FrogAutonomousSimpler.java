@@ -25,6 +25,15 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         robotWait(500);
     }
 
+    public void addChangeFront(final short front){
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                changeDirection(front);
+                nextAction();
+            }
+        });
+    }
     public void addDriveToPosition(int x, int y){
         int[] vector;
         vector = FrogMath.calculateVector(x, y, robotX, robotY);
@@ -83,7 +92,9 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
             @Override
             public void action() {
                 driveToWall();
+                telemetry.addData("Status", "driving to wall");
                 if(!drivingToWall()){
+                    resetDrive();
                     nextAction();
                 }
             }

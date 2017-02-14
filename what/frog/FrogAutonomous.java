@@ -138,15 +138,18 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public void driveToWall(){
-        if(leftBeaconRange.getOptical() <= 2){
-            frontLeftDrive.setPower(0.1);
-            backLeftDrive.setPower(0.1);
+        telemetry.addData("leftBeaconRange", leftBeaconRange.getUltrasonic());
+        telemetry.addData("rightBeaconRange", rightBeaconRange.getUltrasonic());
+        if(leftBeaconRange.getUltrasonic() > 10){
+            frontLeftDrive.setPower(0.05);
+            backLeftDrive.setPower(0.05);
         } else {
             frontLeftDrive.setPower(0);
             backLeftDrive.setPower(0);
-        } if(rightBeaconRange.getOptical() <= 2){
-            frontRightDrive.setPower(0.1);
-            backRightDrive.setPower(0.1);
+        }
+        if(rightBeaconRange.getUltrasonic() > 10){
+            frontRightDrive.setPower(0.05);
+            backRightDrive.setPower(0.05);
         } else {
             frontRightDrive.setPower(0);
             backRightDrive.setPower(0);
@@ -154,7 +157,7 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public boolean drivingToWall(){
-        return (leftBeaconRange.getOptical() <= 2) || (rightBeaconRange.getOptical() <= 2);
+        return (leftBeaconRange.getUltrasonic() > 10) || (rightBeaconRange.getUltrasonic() > 10);
     }
     public void pushBlueBeacon(){
         if (leftBeaconColor.blue() > leftBeaconColor.red()) {
