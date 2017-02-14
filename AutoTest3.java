@@ -13,6 +13,7 @@ public class AutoTest3 extends FrogAutonomousSimpler {
     public void init() {
         super.init();
         changeDirection(GABI_FRONT);
-        addDriveToPosition(100, 100);
+        //addDriveToPosition(100, 100);
+        addBlueBeacon();
     }
 }

@@ -78,6 +78,17 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         });
     }
 
+    public void addDriveToWall(){
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                driveToWall();
+                if(!drivingToWall()){
+                    nextAction();
+                }
+            }
+        });
+    }
     public void addBlueBeacon(){
         addAction(new FrogAction() {
             @Override
