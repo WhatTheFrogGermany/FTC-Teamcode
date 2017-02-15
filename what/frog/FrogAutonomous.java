@@ -25,6 +25,7 @@ public class FrogAutonomous extends FrogOpMode {
     int robotX = 0;
     int robotY = 0;
     int heading;
+    int rangeDistance;
 
     FrogMotor frontRightDrive;
     FrogMotor frontLeftDrive;
@@ -137,27 +138,24 @@ public class FrogAutonomous extends FrogOpMode {
         return front;
     }
 
-    public void driveToWall(){
+    public void driveToWall(int distance){
         telemetry.addData("leftBeaconRange", leftBeaconRange.getUltrasonic());
         telemetry.addData("rightBeaconRange", rightBeaconRange.getUltrasonic());
-        if(leftBeaconRange.getUltrasonic() > 10){
-            frontLeftDrive.setPower(0.05);
-            backLeftDrive.setPower(0.05);
-        } else {
-            frontLeftDrive.setPower(0);
-            backLeftDrive.setPower(0);
-        }
-        if(rightBeaconRange.getUltrasonic() > 10){
-            frontRightDrive.setPower(0.05);
-            backRightDrive.setPower(0.05);
-        } else {
-            frontRightDrive.setPower(0);
-            backRightDrive.setPower(0);
-        }
+        rangeDistance = distance;
+        double leftPower = (distance - leftBeaconRange.getUltrasonic()) *0.005;
+        double rightPower = (distance - rightBeaconRange.getUltrasonic()) * 0.005;
+        leftPower = FrogMath.checkSmallerOne(leftPower);
+        rightPower = FrogMath.checkSmallerOne(rightPower);
+
+        frontLeftDrive.setPower(leftPower);
+        backLeftDrive.setPower(leftPower);
+
+        frontRightDrive.setPower(rightPower);
+        backRightDrive.setPower(rightPower);
     }
 
     public boolean drivingToWall(){
-        return (leftBeaconRange.getUltrasonic() > 10) || (rightBeaconRange.getUltrasonic() > 10);
+        return (Math.abs(rangeDistance - leftBeaconRange.getUltrasonic()) > 1) || (Math.abs(rangeDistance - rightBeaconRange.getUltrasonic()) > 1);
     }
     public void pushBlueBeacon(){
         if (leftBeaconColor.blue() > leftBeaconColor.red()) {

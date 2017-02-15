@@ -24,4 +24,14 @@ public class FrogMath {
         double[] result = {length, degrees};
         return result;
     }
+
+    public static double checkSmallerOne(double val){
+        if (val > 1){
+            val = 1;
+        }
+        if (val < -1){
+            val = -1;
+        }
+        return val;
+    }
 }
