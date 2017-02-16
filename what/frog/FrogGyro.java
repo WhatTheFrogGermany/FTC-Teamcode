@@ -25,12 +25,17 @@ public class FrogGyro extends FrogSensor {
 
     ElapsedTime elapsedTime = new ElapsedTime();
 
+    int lastHeading;
     public FrogGyro(HardwareMap hardwareMap, String name, int address){
         super(hardwareMap, name, address);
     }
 
     public int getHeading(){
-        return readTwoBytes(HEADING_REGISTER);
+        int value = readTwoBytes(HEADING_REGISTER);
+        if(value != -1){
+            lastHeading = value;
+        }
+        return lastHeading;
     }
 
     public int getIntegratedZ(){

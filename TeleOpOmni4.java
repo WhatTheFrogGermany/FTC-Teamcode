@@ -26,7 +26,7 @@ public class TeleOpOmni4 extends FrogOpMode {
     //for driving with the Gyros
     int desiredHeading = 0;
     FrogToggle gyrosToggle;
-    int gyroCount = 0;
+
 
     int lyMag;
     int lxMag;
@@ -111,9 +111,8 @@ public class TeleOpOmni4 extends FrogOpMode {
         double[] beforeScaled = {a,b,c,d};
 
         gyrosToggle.toggle(gamepad1.right_trigger > 0.5);
-        gyroCount++;
-        if(gyrosToggle.getState() && gyroCount > 10) {
-            gyroCount = 0;
+
+        if(gyrosToggle.getState()) {
             double[] adjusted = adjustToHeading(beforeScaled);
             scaled = scaleDown(adjusted, x, y, r);
             telemetry.addData("GyrosDrive", true);
