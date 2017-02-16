@@ -29,6 +29,7 @@ public class TeleOpOmni4 extends FrogOpMode {
 
     int lyMag;
     int lxMag;
+    double r_extra = 0;
 
     double[] scaled = new double[4];
 
@@ -114,6 +115,7 @@ public class TeleOpOmni4 extends FrogOpMode {
             scaled = scaleDown(adjusted, x, y, r);
             telemetry.addData("GyrosDrive", true);
         } else {
+            r_extra = 0;
             scaled = scaleDown(beforeScaled, x, y, r);
             telemetry.addData("GyrosDrive", false);
         }
@@ -145,7 +147,7 @@ public class TeleOpOmni4 extends FrogOpMode {
         }else if (difference < -180){
             difference = difference + 360;
         }
-        double r_extra = ((difference) * 0.005556);
+        r_extra = ((difference) * 0.005556);
         telemetry.addData("power", r_extra);
         telemetry.addData("heading", desiredHeading);
         telemetry.addData("gyro val", getHeading());
@@ -193,6 +195,10 @@ public class TeleOpOmni4 extends FrogOpMode {
         if(absolute > Math.abs(r)) {
             for (int i = 0; i < 4; i++) {
                 vals[i] = vals[i] * absolute;
+            }
+        } else if(r_extra != 0){
+            for (int i = 0; i < 4; i++) {
+                vals[i] = vals[i] * Math.abs(r_extra);
             }
         } else {
             for (int i = 0; i < 4; i++) {
