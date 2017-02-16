@@ -124,15 +124,13 @@ public class TeleOpOmni4 extends FrogOpMode {
         c = scaled[2];
         d = scaled[3];
 
-        if(x != 0 || y != 0 || r != 0) {
+        if(!isAllNull(scaled)) {
             //changed it from cornerMotors to directionMotors for changing the directions
             frontRightDrive.setPower(a);
             frontLeftDrive.setPower(b);
             backLeftDrive.setPower(c);
             backRightDrive.setPower(d);
-        }
-
-        if(r == 0 && x == 0 && y == 0 && !extraDrive){
+        } else if(!extraDrive){
             aOmni.setPower(0);
             bOmni.setPower(0);
             cOmni.setPower(0);
@@ -159,6 +157,15 @@ public class TeleOpOmni4 extends FrogOpMode {
         vals[3] += r_extra;
 
         return vals;
+    }
+
+    public boolean isAllNull(double[] vals){
+        for(int i = 0; i < vals.length; i++){
+            if(vals[i] != 0){
+                return false;
+            }
+        }
+        return true;
     }
     public double[] scaleDown(double[] vals, double x ,double y, double r){
         //instead of the check we will scale down proportionally (10.10.16)
