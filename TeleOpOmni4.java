@@ -196,7 +196,7 @@ public class TeleOpOmni4 extends FrogOpMode {
             }
         } else {
             for (int i = 0; i < 4; i++) {
-                vals[i] = vals[i] * r;
+                vals[i] = vals[i] * Math.abs(r);
             }
         }
 
