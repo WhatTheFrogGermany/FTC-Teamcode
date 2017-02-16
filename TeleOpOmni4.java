@@ -22,6 +22,11 @@ public class TeleOpOmni4 extends FrogOpMode {
     FrogToggle slowModeToggle;
 
     public boolean extraDrive = false; // work around to make sure MeasureDrive is working properly
+
+    //for driving with the Gyros
+    int desiredHeading = 0;
+    FrogToggle gyrosToggle;
+
     int lyMag;
     int lxMag;
 
@@ -43,6 +48,7 @@ public class TeleOpOmni4 extends FrogOpMode {
     public void init (){
         super.init();
 
+        gyrosToggle = new FrogToggle(500);
         slowModeToggle = new FrogToggle(500);
         gabiBlockToggle = new FrogToggle(500);
 
@@ -92,11 +98,12 @@ public class TeleOpOmni4 extends FrogOpMode {
 
         double a = -x + y - r;
         double b = x + y + r;
-        double c = - x + y - r;
-        double d = x + y + r;
+        double c = - x + y + r;
+        double d = x + y - r;
 
         double[] beforeScaled = {a,b,c,d};
-        scaled = scaleDown(beforeScaled, x, y, r);
+        double[] adjusted = adjustToHeading(beforeScaled);
+        scaled = scaleDown(adjusted, x, y, r);
         a = scaled[0];
         b = scaled[1];
         c = scaled[2];
@@ -119,6 +126,25 @@ public class TeleOpOmni4 extends FrogOpMode {
 
     }
 
+    public double[] adjustToHeading(double[] vals){
+        int difference = desiredHeading - getHeading();
+        if(difference > 180){
+            difference = 360 - difference;
+        }else if (difference < -180){
+            difference = difference + 360;
+        }
+        double r_extra = ((difference) * 0.005556 * 0.3);
+        telemetry.addData("power", r_extra);
+        telemetry.addData("heading", desiredHeading);
+        telemetry.addData("gyro val", getHeading());
+
+        vals[0] += r_extra;
+        vals[1] -= r_extra;
+        vals[2] -= r_extra;
+        vals[3] += r_extra;
+
+        return vals;
+    }
     public double[] scaleDown(double[] vals, double x ,double y, double r){
         //instead of the check we will scale down proportionally (10.10.16)
         //first we check for the greatest of all four values

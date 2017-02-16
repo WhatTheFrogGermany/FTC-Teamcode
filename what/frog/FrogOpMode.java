@@ -149,4 +149,10 @@ public class FrogOpMode extends OpMode {
         backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
     }
+
+    public int getHeading(){
+        //int result = Math.round(((360-topGyro.getHeading())+bottomGyro.getHeading())/2);
+        //telemetry.addData("result", result);
+        return bottomGyro.getHeading();
+    }
 }

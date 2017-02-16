@@ -113,11 +113,6 @@ public class FrogAutonomous extends FrogOpMode {
         backLeftDrive.reset();
         backRightDrive.reset();
     }
-    public int getHeading(){
-        //int result = Math.round(((360-topGyro.getHeading())+bottomGyro.getHeading())/2);
-        //telemetry.addData("result", result);
-        return bottomGyro.getHeading();
-    }
 
     public void resetHeading(){
         bottomGyro.reset();
