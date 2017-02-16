@@ -106,8 +106,8 @@ public class TeleOpOmni4 extends FrogOpMode {
 
         double a = -x + y - r;
         double b = x + y + r;
-        double c = x - y - r;
-        double d = -x - y + r;
+        double c = - x + y - r;
+        double d = x + y + r;
 
         double[] beforeScaled = {a,b,c,d};
         scaled = scaleDown(beforeScaled, x, y, r);
@@ -219,9 +219,9 @@ public class TeleOpOmni4 extends FrogOpMode {
 
     public void changeMotorDirections(){
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        backRightDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
-        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
     }
 
     public void lift(){
