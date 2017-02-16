@@ -109,7 +109,7 @@ public class TeleOpOmni4 extends FrogOpMode {
 
         double[] beforeScaled = {a,b,c,d};
 
-        gyrosToggle.toggle(gamepad1.right_trigger > 0.5);
+        gyrosToggle.toggle(false);
         if(gyrosToggle.getState()) {
             double[] adjusted = adjustToHeading(beforeScaled);
             scaled = scaleDown(adjusted, x, y, r);
@@ -192,11 +192,11 @@ public class TeleOpOmni4 extends FrogOpMode {
 
         //Afterwards we scale according to the absolute value of x and y (the distance the stick is from 0)
         double absolute = Math.sqrt(x*x + y*y);
-        if(absolute > Math.abs(r)) {
+        if(absolute > Math.abs(r) && absolute > Math.abs(r_extra)) {
             for (int i = 0; i < 4; i++) {
                 vals[i] = vals[i] * absolute;
             }
-        } else if(r_extra != 0){
+        } else if(r_extra > r){
             for (int i = 0; i < 4; i++) {
                 vals[i] = vals[i] * Math.abs(r_extra);
             }
