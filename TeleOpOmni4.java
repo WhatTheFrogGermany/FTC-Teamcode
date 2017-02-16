@@ -49,6 +49,8 @@ public class TeleOpOmni4 extends FrogOpMode {
         super.init();
 
         gyrosToggle = new FrogToggle(500);
+        gyrosToggle.toggle(true);
+
         slowModeToggle = new FrogToggle(500);
         gabiBlockToggle = new FrogToggle(500);
 
@@ -94,7 +96,6 @@ public class TeleOpOmni4 extends FrogOpMode {
         x = x * x * lxMag;
 
         double r = gamepad1.right_stick_x;
-        r *= 0.5;
 
         if(r != 0){
             desiredHeading = getHeading();
@@ -106,6 +107,7 @@ public class TeleOpOmni4 extends FrogOpMode {
         double d = x + y - r;
 
         double[] beforeScaled = {a,b,c,d};
+        scaled = scaleDown(beforeScaled, x, y, r);
 
         gyrosToggle.toggle(gamepad1.right_trigger > 0.5);
         if(gyrosToggle.getState()) {
@@ -146,7 +148,7 @@ public class TeleOpOmni4 extends FrogOpMode {
         }else if (difference < -180){
             difference = difference + 360;
         }
-        double r_extra = ((difference) * 0.005556 * 0.3);
+        double r_extra = ((difference) * 0.005556);
         telemetry.addData("power", r_extra);
         telemetry.addData("heading", desiredHeading);
         telemetry.addData("gyro val", getHeading());
@@ -163,13 +165,13 @@ public class TeleOpOmni4 extends FrogOpMode {
         //first we check for the greatest of all four values
         double greatest = 0;
         for(int i = 0; i < 4; i++){
-            if(vals[i] > greatest){
+            if(Math.abs(vals[i]) > Math.abs(greatest)){
                 greatest = vals[i];
             }
         }
 
         //then we scale the rest accordingly to make sure the greatest value equals one.
-        double scale = 1 / greatest;
+        double scale = Math.abs(1 / greatest);
         for(int i = 0; i < 4; i++){
             vals[i] = vals[i] * scale;
             vals[i] = check(vals[i]);
@@ -177,7 +179,7 @@ public class TeleOpOmni4 extends FrogOpMode {
 
         //Afterwards we scale according to the absolute value of x and y (the distance the stick is from 0)
         double absolute = Math.sqrt(x*x + y*y);
-        if(absolute > r) {
+        if(absolute > Math.abs(r)) {
             for (int i = 0; i < 4; i++) {
                 vals[i] = vals[i] * absolute;
             }
