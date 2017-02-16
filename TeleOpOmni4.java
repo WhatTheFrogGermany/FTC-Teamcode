@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.ams.AMSColorSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -109,7 +110,7 @@ public class TeleOpOmni4 extends FrogOpMode {
         double d = x + y - r;
 
         double[] beforeScaled = {a,b,c,d};
-
+        beforeScaled = scaleDown(beforeScaled, x, y, r);
         gyrosToggle.toggle(gamepad1.right_trigger > 0.5);
 
         if(gyrosToggle.getState()) {
@@ -122,6 +123,9 @@ public class TeleOpOmni4 extends FrogOpMode {
             telemetry.addData("GyrosDrive", false);
         }
 
+        for(int i = 0; i < 4; i++){
+            telemetry.addData(Integer.toString(i), scaled[i]);
+        }
         a = scaled[0];
         b = scaled[1];
         c = scaled[2];
@@ -143,21 +147,41 @@ public class TeleOpOmni4 extends FrogOpMode {
     }
 
     public double[] adjustToHeading(double[] vals){
-        int difference = desiredHeading - getHeading();
-        if(difference > 180){
-            difference = 360 - difference;
-        }else if (difference < -180){
-            difference = difference + 360;
+        if(bottomGyro.getIsValueNew()) {
+            int difference = desiredHeading - getHeading();
+            if (difference > 180) {
+                difference = 360 - difference;
+            } else if (difference < -180) {
+                difference = difference + 360;
+            }
+            r_extra = ((difference) * 0.005556 * 0.3);
         }
-        r_extra = ((difference) * 0.005556);
         telemetry.addData("power", r_extra);
         telemetry.addData("heading", desiredHeading);
         telemetry.addData("gyro val", getHeading());
-
         vals[0] += r_extra;
         vals[1] -= r_extra;
         vals[2] -= r_extra;
         vals[3] += r_extra;
+
+        double greatest = 0;
+        for(int i = 0; i < 4; i++){
+            if(Math.abs(vals[i]) > Math.abs(greatest)){
+                greatest = vals[i];
+            }
+        }
+
+        //then we scale the rest accordingly to make sure the greatest value equals one.
+        double scale;
+        if(greatest != 0) {
+            scale = Math.abs(1 / greatest);
+        } else {
+            scale = 0;
+        }
+        for(int i = 0; i < 4; i++){
+            vals[i] = vals[i] * scale * Math.abs(r_extra);
+            vals[i] = check(vals[i]);
+        }
 
         return vals;
     }
@@ -193,14 +217,10 @@ public class TeleOpOmni4 extends FrogOpMode {
         }
 
         //Afterwards we scale according to the absolute value of x and y (the distance the stick is from 0)
-        double absolute = Math.sqrt(x*x + y*y);
-        if(absolute > Math.abs(r) && absolute > Math.abs(r_extra)) {
+        double absolute = Math.abs(Math.sqrt(x*x + y*y));
+        if(absolute > Math.abs(r)) {
             for (int i = 0; i < 4; i++) {
                 vals[i] = vals[i] * absolute;
-            }
-        } else if(Math.abs(r_extra) > Math.abs(r)){
-            for (int i = 0; i < 4; i++) {
-                vals[i] = vals[i] * Math.abs(r_extra);
             }
         } else {
             for (int i = 0; i < 4; i++) {
