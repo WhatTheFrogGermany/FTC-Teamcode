@@ -107,7 +107,6 @@ public class TeleOpOmni4 extends FrogOpMode {
         double d = x + y - r;
 
         double[] beforeScaled = {a,b,c,d};
-        scaled = scaleDown(beforeScaled, x, y, r);
 
         gyrosToggle.toggle(gamepad1.right_trigger > 0.5);
         if(gyrosToggle.getState()) {
@@ -178,7 +177,12 @@ public class TeleOpOmni4 extends FrogOpMode {
         }
 
         //then we scale the rest accordingly to make sure the greatest value equals one.
-        double scale = Math.abs(1 / greatest);
+        double scale;
+        if(greatest != 0) {
+            scale = Math.abs(1 / greatest);
+        } else {
+            scale = 0;
+        }
         for(int i = 0; i < 4; i++){
             vals[i] = vals[i] * scale;
             vals[i] = check(vals[i]);
