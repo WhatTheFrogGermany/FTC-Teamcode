@@ -20,6 +20,7 @@ public class FrogSensor {
     boolean locked = false;
     int milliSecondsWait = 250;
     ElapsedTime waitTime;
+    boolean isValueNew = false;
 
     public FrogSensor(HardwareMap hardwareMap, String name, int address){
         this.name = name;
@@ -38,8 +39,10 @@ public class FrogSensor {
         if(waitTime.milliseconds() > milliSecondsWait) {
             waitTime.reset();
             readCache = deviceRead.read(address, 1);
+            isValueNew = true;
             return readCache[0] & 0xFF;
         } else {
+            isValueNew = false;
             return -1;
         }
     }
@@ -51,12 +54,16 @@ public class FrogSensor {
         if(waitTime.milliseconds() > milliSecondsWait){
             waitTime.reset();
             readCache = deviceRead.read(address, 2);
+            isValueNew = true;
             return FrogMath.bytesToInt(readCache);
         } else {
+            isValueNew = false;
             return -1;
         }
 
     }
+
+    public boolean getIsValueNew(){return isValueNew;}
 
     public void write(int address, byte[] toWrite){
         deviceRead.write(address, toWrite);
