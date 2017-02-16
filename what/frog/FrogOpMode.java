@@ -11,11 +11,25 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by FTC2 on 31.01.2017.
  */
 public class FrogOpMode extends OpMode {
+    //variables to save the front
+    public final static short HILDE_FRONT = 0;
+    public final static short FRANZ_FRONT = 1;
+    public final static short BEACON_FRONT = 2;
+    public final static short GABI_FRONT = 3;
+
+    short front = GABI_FRONT;
     //drive
     protected FrogMotor aOmni;
     protected FrogMotor bOmni;
     protected FrogMotor cOmni;
     protected FrogMotor dOmni;
+
+    //enable to change the front (18.10.16)
+    //16.02 moved into the FrogOpMode
+    protected FrogMotor frontRightDrive;
+    protected FrogMotor frontLeftDrive;
+    protected FrogMotor backLeftDrive;
+    protected FrogMotor backRightDrive;
 
     protected FrogMotor gabiMotor;
     protected Servo gabiBlockServo;
@@ -92,10 +106,47 @@ public class FrogOpMode extends OpMode {
         super.start();
         bottomGyro.reactivateRead();
         topGyro.reactivateRead();
+        changeDirection(GABI_FRONT);
     }
 
     @Override
     public void loop() {
 
+    }
+
+    public void changeDirection(short direction){
+        if(direction == GABI_FRONT){
+            frontRightDrive = aOmni;
+            frontLeftDrive = bOmni;
+            backLeftDrive = cOmni;
+            backRightDrive = dOmni;
+            front = direction;
+        }
+        if(direction == HILDE_FRONT){
+            frontRightDrive = bOmni;
+            frontLeftDrive = cOmni;
+            backLeftDrive = dOmni;
+            backRightDrive = aOmni;
+            front = direction;
+        }
+        if(direction == FRANZ_FRONT){
+            frontRightDrive = cOmni;
+            frontLeftDrive = dOmni;
+            backLeftDrive = aOmni;
+            backRightDrive = bOmni;
+            front = direction;
+        }
+        if(direction == BEACON_FRONT){
+            frontRightDrive = dOmni;
+            frontLeftDrive = aOmni;
+            backLeftDrive = bOmni;
+            backRightDrive = cOmni;
+            front = direction;
+        }
+
+        frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 }

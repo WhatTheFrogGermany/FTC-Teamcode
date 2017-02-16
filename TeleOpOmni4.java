@@ -18,11 +18,6 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogToggle;
 @TeleOp(name="TeleOp: Omni", group="TeleOp")
 
 public class TeleOpOmni4 extends FrogOpMode {
-    //enable to change the front (18.10.16)
-    DcMotor frontLeftDrive;
-    DcMotor frontRightDrive;
-    DcMotor backLeftDrive;
-    DcMotor backRightDrive;
 
     FrogToggle slowModeToggle;
 
@@ -47,15 +42,6 @@ public class TeleOpOmni4 extends FrogOpMode {
     @Override
     public void init (){
         super.init();
-        aOmni.setDirection(DcMotor.Direction.REVERSE);
-        bOmni.setDirection(DcMotor.Direction.FORWARD);
-        dOmni.setDirection(DcMotor.Direction.FORWARD);
-        cOmni.setDirection(DcMotor.Direction.REVERSE);
-
-        frontRightDrive = aOmni;
-        frontLeftDrive = bOmni;
-        backRightDrive = dOmni;
-        backLeftDrive = cOmni;
 
         slowModeToggle = new FrogToggle(500);
         gabiBlockToggle = new FrogToggle(500);
@@ -185,43 +171,20 @@ public class TeleOpOmni4 extends FrogOpMode {
         //to change the front. (18.10.16)
         if(gamepad1.y){
             //Liane
-            frontRightDrive = aOmni;
-            frontLeftDrive = bOmni;
-            backRightDrive = dOmni;
-            backLeftDrive = cOmni;
-            changeMotorDirections();
+            super.changeDirection(FRANZ_FRONT);
         }
         if(gamepad1.b){
             //Enrico
-            frontRightDrive= dOmni;
-            frontLeftDrive = aOmni;
-            backRightDrive = cOmni;
-            backLeftDrive = bOmni;
-            changeMotorDirections();
+            super.changeDirection(HILDE_FRONT);
         }
         if(gamepad1.a){
             //Jens
-            frontRightDrive = cOmni;
-            frontLeftDrive = dOmni;
-            backRightDrive = bOmni;
-            backLeftDrive = aOmni;
-            changeMotorDirections();
+            super.changeDirection(GABI_FRONT);
         }
         if(gamepad1.x){
             //Raimar
-            frontRightDrive = bOmni;
-            frontLeftDrive = cOmni;
-            backRightDrive = aOmni;
-            backLeftDrive = dOmni;
-            changeMotorDirections();
+            super.changeDirection(BEACON_FRONT);
         }
-    }
-
-    public void changeMotorDirections(){
-        frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
-        backRightDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
-        backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
     }
 
     public void lift(){

@@ -10,12 +10,6 @@ import java.util.ArrayList;
  * Created by FTC2 on 01.02.2017.
  */
 public class FrogAutonomous extends FrogOpMode {
-    public final static short HILDE_FRONT = 0;
-    public final static short FRANZ_FRONT = 1;
-    public final static short BEACON_FRONT = 2;
-    public final static short GABI_FRONT = 3;
-
-    short front = GABI_FRONT;
 
     double power;
 
@@ -26,11 +20,6 @@ public class FrogAutonomous extends FrogOpMode {
     int robotY = 0;
     int heading;
     int rangeDistance;
-
-    FrogMotor frontRightDrive;
-    FrogMotor frontLeftDrive;
-    FrogMotor backLeftDrive;
-    FrogMotor backRightDrive;
 
     ElapsedTime waitTime;
     int waitMilliSecs;
@@ -201,41 +190,6 @@ public class FrogAutonomous extends FrogOpMode {
         return wildeHildeMotor.drivingToPosition;
     }
 
-    public void changeDirection(short direction){
-        if(direction == GABI_FRONT){
-            frontRightDrive = aOmni;
-            frontLeftDrive = bOmni;
-            backLeftDrive = cOmni;
-            backRightDrive = dOmni;
-            front = direction;
-        }
-        if(direction == HILDE_FRONT){
-            frontRightDrive = bOmni;
-            frontLeftDrive = cOmni;
-            backLeftDrive = dOmni;
-            backRightDrive = aOmni;
-            front = direction;
-        }
-        if(direction == FRANZ_FRONT){
-            frontRightDrive = cOmni;
-            frontLeftDrive = dOmni;
-            backLeftDrive = aOmni;
-            backRightDrive = bOmni;
-            front = direction;
-        }
-        if(direction == BEACON_FRONT){
-            frontRightDrive = dOmni;
-            frontLeftDrive = aOmni;
-            backLeftDrive = bOmni;
-            backRightDrive = cOmni;
-            front = direction;
-        }
-
-        frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-    }
 
     public void addAction(FrogAction action){
         actionList.add(action);
