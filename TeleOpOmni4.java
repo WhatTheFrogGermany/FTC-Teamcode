@@ -101,40 +101,27 @@ public class TeleOpOmni4 extends FrogOpMode {
         y = y * y * lyMag;
         x = x * x * lxMag;
 
-        double a = -x + y;
-        double b = x + y;
-        double c = x - y;
-        double d = -x - y;
+        double r = gamepad1.right_stick_x;
+        r *= 0.5;
+
+        double a = -x + y - r;
+        double b = x + y + r;
+        double c = x - y - r;
+        double d = -x - y + r;
 
         double[] beforeScaled = {a,b,c,d};
-        scaled = scaleDown(beforeScaled, x, y);
+        scaled = scaleDown(beforeScaled, x, y, r);
         a = scaled[0];
         b = scaled[1];
         c = scaled[2];
         d = scaled[3];
 
-        if(x != 0 || y != 0) {
+        if(x != 0 || y != 0 || r != 0) {
             //changed it from cornerMotors to directionMotors for changing the directions
             frontRightDrive.setPower(a);
             frontLeftDrive.setPower(b);
             backLeftDrive.setPower(c);
             backRightDrive.setPower(d);
-        }
-
-        //nur Stick 2 (drehen)
-        double r = gamepad1.right_stick_x;
-
-        r*=0.5;
-        if(r != 0) {
-            if(slowModeToggle.getState()){
-                r = r * 0.3;
-            }
-            telemetry.addData("RightstickX", r);
-            //rechtsdrehung oder von liane zu enrico
-            frontLeftDrive.setPower(-r);
-            frontRightDrive.setPower(r);
-            backRightDrive.setPower(-r);
-            backLeftDrive.setPower(r);
         }
 
         if(r == 0 && x == 0 && y == 0 && !extraDrive){
@@ -146,7 +133,7 @@ public class TeleOpOmni4 extends FrogOpMode {
 
     }
 
-    public double[] scaleDown(double[] vals, double x ,double y){
+    public double[] scaleDown(double[] vals, double x ,double y, double r){
         //instead of the check we will scale down proportionally (10.10.16)
         //first we check for the greatest of all four values
         double greatest = 0;
@@ -165,9 +152,16 @@ public class TeleOpOmni4 extends FrogOpMode {
 
         //Afterwards we scale according to the absolute value of x and y (the distance the stick is from 0)
         double absolute = Math.sqrt(x*x + y*y);
-        for(int i = 0; i < 4; i++){
-            vals[i] = vals[i] * absolute;
+        if(absolute > r) {
+            for (int i = 0; i < 4; i++) {
+                vals[i] = vals[i] * absolute;
+            }
+        } else {
+            for (int i = 0; i < 4; i++) {
+                vals[i] = vals[i] * r;
+            }
         }
+
         //scale down to 20% if the slowModeToggle is on ; up to 30% on 10.2 bc robot was too heavy
         if(slowModeToggle.getState()){
             for(int i = 0; i < 4; i++){

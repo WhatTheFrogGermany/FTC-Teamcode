@@ -91,6 +91,13 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         addAction(new FrogAction() {
             @Override
             public void action() {
+                changeDirection(BEACON_FRONT);
+                nextAction();
+            }
+        });
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
                 driveToWall(10);
                 telemetry.addData("Status", "driving to wall");
                 if(!drivingToWall()){

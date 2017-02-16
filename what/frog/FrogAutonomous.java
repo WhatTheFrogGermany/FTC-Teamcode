@@ -142,8 +142,9 @@ public class FrogAutonomous extends FrogOpMode {
         telemetry.addData("leftBeaconRange", leftBeaconRange.getUltrasonic());
         telemetry.addData("rightBeaconRange", rightBeaconRange.getUltrasonic());
         rangeDistance = distance;
-        double leftPower = (distance - leftBeaconRange.getUltrasonic()) *0.005;
-        double rightPower = (distance - rightBeaconRange.getUltrasonic()) * 0.005;
+
+        double leftPower = (leftBeaconRange.getUltrasonic() - distance) *0.005;
+        double rightPower = (rightBeaconRange.getUltrasonic() - distance) * 0.005;
         leftPower = FrogMath.checkSmallerOne(leftPower);
         rightPower = FrogMath.checkSmallerOne(rightPower);
 
@@ -155,6 +156,11 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public boolean drivingToWall(){
+        if (leftBeaconRange.getUltrasonic() == 255 && rightBeaconRange.getUltrasonic() == 255)
+        {
+            telemetry.addData("Fehlermeldung bei BeaconSensor", leftBeaconRange);
+            return false;
+        }
         return (Math.abs(rangeDistance - leftBeaconRange.getUltrasonic()) > 1) || (Math.abs(rangeDistance - rightBeaconRange.getUltrasonic()) > 1);
     }
     public void pushBlueBeacon(){
