@@ -99,7 +99,9 @@ public class TeleOpOmni4 extends FrogOpMode {
         x = x * x * lxMag;
 
         double r = gamepad1.right_stick_x;
-
+        if(!slowModeToggle.getState()){
+            r*=0.5;
+        }
         if(r != 0){
             desiredHeading = getHeading();
         }

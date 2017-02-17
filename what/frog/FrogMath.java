@@ -25,6 +25,16 @@ public class FrogMath {
         return result;
     }
 
+    public static int degreesInCircle(int degrees){
+        while(degrees > 360){
+            degrees -= 360;
+        }
+        while(degrees < 0){
+            degrees -= 360;
+        }
+        return degrees;
+    }
+
     public static double checkSmallerOne(double val){
         if (val > 1){
             val = 1;

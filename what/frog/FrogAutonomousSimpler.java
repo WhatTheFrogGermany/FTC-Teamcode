@@ -40,7 +40,8 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         final double[] polar = FrogMath.xyToPolar(vector[0], vector[1]);
         robotX = x;
         robotY = y;
-        addDriveToHeading((int)polar[1]);
+        int heading = headingAfterFront((int)polar[1]);
+        addDriveToHeading(heading);
         addDriveDistance((int)polar[0]);
     }
     public void addDriveToHeading(int heading){

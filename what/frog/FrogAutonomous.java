@@ -114,6 +114,20 @@ public class FrogAutonomous extends FrogOpMode {
         backRightDrive.reset();
     }
 
+    public int headingAfterFront(int gabiHeading){
+        int returnHeading = -1;
+        if(front == GABI_FRONT){
+            returnHeading = gabiHeading;
+        } else if(front == HILDE_FRONT){
+            returnHeading = FrogMath.degreesInCircle(gabiHeading+90);
+        } else if(front == FRANZ_FRONT){
+            returnHeading = FrogMath.degreesInCircle(gabiHeading+180);
+        } else if(front == BEACON_FRONT){
+            returnHeading = FrogMath.degreesInCircle(gabiHeading+370);
+        }
+        return returnHeading;
+    }
+
     public void resetHeading(){
         bottomGyro.reset();
         topGyro.reset();
