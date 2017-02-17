@@ -295,7 +295,7 @@ public class TeleOpOmni4 extends FrogOpMode {
         }
 
         if(franzToggle) {
-            franzMotor.setPower(1);
+            franzMotor.setPower(-1);
         } else {
             franzMotor.setPower(0);
         }
