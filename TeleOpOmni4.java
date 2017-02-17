@@ -300,6 +300,8 @@ public class TeleOpOmni4 extends FrogOpMode {
             franzMotor.setPower(0);
         }
 
+        telemetry.addData("FranzMotor", franzMotor.getPower());
+
 
         if(gamepad2.a && (steffiTime.milliseconds() > 500)){
             steffiToggle = !steffiToggle;
