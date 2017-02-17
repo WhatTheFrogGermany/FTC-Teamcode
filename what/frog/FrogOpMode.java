@@ -33,6 +33,7 @@ public class FrogOpMode extends OpMode {
 
     protected FrogMotor gabiMotor;
     protected Servo gabiBlockServo;
+    protected Servo gabiBlockServoRight;
 
     //the collecting mechanism
     protected FrogMotor steffiMotor;    //the back
@@ -70,7 +71,8 @@ public class FrogOpMode extends OpMode {
         gabiMotor.setDirection(DcMotor.Direction.REVERSE);
         gabiMotor.reset();
 
-        gabiBlockServo = hardwareMap.servo.get("gabi_block_servo");
+        gabiBlockServo = hardwareMap.servo.get("gabi_block_servo_left");
+        gabiBlockServoRight = hardwareMap.servo.get("gabi_block_servo_right");
 
         steffiMotor = new FrogMotor(hardwareMap.dcMotor.get("steffi"));
         franzMotor = new FrogMotor(hardwareMap.dcMotor.get("franz"));

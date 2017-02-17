@@ -114,8 +114,7 @@ public class TeleOpOmni4 extends FrogOpMode {
         gyrosToggle.toggle(gamepad1.right_trigger > 0.5);
 
         if(gyrosToggle.getState()) {
-            double[] adjusted = adjustToHeading(beforeScaled);
-            scaled = scaleDown(adjusted, x, y, r);
+            scaled = adjustToHeading(beforeScaled);
             telemetry.addData("GyrosDrive", true);
         } else {
             r_extra = 0;
@@ -147,6 +146,7 @@ public class TeleOpOmni4 extends FrogOpMode {
     }
 
     public double[] adjustToHeading(double[] vals){
+        double[] valsOld = vals;
         if(bottomGyro.getIsValueNew()) {
             int difference = desiredHeading - getHeading();
             if (difference > 180) {
@@ -174,12 +174,14 @@ public class TeleOpOmni4 extends FrogOpMode {
         //then we scale the rest accordingly to make sure the greatest value equals one.
         double scale;
         if(greatest != 0) {
-            scale = Math.abs(1 / greatest);
+            scale = Math.abs(1/greatest);
         } else {
             scale = 0;
         }
+
         for(int i = 0; i < 4; i++){
-            vals[i] = vals[i] * scale * Math.abs(r_extra);
+            double absolute = Math.sqrt(r_extra*r_extra + valsOld[i]*valsOld[i]);
+            vals[i] = vals[i] * scale * absolute;
             vals[i] = check(vals[i]);
         }
 
@@ -211,6 +213,7 @@ public class TeleOpOmni4 extends FrogOpMode {
         } else {
             scale = 0;
         }
+
         for(int i = 0; i < 4; i++){
             vals[i] = vals[i] * scale;
             vals[i] = check(vals[i]);
@@ -275,8 +278,10 @@ public class TeleOpOmni4 extends FrogOpMode {
         gabiBlockToggle.toggle(gamepad2.left_trigger > 0.5 && gamepad2.right_trigger > 0.5);
         if(gabiBlockToggle.getState()){
             gabiBlockServo.setPosition(0.8);
+            gabiBlockServoRight.setPosition(0.15);
         } else {
             gabiBlockServo.setPosition(0.15);
+            gabiBlockServoRight.setPosition(0.8);
         }
     }
 
