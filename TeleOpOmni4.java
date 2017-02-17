@@ -295,12 +295,10 @@ public class TeleOpOmni4 extends FrogOpMode {
         }
 
         if(franzToggle) {
-            franzMotor.setPower(-1);
+            franzMotor.setPower(1);
         } else {
             franzMotor.setPower(0);
         }
-
-        telemetry.addData("FranzMotor", franzMotor.getPower());
 
 
         if(gamepad2.a && (steffiTime.milliseconds() > 500)){

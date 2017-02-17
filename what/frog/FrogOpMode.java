@@ -76,7 +76,7 @@ public class FrogOpMode extends OpMode {
 
         steffiMotor = new FrogMotor(hardwareMap.dcMotor.get("steffi"));
         franzMotor = new FrogMotor(hardwareMap.dcMotor.get("franz"));
-        //franzMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        franzMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         steffiMotor.reset();
         franzMotor.reset();
 
