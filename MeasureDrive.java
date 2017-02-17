@@ -40,8 +40,8 @@ public class MeasureDrive extends TeleOpOmni4 {
             extraDrive = true;
             frontLeftDrive.setPower(1);
             frontRightDrive.setPower(1);
-            backLeftDrive.setPower(-1);
-            backRightDrive.setPower(-1);
+            backLeftDrive.setPower(1);
+            backRightDrive.setPower(1);
 
         }
 
