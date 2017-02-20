@@ -20,6 +20,7 @@ public class FrogAutonomous extends FrogOpMode {
     int robotY = 0;
     int heading;
     int rangeDistance;
+    ElapsedTime rangeWait;
 
     ElapsedTime waitTime;
     int waitMilliSecs;
@@ -159,7 +160,18 @@ public class FrogAutonomous extends FrogOpMode {
             telemetry.addData("Fehlermeldung bei BeaconSensor", leftBeaconRange);
             return false;
         }
-        return (Math.abs(rangeDistance - leftBeaconRange.getUltrasonic()) > 1) || (Math.abs(rangeDistance - rightBeaconRange.getUltrasonic()) > 1);
+        boolean rightDistance = (Math.abs(rangeDistance - leftBeaconRange.getUltrasonic()) > 1) || (Math.abs(rangeDistance - rightBeaconRange.getUltrasonic()) > 1);
+        if(rightDistance){
+            if(rangeWait.milliseconds() > 500){
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            rangeWait.reset();
+            return true;
+        }
+
     }
     public void pushBlueBeacon(){
         if (leftBeaconColor.blue() > leftBeaconColor.red()) {
@@ -214,6 +226,8 @@ public class FrogAutonomous extends FrogOpMode {
         actionList = new ArrayList<>();
         leftBeaconServo.setPosition(0);
         rightBeaconServo.setPosition(1);
+
+        rangeWait = new ElapsedTime();
     }
 
     @Override
