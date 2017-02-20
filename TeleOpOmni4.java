@@ -279,11 +279,11 @@ public class TeleOpOmni4 extends FrogOpMode {
     public void gabiBlock(){
         gabiBlockToggle.toggle(gamepad2.left_trigger > 0.5 && gamepad2.right_trigger > 0.5);
         if(gabiBlockToggle.getState()){
-            gabiBlockServo.setPosition(0.8);
-            gabiBlockServoRight.setPosition(0.15);
+            gabiBlockServo.setPosition(1); //before this the values were 0.8 and 0.15
+            gabiBlockServoRight.setPosition(0);
         } else {
-            gabiBlockServo.setPosition(0.15);
-            gabiBlockServoRight.setPosition(0.8);
+            gabiBlockServo.setPosition(0);
+            gabiBlockServoRight.setPosition(1);
         }
     }
 
