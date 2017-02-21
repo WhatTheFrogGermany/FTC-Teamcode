@@ -11,11 +11,19 @@ public class FrogRange extends FrogSensor{
     final static byte ULTRASONIC_REGISTER = 0x04;
     final static byte OPTICAL_REGISTER = 0x05;
 
+    int oldUltrasonic = 0;
+
     public FrogRange(HardwareMap hardwareMap, String name, int address){
         super(hardwareMap, name, address);
     };
     public int getUltrasonic(){
-        return super.readOneByte(0x04);
+        int value = super.readOneByte(ULTRASONIC_REGISTER);
+        if(value == -1){
+            return oldUltrasonic;
+        } else {
+            oldUltrasonic = value;
+            return value;
+        }
     }
 
     public int getOptical(){

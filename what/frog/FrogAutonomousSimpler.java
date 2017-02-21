@@ -56,6 +56,7 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         addAction(new FrogAction() {
             @Override
             public void action() {
+                telemetry.addData("Status", "driving to heading " + Integer.toString(heading_final));
                 driveToHeading();
                 if(!drivingToHeading()){
                     stopDrive();
@@ -79,6 +80,7 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         addAction(new FrogAction() {
             @Override
             public void action() {
+                telemetry.addData("Status", "driving to distance " + Integer.toString(distance_final));
                 driveDistance();
                 if(!drivingToPosition()){
                     stopDrive();
@@ -112,6 +114,7 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         addAction(new FrogAction() {
             @Override
             public void action() {
+                telemetry.addData("Status", "pushing blue beacon");
                 pushBlueBeacon();
                 nextAction();
             }
@@ -130,6 +133,7 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         addAction(new FrogAction() {
             @Override
             public void action() {
+                telemetry.addData("Status", "pushing red beacon");
                 pushRedBeacon();
                 nextAction();
             }

@@ -160,16 +160,17 @@ public class FrogAutonomous extends FrogOpMode {
             telemetry.addData("Fehlermeldung bei BeaconSensor", leftBeaconRange);
             return false;
         }
-        boolean rightDistance = (Math.abs(rangeDistance - leftBeaconRange.getUltrasonic()) > 1) || (Math.abs(rangeDistance - rightBeaconRange.getUltrasonic()) > 1);
-        if(rightDistance){
-            if(rangeWait.milliseconds() > 500){
-                return false;
-            } else {
-                return true;
-            }
-        } else {
+        boolean wrongDistance = (Math.abs(rangeDistance - leftBeaconRange.getUltrasonic()) > 1) || (Math.abs(rangeDistance - rightBeaconRange.getUltrasonic()) > 1);
+        if(wrongDistance){
             rangeWait.reset();
             return true;
+        } else {
+            if(rangeWait.milliseconds() > 500){
+                rangeWait.reset();
+                return false;
+            }else {
+                return true;
+            }
         }
 
     }
