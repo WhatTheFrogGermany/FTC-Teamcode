@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by FTC2 on 20.01.2017.
  */
 @TeleOp(name="Info: TeleOmni Encoder", group="info")
-public class TeleOpOmniWithInfo extends TeleOpOmni3{
+public class TeleOpOmniWithInfo extends TeleOpOmni4{
     @Override
     public void init() {
         super.init();
