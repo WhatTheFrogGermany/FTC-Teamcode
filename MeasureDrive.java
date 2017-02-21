@@ -86,6 +86,7 @@ public class MeasureDrive extends TeleOpOmni4 {
         if(gamepad1.left_trigger > 0.5 && storeTime.seconds() > 1){
             storeTime.reset();
             telemetry.addData("status", "saved file");
+            fileWriter.writeAll();
             requestOpModeStop();
         }
 
