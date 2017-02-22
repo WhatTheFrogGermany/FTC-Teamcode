@@ -90,7 +90,7 @@ public class FrogAutonomous extends FrogOpMode {
         backRightDrive.reset();
     }
     public void initDriveDistance(int cmDistance){
-        int encoderValue = cmDistance * 10; //for now. I'll later calculate something using the stuff I measure
+        int encoderValue = (int)Math.round(cmDistance * 80.83); //80.83 is the ppcm I got from my measurements.
         frontRightDrive.initDriveToPosition(encoderValue, 5000, 1);
         frontLeftDrive.initDriveToPosition(encoderValue, 5000, 1);
         backLeftDrive.initDriveToPosition(encoderValue, 5000, 1);
