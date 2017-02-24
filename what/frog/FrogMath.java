@@ -44,4 +44,14 @@ public class FrogMath {
         }
         return val;
     }
+
+    public static double checkSmaller(double val, double limit){
+        if (val > limit){
+            val = limit;
+        }
+        if (val < -limit){
+            val = limit;
+        }
+        return val;
+    }
 }

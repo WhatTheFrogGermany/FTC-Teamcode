@@ -80,7 +80,7 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public boolean drivingToHeading(){
-        return (Math.abs(heading - getHeading()) > 5);
+        return (Math.abs(heading - getHeading()) > 3);
     }
 
     public void stopDrive(){
@@ -90,7 +90,7 @@ public class FrogAutonomous extends FrogOpMode {
         backRightDrive.reset();
     }
     public void initDriveDistance(int cmDistance){
-        int encoderValue = (int)Math.round(cmDistance * 80.83); //80.83 is the ppcm I got from my measurements.
+        int encoderValue = (int)Math.round(cmDistance * 20.1); // 20.1 is the ppcm I got from my measurements.
         frontRightDrive.initDriveToPosition(encoderValue, 5000, 1);
         frontLeftDrive.initDriveToPosition(encoderValue, 5000, 1);
         backLeftDrive.initDriveToPosition(encoderValue, 5000, 1);
@@ -144,8 +144,8 @@ public class FrogAutonomous extends FrogOpMode {
 
         double leftPower = (leftBeaconRange.getUltrasonic() - distance) *0.005;
         double rightPower = (rightBeaconRange.getUltrasonic() - distance) * 0.005;
-        leftPower = FrogMath.checkSmallerOne(leftPower);
-        rightPower = FrogMath.checkSmallerOne(rightPower);
+        leftPower = FrogMath.checkSmaller(leftPower, 0.3);
+        rightPower = FrogMath.checkSmaller(rightPower, 0.3);
 
         frontLeftDrive.setPower(leftPower);
         backLeftDrive.setPower(leftPower);
@@ -237,6 +237,7 @@ public class FrogAutonomous extends FrogOpMode {
         if(actionIndex < actionList.size()) {
             actionList.get(actionIndex).action();
         }
-        gabiBlockServo.setPosition(0.15);
+        gabiBlockServo.setPosition(0);
+        gabiBlockServoRight.setPosition(1);
     }
 }

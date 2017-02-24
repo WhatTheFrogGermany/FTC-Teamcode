@@ -37,7 +37,7 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
     public void addDriveToPosition(int x, int y){
         int[] vector;
         vector = FrogMath.calculateVector(x, y, robotX, robotY);
-        final double[] polar = FrogMath.xyToPolar(vector[0], vector[1]);
+        double[] polar = FrogMath.xyToPolar(vector[0], vector[1]);
         robotX = x;
         robotY = y;
         int heading = headingAfterFront((int)polar[1]);
