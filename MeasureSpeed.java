@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.what.frog.FrogTableTelemetry;
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogTableTelemetry;
  * Created by FTC2 on 27.01.2017.
  */
 
-@TeleOp(name="Measure: Drive", group="Measure")
+@TeleOp(name="Measure: Speed", group="Measure")
 //This OpMode is for measuring the encoder values that correlate to the distance driven.
 public class MeasureSpeed extends TeleOpOmni4 {
 
@@ -28,7 +29,7 @@ public class MeasureSpeed extends TeleOpOmni4 {
         super.init();
         elapsedTime = new ElapsedTime();
         storeTime = new ElapsedTime();
-
+        driveTime = new ElapsedTime();
         fileWriter = new FrogTableTelemetry("measure_speed.csv", 6, "mes", telemetry);
     }
 
@@ -86,6 +87,11 @@ public class MeasureSpeed extends TeleOpOmni4 {
             bOmni.reset();
             cOmni.reset();
             dOmni.reset();
+
+            aOmni.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            bOmni.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            cOmni.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            dOmni.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
         /*
