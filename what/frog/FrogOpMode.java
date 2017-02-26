@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.what.frog;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -34,6 +35,7 @@ public class FrogOpMode extends OpMode {
     protected FrogMotor gabiMotor;
     protected Servo gabiBlockServo;
     protected Servo gabiBlockServoRight;
+    protected CRServo quewakServo;
 
     //the collecting mechanism
     protected FrogMotor steffiMotor;    //the back
@@ -73,6 +75,7 @@ public class FrogOpMode extends OpMode {
 
         gabiBlockServo = hardwareMap.servo.get("gabi_block_servo_left");
         gabiBlockServoRight = hardwareMap.servo.get("gabi_block_servo_right");
+        quewakServo = hardwareMap.crservo.get("quewak_Servo");
 
         steffiMotor = new FrogMotor(hardwareMap.dcMotor.get("steffi"));
         franzMotor = new FrogMotor(hardwareMap.dcMotor.get("franz"));

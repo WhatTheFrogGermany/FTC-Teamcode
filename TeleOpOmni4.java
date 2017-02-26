@@ -46,6 +46,7 @@ public class TeleOpOmni4 extends FrogOpMode {
     int lastTargetPositionHilde = 0;
     boolean hildeRotatedFully = true;
     boolean customMoveHilde = false;
+    boolean slowModeOn = false;
 
     @Override
     public void init (){
@@ -82,6 +83,13 @@ public class TeleOpOmni4 extends FrogOpMode {
         slowModeToggle.toggle(gamepad1.left_trigger > 0.5);
         double y = -(gamepad1.left_stick_y);
         double x = gamepad1.left_stick_x;
+
+        if(slowModeToggle.getState()){
+            quewakServo.setPower(1);
+        } else {
+            quewakServo.setPower(0);
+        }
+        //vonJanine keine ahnung wie das tut und welcherichtung und so
 
         if (y < 0) {
             lyMag = -1;
