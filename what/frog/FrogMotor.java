@@ -94,7 +94,7 @@ public class FrogMotor extends DcMotorImpl {
     public void reset(){
         setPower(0);
         setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        setMode(DcMotor.RunMode.RUN_USING_ENCODER);;
+        setMode(RunMode.RUN_WITHOUT_ENCODER);;
         drivingToPosition = false;
         lastTargetPosition = 0;
     }

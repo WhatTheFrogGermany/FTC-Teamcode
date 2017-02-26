@@ -50,7 +50,7 @@ public class FrogMath {
             val = limit;
         }
         if (val < -limit){
-            val = limit;
+            val = -limit;
         }
         return val;
     }

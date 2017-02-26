@@ -143,15 +143,26 @@ public class FrogAutonomous extends FrogOpMode {
         rangeDistance = distance;
 
         int averageDistance = (int) (leftBeaconRange.getUltrasonic() + rightBeaconRange.getUltrasonic()) / 2;
-        double power = (averageDistance - distance) * 0.007;
+        double power;
+        if((averageDistance - distance) > 40){
+            power = 0.1;
+        } else {
+            power = -0.0000625*Math.pow(Math.abs((double)(averageDistance-distance)) - 40,2) + 0.1;
+            if(averageDistance - distance < 0){
+                power *= -1;
+            }
+        }
         double leftPower;
         double rightPower;
         if(leftBeaconRange.getUltrasonic() <= rangeDistance || rightBeaconRange.getUltrasonic() <= rangeDistance ){
+
             leftPower = (leftBeaconRange.getUltrasonic() - distance) *0.007;
             rightPower = (rightBeaconRange.getUltrasonic() - distance) * 0.007;
+            telemetry.addData("Setting", "seperate");
         } else {
             leftPower = power;
             rightPower = power;
+            telemetry.addData("Setting", "same");
         }
 
         if(leftBeaconRange.getUltrasonic() == 255 || rightBeaconRange.getUltrasonic() == 255){
@@ -162,6 +173,8 @@ public class FrogAutonomous extends FrogOpMode {
         leftPower = FrogMath.checkSmaller(leftPower, 0.2);
         rightPower = FrogMath.checkSmaller(rightPower, 0.2);
 
+        telemetry.addData("leftPower", leftPower);
+        telemetry.addData("rightPower", rightPower);
         frontLeftDrive.setPower(leftPower);
         backLeftDrive.setPower(leftPower);
 
