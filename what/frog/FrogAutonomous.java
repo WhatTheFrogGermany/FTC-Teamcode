@@ -145,9 +145,9 @@ public class FrogAutonomous extends FrogOpMode {
         int averageDistance = (int) (leftBeaconRange.getUltrasonic() + rightBeaconRange.getUltrasonic()) / 2;
         double power;
         if((averageDistance - distance) > 40){
-            power = 0.1;
+            power = 0.2;
         } else {
-            power = -0.0000625*Math.pow(Math.abs((double)(averageDistance-distance)) - 40,2) + 0.1;
+            power = -0.000125*Math.pow(Math.abs((double)(averageDistance-distance)) - 40,2) + 0.2;
             if(averageDistance - distance < 0){
                 power *= -1;
             }
