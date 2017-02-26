@@ -75,7 +75,7 @@ public class FrogOpMode extends OpMode {
 
         gabiBlockServo = hardwareMap.servo.get("gabi_block_servo_left");
         gabiBlockServoRight = hardwareMap.servo.get("gabi_block_servo_right");
-        quewakServo = hardwareMap.crservo.get("quewak_Servo");
+        quewakServo = hardwareMap.crservo.get("quewak_servo");
 
         steffiMotor = new FrogMotor(hardwareMap.dcMotor.get("steffi"));
         franzMotor = new FrogMotor(hardwareMap.dcMotor.get("franz"));

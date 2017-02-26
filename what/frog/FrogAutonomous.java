@@ -62,7 +62,7 @@ public class FrogAutonomous extends FrogOpMode {
             }else if (difference < -180){
                 difference = difference + 360;
             }
-            power = ((difference) * 0.005556 * 0.3);
+            power = ((difference) * 0.005556 * 0.4);
             telemetry.addData("power", power);
             telemetry.addData("heading", heading);
             telemetry.addData("gyro val", getHeading());
@@ -80,7 +80,7 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public boolean drivingToHeading(){
-        return (Math.abs(heading - getHeading()) > 3);
+        return (Math.abs(heading - getHeading()) > 4);
     }
 
     public void stopDrive(){
@@ -142,10 +142,25 @@ public class FrogAutonomous extends FrogOpMode {
         telemetry.addData("rightBeaconRange", rightBeaconRange.getUltrasonic());
         rangeDistance = distance;
 
-        double leftPower = (leftBeaconRange.getUltrasonic() - distance) *0.005;
-        double rightPower = (rightBeaconRange.getUltrasonic() - distance) * 0.005;
-        leftPower = FrogMath.checkSmaller(leftPower, 0.3);
-        rightPower = FrogMath.checkSmaller(rightPower, 0.3);
+        int averageDistance = (int) (leftBeaconRange.getUltrasonic() + rightBeaconRange.getUltrasonic()) / 2;
+        double power = (averageDistance - distance) * 0.007;
+        double leftPower;
+        double rightPower;
+        if(leftBeaconRange.getUltrasonic() <= rangeDistance || rightBeaconRange.getUltrasonic() <= rangeDistance ){
+            leftPower = (leftBeaconRange.getUltrasonic() - distance) *0.007;
+            rightPower = (rightBeaconRange.getUltrasonic() - distance) * 0.007;
+        } else {
+            leftPower = power;
+            rightPower = power;
+        }
+
+        if(leftBeaconRange.getUltrasonic() == 255 || rightBeaconRange.getUltrasonic() == 255){
+            leftPower = 0;
+            rightPower = 0;
+        }
+
+        leftPower = FrogMath.checkSmaller(leftPower, 0.2);
+        rightPower = FrogMath.checkSmaller(rightPower, 0.2);
 
         frontLeftDrive.setPower(leftPower);
         backLeftDrive.setPower(leftPower);

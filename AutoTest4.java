@@ -21,7 +21,7 @@ public class AutoTest4 extends FrogAutonomousSimpler {
         addShoot();
         addNextBall();
         addShoot();
-        addDriveToPosition(154, 280);
+        addDriveToPosition(154, 300);
         addDriveToHeading(180);
         addChangeFront(BEACON_FRONT);
         addDriveToWall();
