@@ -36,8 +36,12 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
     }
     public void addDriveToPosition(int x, int y){
         int[] vector;
-        vector = FrogMath.calculateVector(x, y, robotX, robotY);
+        vector = FrogMath.calculateVector(robotX, robotY, x, y);
+        telemetry.addData("Vectors", vector[0]);
+        telemetry.addData("Vectors y", vector[1]);
         double[] polar = FrogMath.xyToPolar(vector[0], vector[1]);
+        telemetry.addData("Length", polar[0]);
+        telemetry.addData("Angle", polar[1]);
         robotX = x;
         robotY = y;
         int heading = headingAfterFront((int)polar[1]);
@@ -90,7 +94,7 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         });
     }
 
-    public void addDriveToWall(){
+    public void addDriveToWall(final int distance){
         addAction(new FrogAction() {
             @Override
             public void action() {
@@ -101,9 +105,73 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         addAction(new FrogAction() {
             @Override
             public void action() {
-                driveToWall(7);
+                driveToWall(distance);
                 telemetry.addData("Status", "driving to wall");
                 if(!drivingToWall()){
+                    resetDrive();
+                    nextAction();
+                }
+            }
+        });
+    }
+
+    public void addDriveDiagonalRed(){
+        //here need to set position where it is
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                changeDirection(FRANZ_FRONT);
+                nextAction();
+            }
+        });
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                driveDiagonalLineRed();
+                if(!drivingToLine()){
+                    resetDrive();
+                    nextAction();
+                }
+            }
+        });
+
+    }
+
+    public void addDriveDiagonalBlue(){
+        //here need to set position where it is
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                changeDirection(GABI_FRONT);
+                nextAction();
+            }
+        });
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                driveDiagonalLineBlue();
+                if(!drivingToLine()){
+                    resetDrive();
+                    nextAction();
+                }
+            }
+        });
+
+    }
+    public void addDriveToLine(final short frontdirection){
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                changeDirection(frontdirection);
+                nextAction();
+            }
+        });
+
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                driveToLine();
+                if(!drivingToLine()){
                     resetDrive();
                     nextAction();
                 }
@@ -186,6 +254,26 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         });
     }
 
+    public void addShootTwice(){
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                initShootTwice();
+                nextAction();
+            }
+        });
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                shootBall();
+                telemetry.addData("Status", "shooting");
+                if(!shooting()){
+                    nextAction();
+                }
+            }
+        });
+    }
+
     public void addNextBall(){
         addAction(new FrogAction() {
             @Override
@@ -194,6 +282,6 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
                 nextAction();
             }
         });
-        robotWait(2000);
+        robotWait(500);
     }
 }

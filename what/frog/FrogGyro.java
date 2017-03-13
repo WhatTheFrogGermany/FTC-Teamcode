@@ -23,6 +23,7 @@ public class FrogGyro extends FrogSensor {
     final static byte RESET_COMMAND = 0x52;
     final static int NORMAL_READ_MODE_COMMAND = 0x00;
 
+
     ElapsedTime elapsedTime = new ElapsedTime();
 
     int lastHeading;

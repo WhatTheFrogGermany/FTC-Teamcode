@@ -25,10 +25,13 @@ public class FrogAutonomous extends FrogOpMode {
     ElapsedTime waitTime;
     int waitMilliSecs;
 
+
     public void setRobotXY(int x, int y){
         robotX = x;
         robotY = y;
     }
+
+
     public void initWait(int milliSecs){
         waitTime = new ElapsedTime();
         waitMilliSecs = milliSecs;
@@ -62,7 +65,12 @@ public class FrogAutonomous extends FrogOpMode {
             }else if (difference < -180){
                 difference = difference + 360;
             }
-            power = ((difference) * 0.005556 * 0.4);
+            //power = ((difference) * 0.02);
+            power = 0.0005 * difference* difference + 0.025;
+            if(difference < 0){
+                power*=-1;
+            }
+            power = FrogMath.checkSmaller(power, 0.7);
             telemetry.addData("power", power);
             telemetry.addData("heading", heading);
             telemetry.addData("gyro val", getHeading());
@@ -73,14 +81,14 @@ public class FrogAutonomous extends FrogOpMode {
             backRightDrive.setPower(power);
 
         } else {
-            stopDrive();
+            resetDrive();
         }
 
 
     }
 
     public boolean drivingToHeading(){
-        return (Math.abs(heading - getHeading()) > 4);
+        return (Math.abs(heading - getHeading()) > 2);
     }
 
     public void stopDrive(){
@@ -91,10 +99,10 @@ public class FrogAutonomous extends FrogOpMode {
     }
     public void initDriveDistance(int cmDistance){
         int encoderValue = (int)Math.round(cmDistance * 20.1); // 20.1 is the ppcm I got from my measurements.
-        frontRightDrive.initDriveToPosition(encoderValue, 5000, 1);
-        frontLeftDrive.initDriveToPosition(encoderValue, 5000, 1);
-        backLeftDrive.initDriveToPosition(encoderValue, 5000, 1);
-        backRightDrive.initDriveToPosition(encoderValue, 5000, 1);
+        frontRightDrive.initDriveToPosition(encoderValue, 1000, 1);
+        frontLeftDrive.initDriveToPosition(encoderValue, 1000, 1);
+        backLeftDrive.initDriveToPosition(encoderValue, 1000, 1);
+        backRightDrive.initDriveToPosition(encoderValue, 1000, 1);
     }
 
     public void driveDistance(){
@@ -113,6 +121,11 @@ public class FrogAutonomous extends FrogOpMode {
         frontLeftDrive.reset();
         backLeftDrive.reset();
         backRightDrive.reset();
+
+        aOmni.setMaxSpeed(1677);
+        bOmni.setMaxSpeed(1677);
+        cOmni.setMaxSpeed(1677);
+        dOmni.setMaxSpeed(1677);
     }
 
     public int headingAfterFront(int gabiHeading){
@@ -131,7 +144,7 @@ public class FrogAutonomous extends FrogOpMode {
 
     public void resetHeading(){
         bottomGyro.reset();
-        topGyro.reset();
+        //topGyro.reset();
     }
     public int getFront(){
         return front;
@@ -143,36 +156,19 @@ public class FrogAutonomous extends FrogOpMode {
         rangeDistance = distance;
 
         int averageDistance = (int) (leftBeaconRange.getUltrasonic() + rightBeaconRange.getUltrasonic()) / 2;
-        double power;
-        if((averageDistance - distance) > 40){
-            power = 0.2;
-        } else {
-            power = -0.000125*Math.pow(Math.abs((double)(averageDistance-distance)) - 40,2) + 0.2;
-            if(averageDistance - distance < 0){
-                power *= -1;
-            }
-        }
+
         double leftPower;
         double rightPower;
-        if((leftBeaconRange.getUltrasonic() - distance) > 40){
-            leftPower = 0.2;
+        if((leftBeaconRange.getUltrasonic() - distance) > 30){
+            leftPower = 1;
         } else {
-            leftPower = -0.000125*Math.pow(Math.abs((double)(leftBeaconRange.getUltrasonic()-distance)) - 40,2) + 0.2;
-            if(leftBeaconRange.getUltrasonic() - distance < 0){
-                leftPower *= -1;
-            }
+            leftPower = (leftBeaconRange.getUltrasonic()-distance) * 0.03;
         }
-        if((rightBeaconRange.getUltrasonic() - distance) > 40){
-            rightPower = 0.2;
+        if((rightBeaconRange.getUltrasonic() - distance) > 30){
+            rightPower = 1;
         } else {
-            rightPower = -0.000125*Math.pow(Math.abs((double)(rightBeaconRange.getUltrasonic()-distance)) - 40,2) + 0.2;
-            if(rightBeaconRange.getUltrasonic() - distance < 0){
-                rightPower *= -1;
-            }
+            rightPower = (rightBeaconRange.getUltrasonic()-distance) * 0.03;
         }
-
-        telemetry.addData("leftPower", leftPower);
-        telemetry.addData("rightPower", rightPower);
 
         if(leftBeaconRange.getUltrasonic() == 255 || rightBeaconRange.getUltrasonic() == 255){
             leftPower = 0;
@@ -211,6 +207,33 @@ public class FrogAutonomous extends FrogOpMode {
         }
 
     }
+
+    public void driveToLine(){
+        frontRightDrive.setPower(0.2);
+        frontLeftDrive.setPower(0.2);
+        backLeftDrive.setPower(0.2);
+        backRightDrive.setPower(0.2);
+    }
+
+    public boolean drivingToLine(){
+        if(beaconColor.alpha() < 60){
+            telemetry.addData("ground", beaconColor.alpha());
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void driveDiagonalLineRed(){
+        frontRightDrive.setPower(1);
+        backLeftDrive.setPower(1);
+    }
+
+    public void driveDiagonalLineBlue(){
+        frontLeftDrive.setPower(1);
+        backRightDrive.setPower(1);
+    }
+
     public void pushBlueBeacon(){
         if (leftBeaconColor.blue() > leftBeaconColor.red()) {
             leftBeaconServo.setPosition(1);
@@ -240,6 +263,7 @@ public class FrogAutonomous extends FrogOpMode {
     public void initShootBall(){
         wildeHildeMotor.initRotateRounds(1,1);
     }
+    public void initShootTwice(){ wildeHildeMotor.initRotateRounds(2, 1);}
 
     public void shootBall(){
         wildeHildeMotor.driveToPosition();
@@ -266,6 +290,14 @@ public class FrogAutonomous extends FrogOpMode {
         rightBeaconServo.setPosition(1);
 
         rangeWait = new ElapsedTime();
+        gabiBlockServo.setPosition(0);
+        gabiBlockServoRight.setPosition(1);
+
+        beaconColor.enableLed(true);
+        wildeHildeMotor.reset();
+        changeDirection(GABI_FRONT);
+        setDriveTolerances(0.1);
+        wildeHildeMotor.setTolerance(0.1);
     }
 
     @Override

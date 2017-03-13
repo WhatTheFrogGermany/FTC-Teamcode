@@ -61,6 +61,9 @@ public class TeleOpOmni4 extends FrogOpMode {
         steffiTime = new ElapsedTime();
 
         franzTime = new ElapsedTime();
+
+        gabiBlockServo.setPosition(0);
+        gabiBlockServoRight.setPosition(1);
     }
 
     public void loop() {
@@ -84,11 +87,7 @@ public class TeleOpOmni4 extends FrogOpMode {
         double y = -(gamepad1.left_stick_y);
         double x = gamepad1.left_stick_x;
 
-        if(slowModeToggle.getState()){
-            quewakServo.setPower(1);
-        } else {
-            quewakServo.setPower(0);
-        }
+        quewakServo.setPower(1);
         //vonJanine keine ahnung wie das tut und welcherichtung und so
 
         if (y < 0) {

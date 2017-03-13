@@ -20,7 +20,22 @@ public class FrogMath {
         double length;
         double degrees;
         length = Math.sqrt(x*x + y*y);
-        degrees = Math.toDegrees(Math.atan(y/x));
+        degrees = Math.toDegrees(Math.asin(Math.abs(y)/length));
+        if(y < 0){
+            if(x < 0){
+                degrees += 180;
+                degrees = degreesInCircle((int)degrees);
+            } else {
+                degrees += (90-degrees)*2;
+            }
+        } else{
+            if(x < 0){
+                degrees += (180 - degrees)*2;
+            }
+        }
+        if(y < 0){
+            degrees += 180;
+        }
         double[] result = {length, degrees};
         return result;
     }

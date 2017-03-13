@@ -32,6 +32,7 @@ public class FrogSensor {
         waitTime = new ElapsedTime();
     }
 
+
     public int readOneByte(int address){
         if(locked){
             return -2;

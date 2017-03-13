@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by FTC2 on 31.01.2017.
  */
 public class FrogOpMode extends OpMode {
+    int initialHeading = 0;
     //variables to save the front
     public final static short HILDE_FRONT = 0;
     public final static short FRANZ_FRONT = 1;
@@ -58,6 +59,10 @@ public class FrogOpMode extends OpMode {
     protected FrogGyro topGyro;
     protected FrogGyro bottomGyro;
 
+    protected ColorSensor beaconColor;
+
+
+
     @Override
     public void init() {
         aOmni = new FrogMotor(hardwareMap.dcMotor.get("a_omni"));
@@ -91,6 +96,7 @@ public class FrogOpMode extends OpMode {
 
         wildeHildeMotor = new FrogMotor(hardwareMap.dcMotor.get("hilde"));
         wildeHildeMotor.setGearRatio(720);
+        wildeHildeMotor.reset();
 
         leftBeaconServo = hardwareMap.servo.get("left_beacon");
         rightBeaconServo = hardwareMap.servo.get("right_beacon");
@@ -105,16 +111,20 @@ public class FrogOpMode extends OpMode {
         rightBeaconRange = new FrogRange(hardwareMap, "right_beacon_range", 0x28);
 
         bottomGyro = new FrogGyro(hardwareMap, "bottom_gyro", 0x10);
-        topGyro = new FrogGyro(hardwareMap, "top_gyro", 0x20);
+        //topGyro = new FrogGyro(hardwareMap, "top_gyro", 0x20);
         bottomGyro.reset();
-        topGyro.reset();
+        //topGyro.reset();
+
+        beaconColor = hardwareMap.colorSensor.get("beacon_color");
+        beaconColor.setI2cAddress(I2cAddr.create8bit(0x3c));
     }
+
 
     @Override
     public void start() {
         super.start();
         bottomGyro.reactivateRead();
-        topGyro.reactivateRead();
+        //topGyro.reactivateRead();
         changeDirection(GABI_FRONT);
     }
 
@@ -159,9 +169,15 @@ public class FrogOpMode extends OpMode {
         backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
+    public void setInitialHeading(int heading){
+        initialHeading = heading;
+    }
+
     public int getHeading(){
         //int result = Math.round(((360-topGyro.getHeading())+bottomGyro.getHeading())/2);
         //telemetry.addData("result", result);
-        return bottomGyro.getHeading();
+        int heading = bottomGyro.getHeading() + initialHeading;
+        heading = FrogMath.degreesInCircle(heading);
+        return heading;
     }
 }

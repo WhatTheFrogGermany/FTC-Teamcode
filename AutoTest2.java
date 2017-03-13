@@ -14,12 +14,21 @@ public class AutoTest2 extends FrogAutonomousSimpler {
         super.init();
         changeDirection(GABI_FRONT);
         setDriveTolerances(0.1);
+        setRobotXY(0,0);
+        //setInitialHeading(90);
+        addDriveToPosition(21, 20);
+        addShootTwice();
+        //addDriveToPosition(300, 156);
+        //addDriveToPosition(100, 200);
+        //addDriveToHeading(180);
+        /*
         resetGyros();
         //addDriveDistance(3000);
         addDriveToHeading(150);
         robotWait(5000);
         addShoot();
         //addBlueBeacon();
+        */
     }
 
     @Override

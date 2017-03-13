@@ -5,17 +5,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.what.frog.FrogAutonomousSimpler;
 
 /**
- * Created by FTC2 on 13.02.2017.
+ * Created by FTC2 on 03.03.2017.
  */
-@Autonomous(name="Test: 3", group="Tests")
-public class AutoTest3 extends FrogAutonomousSimpler {
+@Autonomous(name="Test: 6", group="Tests")
+public class AutoTest6 extends FrogAutonomousSimpler{
     @Override
     public void init() {
         super.init();
-        changeDirection(GABI_FRONT);
-        //addDriveToPosition(100, 100);
-        addChangeFront(BEACON_FRONT);
+        addChangeFront(GABI_FRONT);
+        addDriveDiagonalRed();
         addDriveToWall(8);
         addBlueBeacon();
+        addDriveToLine(GABI_FRONT);
+        addRedBeacon();
     }
 }

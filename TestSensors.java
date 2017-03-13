@@ -11,13 +11,14 @@ import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.what.frog.FrogOpMode;
 
 /**
  * Created by FTC2 on 23.01.2017.
  */
 
 @TeleOp(name="Test: Sensors", group="Tests")
-public class TestSensors extends OpMode {
+public class TestSensors extends FrogOpMode {
     int ULTRASONIC_REGISTER = 0x04;
     ColorSensor beaconLeftColor;
     ColorSensor beaconRightColor;
@@ -59,6 +60,8 @@ public class TestSensors extends OpMode {
     public void loop() {
         telemetry.addData("LeftColor", beaconLeftColor.red());
         telemetry.addData("RightColor", beaconRightColor.red());
+
+        telemetry.addData("BEaconColor", beaconColor);
 
         beaconLeftRangeCache = beaconLeftRangeRead.read(ULTRASONIC_REGISTER, 2);
         beaconRightRangeCache = beaconRightRangeRead.read(ULTRASONIC_REGISTER, 2);
