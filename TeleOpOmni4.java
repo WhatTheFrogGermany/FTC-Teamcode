@@ -42,6 +42,8 @@ public class TeleOpOmni4 extends FrogOpMode {
     boolean steffiToggle = false;
     ElapsedTime franzTime;
     boolean franzToggle = false;
+    ElapsedTime steffiStop;
+    ElapsedTime franzStop;
 
     int lastTargetPositionHilde = 0;
     boolean hildeRotatedFully = true;
@@ -59,8 +61,9 @@ public class TeleOpOmni4 extends FrogOpMode {
         gabiBlockToggle = new FrogToggle(500);
 
         steffiTime = new ElapsedTime();
-
+        steffiStop = new ElapsedTime();
         franzTime = new ElapsedTime();
+        franzStop = new ElapsedTime();
 
         gabiBlockServo.setPosition(0);
         gabiBlockServoRight.setPosition(1);
@@ -299,35 +302,25 @@ public class TeleOpOmni4 extends FrogOpMode {
             steffiMotor.setPower(1);
         } else {
             steffiMotor.setPower(0);
+            steffiTime.reset();
         }
 
         if(franzToggle) {
             franzMotor.setPower(1);
         } else {
             franzMotor.setPower(0);
-        }
-
-
-        if(gamepad2.a && (steffiTime.milliseconds() > 500)){
-            steffiToggle = !steffiToggle;
-            steffiTime.reset();
-        }
-        if(gamepad2.b && (franzTime.milliseconds() > 500
-        )){
-            franzToggle = !franzToggle;
             franzTime.reset();
         }
 
+        if(franzTime.seconds() > 40){
+            franzMotor.setPower(0);
+            franzTime.reset();
+        }
+        if(steffiTime.seconds() > 40){
+            steffiMotor.setPower(0);
+            steffiTime.reset();
+        }
     }
-
-    //public void kerstin(){
-       // if(gamepad2.dpad_left){
-           // kerstinServo.setPosition(0);
-        //}
-        //if(gamepad2.dpad_right){
-          //  kerstinServo.setPosition(1);
-      //  }
-   // }
 
     public void shooter(){
         if(gamepad2.x && !wildeHildeMotor.drivingToPosition){
