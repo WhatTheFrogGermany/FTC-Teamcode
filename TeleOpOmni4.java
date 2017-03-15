@@ -330,15 +330,21 @@ public class TeleOpOmni4 extends FrogOpMode {
     }
 
     public void shooter(){
-        if(gamepad2.x && !wildeHildeMotor.drivingToPosition){
+        if(gamepad2.x && !wildeHildeMotor.drivingToPosition && !gamepad2.y){
             wildeHildeMotor.initRotateRounds(1,1);
         }
 
-        wildeHildeMotor.driveToPosition();
+        if(!gamepad1.y){
+            wildeHildeMotor.driveToPosition();
+        }
 
         if(gamepad2.y){
             wildeHildeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            wildeHildeMotor.setPower(1);
+            if(gamepad2.x){
+                wildeHildeMotor.setPower(-1);
+            } else {
+                wildeHildeMotor.setPower(1);
+            }
             customMoveHilde = true;
         } else if(customMoveHilde){
             wildeHildeMotor.setPower(0);
