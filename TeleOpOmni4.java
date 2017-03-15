@@ -54,6 +54,8 @@ public class TeleOpOmni4 extends FrogOpMode {
     public void init (){
         super.init();
 
+        wildeHildeMotor.reset();
+        wildeHildeMotor.setTolerance(0.1);
         gyrosToggle = new FrogToggle(500);
         gyrosToggle.toggle(true);
 
