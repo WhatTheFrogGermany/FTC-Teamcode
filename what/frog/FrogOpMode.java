@@ -96,6 +96,7 @@ public class FrogOpMode extends OpMode {
 
         wildeHildeMotor = new FrogMotor(hardwareMap.dcMotor.get("hilde"));
         wildeHildeMotor.setGearRatio(720);
+        wildeHildeMotor.setMaxSpeed(3000);
         wildeHildeMotor.reset();
 
         leftBeaconServo = hardwareMap.servo.get("left_beacon");
