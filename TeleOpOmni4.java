@@ -39,9 +39,9 @@ public class TeleOpOmni4 extends FrogOpMode {
 
     //the collecting mechanism
     ElapsedTime steffiTime; //Added TimeToggle on 14.01
-    boolean steffiToggle = false;
+    FrogToggle steffiToggle;
     ElapsedTime franzTime;
-    boolean franzToggle = false;
+    FrogToggle franzToggle;
     ElapsedTime steffiStop;
     ElapsedTime franzStop;
 
@@ -60,8 +60,10 @@ public class TeleOpOmni4 extends FrogOpMode {
         slowModeToggle = new FrogToggle(500);
         gabiBlockToggle = new FrogToggle(500);
 
+        steffiToggle = new FrogToggle(500);
         steffiTime = new ElapsedTime();
         steffiStop = new ElapsedTime();
+        franzToggle = new FrogToggle(500);
         franzTime = new ElapsedTime();
         franzStop = new ElapsedTime();
 
@@ -298,14 +300,16 @@ public class TeleOpOmni4 extends FrogOpMode {
     }
 
     public void collect(){
-        if(steffiToggle){
+        steffiToggle.toggle(gamepad2.a);
+        franzToggle.toggle(gamepad2.b);
+        if(steffiToggle.getState()){
             steffiMotor.setPower(1);
         } else {
             steffiMotor.setPower(0);
             steffiTime.reset();
         }
 
-        if(franzToggle) {
+        if(franzToggle.getState()) {
             franzMotor.setPower(1);
         } else {
             franzMotor.setPower(0);
@@ -316,6 +320,7 @@ public class TeleOpOmni4 extends FrogOpMode {
             franzMotor.setPower(0);
             franzTime.reset();
         }
+
         if(steffiTime.seconds() > 40){
             steffiMotor.setPower(0);
             steffiTime.reset();
