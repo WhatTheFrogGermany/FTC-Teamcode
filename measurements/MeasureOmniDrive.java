@@ -29,6 +29,7 @@ public class MeasureOmniDrive extends FrogOpMode{
         elapsedTime = new ElapsedTime();
         storeTime = new ElapsedTime();
         tableWriter = new FrogTableTelemetry("omni_drive.csv", 9, "omni",telemetry);
+        changeDirection(GABI_FRONT);
     }
 
     @Override
@@ -99,6 +100,7 @@ public class MeasureOmniDrive extends FrogOpMode{
             telemetry.addData("Status", "Added another line");
             tableWriter.addColumn();
 
+            motorPowerBD-=ratioSteps;
             aOmni.reset();
             bOmni.reset();
             cOmni.reset();
