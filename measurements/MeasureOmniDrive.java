@@ -19,7 +19,7 @@ public class MeasureOmniDrive extends FrogOpMode{
 
     double motorPowerAC = 1;
     double motorPowerBD = 1;
-    double ratioSteps = 0.1;
+    double ratioSteps = 0.05;
     int xDistance = 0;
     int yDistance = 100;
 
