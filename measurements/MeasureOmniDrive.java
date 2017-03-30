@@ -82,6 +82,8 @@ public class MeasureOmniDrive extends FrogOpMode{
         tableWriter.setNextValue(frontRightDrive.getCurrentPosition());
         tableWriter.setNextValue(backRightDrive.getCurrentPosition());
         tableWriter.setNextValue(backLeftDrive.getCurrentPosition());
+        tableWriter.setNextValue(xDistance);
+        tableWriter.setNextValue(yDistance);
         tableWriter.resetCurrentCell();
         tableWriter.addTelemetry();
 
