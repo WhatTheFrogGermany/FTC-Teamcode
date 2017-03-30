@@ -61,27 +61,36 @@ public class MeasureOmniDrive extends FrogOpMode{
         //driving the robot
         if(gamepad1.right_bumper && elapsedTime.milliseconds() > 500){
             elapsedTime.reset();
-            frontLeftDrive.setPower(motorPowerAC);
-            frontRightDrive.setPower(motorPowerBD);
-            backRightDrive.setPower(motorPowerAC);
-            backLeftDrive.setPower(motorPowerBD);
+            aOmni.setPower(motorPowerAC);
+            bOmni.setPower(motorPowerBD);
+            cOmni.setPower(motorPowerAC);
+            dOmni.setPower(motorPowerBD);
         }
 
         if(gamepad1.left_bumper && elapsedTime.milliseconds() > 500){
             elapsedTime.reset();
-            frontLeftDrive.setPower(0);
-            frontRightDrive.setPower(0);
-            backRightDrive.setPower(0);
-            backLeftDrive.setPower(0);
+            aOmni.setPower(0);
+            bOmni.setPower(0);
+            cOmni.setPower(0);
+            dOmni.setPower(0);
+        }
+
+        //resetting the encoders
+        if(gamepad1.b && elapsedTime.milliseconds() > 250){
+            elapsedTime.reset();
+            aOmni.reset();
+            bOmni.reset();
+            cOmni.reset();
+            dOmni.reset();
         }
 
         //saving the values into the table
         tableWriter.setNextValue((int)(motorPowerAC*100));
         tableWriter.setNextValue((int)(motorPowerBD*100));
-        tableWriter.setNextValue(frontLeftDrive.getCurrentPosition());
-        tableWriter.setNextValue(frontRightDrive.getCurrentPosition());
-        tableWriter.setNextValue(backRightDrive.getCurrentPosition());
-        tableWriter.setNextValue(backLeftDrive.getCurrentPosition());
+        tableWriter.setNextValue(aOmni.getCurrentPosition());
+        tableWriter.setNextValue(bOmni.getCurrentPosition());
+        tableWriter.setNextValue(cOmni.getCurrentPosition());
+        tableWriter.setNextValue(dOmni.getCurrentPosition());
         tableWriter.setNextValue(xDistance);
         tableWriter.setNextValue(yDistance);
         tableWriter.resetCurrentCell();
