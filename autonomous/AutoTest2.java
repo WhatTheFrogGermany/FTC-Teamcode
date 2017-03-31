@@ -16,7 +16,7 @@ public class AutoTest2 extends FrogAutonomousSimpler {
         setDriveTolerances(0.1);
         setRobotXY(0,0);
         //setInitialHeading(90);
-        addDriveToPosition(21, 20);
+        addDriveToPosition(100, 20);
         addShootTwice();
         //addDriveToPosition(300, 156);
         //addDriveToPosition(100, 200);

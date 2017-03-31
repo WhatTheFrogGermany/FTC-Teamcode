@@ -49,7 +49,27 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         FrogVector driveRobotVector = new FrogVector(driveVector.getX(), driveVector.getY()); //the vector on the coordinate system of the robot
         double robotAngle = driveVector.getAngle() - heading;
         driveRobotVector.setPolar(robotAngle, driveRobotVector.getLength());
+        final int robotDriveX = (int) driveRobotVector.getX();
+        final int robotDriveY = (int) driveRobotVector.getY();
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                initDriveDiagonal(robotDriveX, robotDriveY);
+                nextAction();
+            }
+        });
 
+        addAction(new FrogAction() {
+            @Override
+            public void action() {
+                telemetry.addData("Status", "driving diagonally " + Integer.toString(robotDriveX) + ", " + Integer.toString(robotDriveY));
+                driveDiagonal();
+                if(!drivingToPosition()){
+                    stopDrive();
+                    nextAction();
+                }
+            }
+        });
     }
 
     public void addDriveToHeading(int heading){
