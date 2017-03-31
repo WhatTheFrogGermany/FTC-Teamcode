@@ -24,10 +24,6 @@ public class TeleOpOmni4 extends FrogOpMode {
 
     public boolean extraDrive = false; // work around to make sure MeasureDrive is working properly
 
-    //for driving with the Gyros
-    int desiredHeading = 0;
-    FrogToggle gyrosToggle;
-
 
     int lyMag;
     int lxMag;
@@ -56,8 +52,6 @@ public class TeleOpOmni4 extends FrogOpMode {
 
         wildeHildeMotor.reset();
         wildeHildeMotor.setTolerance(0.2);
-        gyrosToggle = new FrogToggle(500);
-        gyrosToggle.toggle(true);
 
         slowModeToggle = new FrogToggle(500);
         gabiBlockToggle = new FrogToggle(500);
@@ -113,11 +107,8 @@ public class TeleOpOmni4 extends FrogOpMode {
         x = x * x * lxMag;
 
         double r = gamepad1.right_stick_x;
-        if(!slowModeToggle.getState()){
-            r*=0.5;
-        }
-        if(r != 0){
-            desiredHeading = getHeading();
+        if(!slowModeToggle.getState()) {
+            r *= 0.5;
         }
 
         double a = -x + y - r;
@@ -127,16 +118,10 @@ public class TeleOpOmni4 extends FrogOpMode {
 
         double[] beforeScaled = {a,b,c,d};
         beforeScaled = scaleDown(beforeScaled, x, y, r);
-        gyrosToggle.toggle(gamepad1.right_trigger > 0.5);
 
-        if(gyrosToggle.getState()) {
-            scaled = adjustToHeading(beforeScaled);
-            telemetry.addData("GyrosDrive", true);
-        } else {
-            r_extra = 0;
-            scaled = scaleDown(beforeScaled, x, y, r);
-            telemetry.addData("GyrosDrive", false);
-        }
+        r_extra = 0;
+        scaled = scaleDown(beforeScaled, x, y, r);
+        telemetry.addData("GyrosDrive", false);
 
         for(int i = 0; i < 4; i++){
             telemetry.addData(Integer.toString(i), scaled[i]);
@@ -159,49 +144,6 @@ public class TeleOpOmni4 extends FrogOpMode {
             dOmni.setPower(0);
         }
 
-    }
-
-    public double[] adjustToHeading(double[] vals){
-        double[] valsOld = vals;
-        if(bottomGyro.getIsValueNew()) {
-            int difference = desiredHeading - getHeading();
-            if (difference > 180) {
-                difference = 360 - difference;
-            } else if (difference < -180) {
-                difference = difference + 360;
-            }
-            r_extra = ((difference) * 0.005556 * 0.3);
-        }
-        telemetry.addData("power", r_extra);
-        telemetry.addData("heading", desiredHeading);
-        telemetry.addData("gyro val", getHeading());
-        vals[0] += r_extra;
-        vals[1] -= r_extra;
-        vals[2] -= r_extra;
-        vals[3] += r_extra;
-
-        double greatest = 0;
-        for(int i = 0; i < 4; i++){
-            if(Math.abs(vals[i]) > Math.abs(greatest)){
-                greatest = vals[i];
-            }
-        }
-
-        //then we scale the rest accordingly to make sure the greatest value equals one.
-        double scale;
-        if(greatest != 0) {
-            scale = Math.abs(1/greatest);
-        } else {
-            scale = 0;
-        }
-
-        for(int i = 0; i < 4; i++){
-            double absolute = Math.sqrt(r_extra*r_extra + valsOld[i]*valsOld[i]);
-            vals[i] = vals[i] * scale * absolute;
-            vals[i] = check(vals[i]);
-        }
-
-        return vals;
     }
 
     public boolean isAllNull(double[] vals){
