@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.what.frog;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -18,7 +20,11 @@ public class FrogAutonomous extends FrogOpMode {
 
     int robotX = 0;
     int robotY = 0;
+
     int heading;
+
+    int calculatedHeading = 0;
+
     int rangeDistance;
     ElapsedTime rangeWait;
 
@@ -117,23 +123,31 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public void initDriveDiagonal(int x, int y){
-        int encoderValueFrontLeftBackRight = (int)Math.round((x+y) * 20); //the factor needs to be calculated from the measurements
-        int encoderValueFrontRightBackLeft = (int)Math.round((-x+y) * 20);
+        int encoderValueFrontLeftBackRight = (int)Math.round((x-y) * 20); //the factor needs to be calculated from the measurements
+        int encoderValueFrontRightBackLeft = (int)Math.round((x+y) * 20);
 
         //scale powers
-        int greatest;
+        double greatest;
         if(encoderValueFrontLeftBackRight > encoderValueFrontRightBackLeft){
             greatest = encoderValueFrontLeftBackRight;
         } else {
             greatest = encoderValueFrontRightBackLeft;
         }
-        int powerFrontLeftBackRight = encoderValueFrontLeftBackRight / greatest;
-        int powerFrontRightBackLeft = encoderValueFrontRightBackLeft / greatest;
+        //then we scale the rest accordingly to make sure the greatest value equals one.
+        double scale;
+        if(greatest != 0) {
+            scale = Math.abs(1 / greatest);
+        } else {
+            scale = 0;
+        }
 
-        frontRightDrive.initDriveToPosition(encoderValueFrontRightBackLeft, 1000 * powerFrontRightBackLeft, powerFrontRightBackLeft);
-        frontLeftDrive.initDriveToPosition(encoderValueFrontLeftBackRight, 1000 * powerFrontLeftBackRight, powerFrontLeftBackRight);
-        backLeftDrive.initDriveToPosition(encoderValueFrontRightBackLeft, 1000 * powerFrontRightBackLeft, powerFrontRightBackLeft);
-        backRightDrive.initDriveToPosition(encoderValueFrontLeftBackRight, 1000 * powerFrontLeftBackRight, powerFrontLeftBackRight);
+        double powerFrontLeftBackRight = encoderValueFrontLeftBackRight * scale;
+        double powerFrontRightBackLeft = encoderValueFrontRightBackLeft * scale;
+
+        frontRightDrive.initDriveToPosition(encoderValueFrontRightBackLeft, (int)(1000 * powerFrontRightBackLeft), powerFrontRightBackLeft);
+        frontLeftDrive.initDriveToPosition(encoderValueFrontLeftBackRight, (int)(1000 * powerFrontLeftBackRight), powerFrontLeftBackRight);
+        backLeftDrive.initDriveToPosition(encoderValueFrontRightBackLeft, (int)(1000 * powerFrontRightBackLeft), powerFrontRightBackLeft);
+        backRightDrive.initDriveToPosition(encoderValueFrontLeftBackRight, (int)(1000 * powerFrontLeftBackRight), powerFrontLeftBackRight);
     }
 
     public void driveDiagonal(){
