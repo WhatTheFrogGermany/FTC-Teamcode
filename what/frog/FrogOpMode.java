@@ -66,16 +66,16 @@ public class FrogOpMode extends OpMode {
     @Override
     public void init() {
         aOmni = new FrogMotor(hardwareMap.dcMotor.get("a_omni"));
-        aOmni.setMaxSpeed(1600);
+        aOmni.setMaxSpeed((int)(1600/1.00809));
         aOmni.reset();
         bOmni = new FrogMotor(hardwareMap.dcMotor.get("b_omni"));
-        bOmni.setMaxSpeed(1600);
+        bOmni.setMaxSpeed((int)(1600/0.99493));
         bOmni.reset();
         cOmni = new FrogMotor(hardwareMap.dcMotor.get("c_omni"));
-        cOmni.setMaxSpeed(1600);
+        cOmni.setMaxSpeed((int)(1600/1.00558));
         cOmni.reset();
         dOmni = new FrogMotor(hardwareMap.dcMotor.get("d_omni"));
-        dOmni.setMaxSpeed(1600);
+        dOmni.setMaxSpeed((int)(1600/0.99139));
         dOmni.reset();
 
         gabiMotor = new FrogMotor(hardwareMap.dcMotor.get("gabi"));
