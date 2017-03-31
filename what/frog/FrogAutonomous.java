@@ -116,6 +116,29 @@ public class FrogAutonomous extends FrogOpMode {
         return (frontRightDrive.drivingToPosition || frontLeftDrive.drivingToPosition || backLeftDrive.drivingToPosition || backRightDrive.drivingToPosition);
     }
 
+    public void initDriveDiagonal(int x, int y){
+        int encoderValueFrontLeftBackRight = (int)Math.round((x+y) * 20); //the factor needs to be calculated from the measurements
+        int encoderValueFrontRightBackLeft = (int)Math.round((-x+y) * 20);
+
+        //scale powers
+        int greatest;
+        if(encoderValueFrontLeftBackRight > encoderValueFrontRightBackLeft){
+            greatest = encoderValueFrontLeftBackRight;
+        } else {
+            greatest = encoderValueFrontRightBackLeft;
+        }
+        int powerFrontLeftBackRight = encoderValueFrontLeftBackRight / greatest;
+        int powerFrontRightBackLeft = encoderValueFrontRightBackLeft / greatest;
+
+        frontRightDrive.initDriveToPosition(encoderValueFrontRightBackLeft, 1000 * powerFrontRightBackLeft, powerFrontRightBackLeft);
+        frontLeftDrive.initDriveToPosition(encoderValueFrontLeftBackRight, 1000 * powerFrontLeftBackRight, powerFrontLeftBackRight);
+        backLeftDrive.initDriveToPosition(encoderValueFrontRightBackLeft, 1000 * powerFrontRightBackLeft, powerFrontRightBackLeft);
+        backRightDrive.initDriveToPosition(encoderValueFrontLeftBackRight, 1000 * powerFrontLeftBackRight, powerFrontLeftBackRight);
+    }
+
+    public void driveDiagonal(){
+        driveDistance();
+    }
     public void resetDrive(){
         frontRightDrive.reset();
         frontLeftDrive.reset();

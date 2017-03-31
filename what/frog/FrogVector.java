@@ -60,4 +60,10 @@ public class FrogVector {
         this.y = this.y + secondVector.getY();
         xyToPolar();
     }
+
+    public void substractVector(FrogVector secondVector){
+        this.x = this.x - secondVector.getX();
+        this.y = this.y - secondVector.getY();
+        xyToPolar();
+    }
 }

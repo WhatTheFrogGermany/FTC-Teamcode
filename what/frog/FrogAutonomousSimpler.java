@@ -35,19 +35,23 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
         });
     }
     public void addDriveToPosition(int x, int y){
-        int[] vector;
-        vector = FrogMath.calculateVector(robotX, robotY, x, y);
-        telemetry.addData("Vectors", vector[0]);
-        telemetry.addData("Vectors y", vector[1]);
-        double[] polar = FrogMath.xyToPolar(vector[0], vector[1]);
-        telemetry.addData("Length", polar[0]);
-        telemetry.addData("Angle", polar[1]);
-        robotX = x;
-        robotY = y;
-        int heading = headingAfterFront((int)polar[1]);
-        addDriveToHeading(heading);
-        addDriveDistance((int)polar[0]);
+        FrogVector robotPoint = new FrogVector(robotX,robotY);
+        FrogVector driveVector = new FrogVector(x, y); //the vector on the coordinate system of the map
+        driveVector.substractVector(robotPoint);
+        telemetry.addData("Vectors", driveVector.getX());
+        telemetry.addData("Vectors y", driveVector.getY());
+        telemetry.addData("Length", driveVector.getLength());
+        telemetry.addData("Angle", driveVector.getAngle());
+        robotX = (int)driveVector.getX();
+        robotY = (int)driveVector.getY();
+        int heading = headingAfterFront((int)driveVector.getAngle());
+
+        FrogVector driveRobotVector = new FrogVector(driveVector.getX(), driveVector.getY()); //the vector on the coordinate system of the robot
+        double robotAngle = driveVector.getAngle() - heading;
+        driveRobotVector.setPolar(robotAngle, driveRobotVector.getLength());
+
     }
+
     public void addDriveToHeading(int heading){
         final int heading_final = heading;
         addAction(new FrogAction() {
