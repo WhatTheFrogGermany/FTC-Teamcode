@@ -165,6 +165,12 @@ public class FrogAutonomous extends FrogOpMode {
         dOmni.setMaxSpeed(1677);
     }
 
+    @Override
+    public void setInitialHeading(int heading){
+        super.setInitialHeading(heading);
+        calculatedHeading = heading;
+    }
+
     public int headingAfterFront(int gabiHeading){
         int returnHeading = -1;
         if(front == GABI_FRONT){
