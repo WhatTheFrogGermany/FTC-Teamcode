@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogAutonomousSimpler;
 /**
  * Created by FTC2 on 22.02.2017.
  */
-@Autonomous(name="Test: 4 (Red)", group="Tests")
-public class AutoTest4 extends FrogAutonomousSimpler {
+@Autonomous(name="Default: Red", group="Default")
+public class AutoTest4Red extends FrogAutonomousSimpler {
     @Override
         public void init() {
             super.init();
@@ -21,7 +21,7 @@ public class AutoTest4 extends FrogAutonomousSimpler {
         addShootTwice();
         //addNextBall();
         //addShoot();
-        addDriveToPosition(175, 310);
+        addDriveToPosition(190, 290);
         addDriveToHeading(180);
         addChangeFront(BEACON_FRONT);
         addDriveToWall(8);
