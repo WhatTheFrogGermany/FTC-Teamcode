@@ -36,8 +36,12 @@ public class FrogAutonomousSimpler extends FrogAutonomous {
     }
     public void addDriveToPosition(int x, int y){
         FrogVector robotPoint = new FrogVector(robotX,robotY);
+        robotX = x;
+        robotY = y;
+        telemetry.addData("Current Point", Double.toString(robotPoint.getX()) + ", " + Double.toString(robotPoint.getY()));
+        telemetry.addData("Next point", Integer.toString(x) + ", " + Integer.toString(y));
         FrogVector driveVector = new FrogVector(x, y); //the vector on the coordinate system of the map
-        driveVector.substractVector(robotPoint);
+        driveVector.subtractVector(robotPoint);
         telemetry.addData("Vectors", driveVector.getX());
         telemetry.addData("Vectors y", driveVector.getY());
         telemetry.addData("Length", driveVector.getLength());
