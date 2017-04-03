@@ -232,7 +232,7 @@ public class FrogAutonomous extends FrogOpMode {
             telemetry.addData("Fehlermeldung bei BeaconSensor", "beide 255");
             return false;
         }
-        boolean wrongDistance = (Math.abs(rangeDistance - beaconRangeSensors.getLeft()) > 1) || (Math.abs(rangeDistance - beaconRangeSensors.getRight()) > 1);
+        boolean wrongDistance = (Math.abs(rangeDistance - beaconRangeSensors.getLeft()) > 2) || (Math.abs(rangeDistance - beaconRangeSensors.getRight()) > 2);
         if(wrongDistance){
             rangeWait.reset();
             return true;
@@ -248,10 +248,10 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public void driveToLine(){
-        frontRightDrive.setPower(0.2);
-        frontLeftDrive.setPower(0.2);
-        backLeftDrive.setPower(0.2);
-        backRightDrive.setPower(0.2);
+        frontRightDrive.setPower(0.3);
+        frontLeftDrive.setPower(0.3);
+        backLeftDrive.setPower(0.3);
+        backRightDrive.setPower(0.3);
     }
 
     public boolean drivingToLine(){
