@@ -218,8 +218,8 @@ public class FrogAutonomous extends FrogOpMode {
             rightPower = 0;
         }
 
-        leftPower = FrogMath.checkSmaller(leftPower, 0.2);
-        rightPower = FrogMath.checkSmaller(rightPower, 0.2);
+        leftPower = FrogMath.checkSmaller(leftPower, 0.3);
+        rightPower = FrogMath.checkSmaller(rightPower, 0.3);
 
         telemetry.addData("leftPower", leftPower);
         telemetry.addData("rightPower", rightPower);
