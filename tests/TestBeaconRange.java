@@ -19,6 +19,9 @@ public class TestBeaconRange extends TeleOpOmni4 {
     public void loop() {
         super.loop();
         telemetry.addData("leftBeacon", leftBeaconRange.getUltrasonic());
+        telemetry.addData("leftBeaconProcessed", beaconRangeSensors.getLeft());
         telemetry.addData("rightBeacon", rightBeaconRange.getUltrasonic());
+        telemetry.addData("rightBeaconProcessed", beaconRangeSensors.getRight());
+
     }
 }

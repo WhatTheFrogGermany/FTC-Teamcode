@@ -188,8 +188,10 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public void driveToWall(int distance){
-        telemetry.addData("leftBeaconRange", beaconRangeSensors.getLeft());
-        telemetry.addData("rightBeaconRange", beaconRangeSensors.getRight());
+        telemetry.addData("leftBeaconRange", leftBeaconRange.getUltrasonic());
+        telemetry.addData("leftBeaconRangeProcessed", beaconRangeSensors.getLeft());
+        telemetry.addData("rightBeaconRange", rightBeaconRange.getUltrasonic());
+        telemetry.addData("rightBeaconRangeProcessed", beaconRangeSensors.getRight());
         rangeDistance = distance;
 
         int averageDistance = (int) (beaconRangeSensors.getLeft() + beaconRangeSensors.getRight()) / 2;
@@ -253,7 +255,7 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public boolean drivingToLine(){
-        if(beaconColor.alpha() < 60){
+        if(beaconColor.alpha() < 30){
             telemetry.addData("ground", beaconColor.alpha());
             return true;
         }else{

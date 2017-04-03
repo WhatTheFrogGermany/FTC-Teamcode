@@ -53,8 +53,8 @@ public class FrogOpMode extends OpMode {
     protected ColorSensor leftBeaconColor;
     protected ColorSensor rightBeaconColor;
 
-    private FrogRange leftBeaconRange;
-    private FrogRange rightBeaconRange;
+    protected FrogRange leftBeaconRange; //should refactor sometime and probably make private
+    protected FrogRange rightBeaconRange;
 
     protected FrogBeaconRangeSensors beaconRangeSensors;
 
