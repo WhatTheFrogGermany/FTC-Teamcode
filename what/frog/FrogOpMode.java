@@ -53,8 +53,10 @@ public class FrogOpMode extends OpMode {
     protected ColorSensor leftBeaconColor;
     protected ColorSensor rightBeaconColor;
 
-    protected FrogRange leftBeaconRange;
-    protected FrogRange rightBeaconRange;
+    private FrogRange leftBeaconRange;
+    private FrogRange rightBeaconRange;
+
+    protected FrogBeaconRangeSensors beaconRangeSensors;
 
     protected FrogGyro topGyro;
     protected FrogGyro bottomGyro;
@@ -110,6 +112,7 @@ public class FrogOpMode extends OpMode {
 
         leftBeaconRange = new FrogRange(hardwareMap, "left_beacon_range", 0x18);
         rightBeaconRange = new FrogRange(hardwareMap, "right_beacon_range", 0x28);
+        beaconRangeSensors = new FrogBeaconRangeSensors(leftBeaconRange, rightBeaconRange);
 
         bottomGyro = new FrogGyro(hardwareMap, "bottom_gyro", 0x10);
         //topGyro = new FrogGyro(hardwareMap, "top_gyro", 0x20);

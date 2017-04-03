@@ -31,7 +31,6 @@ public class FrogAutonomous extends FrogOpMode {
     ElapsedTime waitTime;
     int waitMilliSecs;
 
-
     public void setRobotXY(int x, int y){
         robotX = x;
         robotY = y;
@@ -158,11 +157,6 @@ public class FrogAutonomous extends FrogOpMode {
         frontLeftDrive.reset();
         backLeftDrive.reset();
         backRightDrive.reset();
-
-        aOmni.setMaxSpeed(1677);
-        bOmni.setMaxSpeed(1677);
-        cOmni.setMaxSpeed(1677);
-        dOmni.setMaxSpeed(1677);
     }
 
     @Override
@@ -194,26 +188,26 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public void driveToWall(int distance){
-        telemetry.addData("leftBeaconRange", leftBeaconRange.getUltrasonic());
-        telemetry.addData("rightBeaconRange", rightBeaconRange.getUltrasonic());
+        telemetry.addData("leftBeaconRange", beaconRangeSensors.getLeft());
+        telemetry.addData("rightBeaconRange", beaconRangeSensors.getRight());
         rangeDistance = distance;
 
-        int averageDistance = (int) (leftBeaconRange.getUltrasonic() + rightBeaconRange.getUltrasonic()) / 2;
+        int averageDistance = (int) (beaconRangeSensors.getLeft() + beaconRangeSensors.getRight()) / 2;
 
         double leftPower;
         double rightPower;
-        if((leftBeaconRange.getUltrasonic() - distance) > 30){
+        if((beaconRangeSensors.getLeft() - distance) > 30){
             leftPower = 1;
         } else {
-            leftPower = (leftBeaconRange.getUltrasonic()-distance) * 0.03;
+            leftPower = (beaconRangeSensors.getLeft()-distance) * 0.03;
         }
-        if((rightBeaconRange.getUltrasonic() - distance) > 30){
+        if((beaconRangeSensors.getRight() - distance) > 30){
             rightPower = 1;
         } else {
-            rightPower = (rightBeaconRange.getUltrasonic()-distance) * 0.03;
+            rightPower = (beaconRangeSensors.getRight() - distance) * 0.03;
         }
 
-        if(leftBeaconRange.getUltrasonic() == 255 || rightBeaconRange.getUltrasonic() == 255){
+        if(beaconRangeSensors.getLeft() == 255 || beaconRangeSensors.getRight() == 255){
             leftPower = 0;
             rightPower = 0;
         }
@@ -231,12 +225,12 @@ public class FrogAutonomous extends FrogOpMode {
     }
 
     public boolean drivingToWall(){
-        if (leftBeaconRange.getUltrasonic() == 255 && rightBeaconRange.getUltrasonic() == 255)
+        if (beaconRangeSensors.getLeft() == 255 && beaconRangeSensors.getRight() == 255)
         {
-            telemetry.addData("Fehlermeldung bei BeaconSensor", leftBeaconRange);
+            telemetry.addData("Fehlermeldung bei BeaconSensor", "beide 255");
             return false;
         }
-        boolean wrongDistance = (Math.abs(rangeDistance - leftBeaconRange.getUltrasonic()) > 1) || (Math.abs(rangeDistance - rightBeaconRange.getUltrasonic()) > 1);
+        boolean wrongDistance = (Math.abs(rangeDistance - beaconRangeSensors.getLeft()) > 1) || (Math.abs(rangeDistance - beaconRangeSensors.getRight()) > 1);
         if(wrongDistance){
             rangeWait.reset();
             return true;
@@ -341,6 +335,7 @@ public class FrogAutonomous extends FrogOpMode {
         changeDirection(GABI_FRONT);
         setDriveTolerances(0.1);
         wildeHildeMotor.setTolerance(0.1);
+
     }
 
     @Override
