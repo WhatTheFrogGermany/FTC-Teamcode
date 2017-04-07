@@ -68,7 +68,7 @@ public class TeleOpOmni4 extends FrogOpMode {
     }
 
     public void loop() {
-
+        super.loop();
         drive();
         changeDirection();
 

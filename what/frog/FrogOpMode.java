@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by FTC2 on 31.01.2017.
@@ -62,6 +63,9 @@ public class FrogOpMode extends OpMode {
     protected FrogGyro bottomGyro;
 
     protected ColorSensor beaconColor;
+
+    protected CRServo gameClock;
+    ElapsedTime gameClockTime;
 
 
 
@@ -121,6 +125,10 @@ public class FrogOpMode extends OpMode {
 
         beaconColor = hardwareMap.colorSensor.get("beacon_color");
         beaconColor.setI2cAddress(I2cAddr.create8bit(0x3c));
+
+        gameClock = hardwareMap.crservo.get("game_clock");
+        gameClock.setPower(0);
+        gameClockTime = new ElapsedTime();
     }
 
 
@@ -130,11 +138,24 @@ public class FrogOpMode extends OpMode {
         bottomGyro.reactivateRead();
         //topGyro.reactivateRead();
         changeDirection(GABI_FRONT);
+        gameClockTime.reset();
     }
 
     @Override
     public void loop() {
+        if(gameClockTime.seconds() < 0.115) {
+            gameClock.setPower(0.1);
+        } else if (gameClockTime.seconds() < 5){
+            gameClock.setPower(0);
+        } else {
+            gameClockTime.reset();
+        }
+    }
 
+    @Override
+    public void stop() {
+        super.stop();
+        gameClock.setPower(0);
     }
 
     public void changeDirection(short direction){
