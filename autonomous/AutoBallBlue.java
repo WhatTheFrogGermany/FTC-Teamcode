@@ -15,7 +15,8 @@ public class AutoBallBlue extends FrogAutonomousSimpler {
         setInitialHeading(90);
         setRobotXY(208, 20);
         addChangeFront(GABI_FRONT);
-        addDriveToPosition(209, 180);
+        addDriveToPosition(209, 70);
         addShootTwice();
+        addDriveToPosition(208, 180);
     }
 }
