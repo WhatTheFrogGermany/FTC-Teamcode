@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.what.frog.FrogAutonomousSimpler;
  * Created by FTC2 on 22.02.2017.
  */
 @Autonomous(name="Default: Red", group="Default")
-public class AutoTest4Red extends FrogAutonomousSimpler {
+public class AutoRed extends FrogAutonomousSimpler {
     @Override
         public void init() {
             super.init();
